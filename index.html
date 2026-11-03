@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f0e5"><meta name="description" content="IBR للأثاث الخشبي — أثاث خشبي أنيق مصنوع بعناية في مكة المكرمة">
+<title>IBR | أثاث خشبي</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<div class="announcement">ورشة IBR للأثاث الخشبي · مكة المكرمة <a href="https://wa.me/966595811980" target="_blank" rel="noopener">تواصل عبر واتساب</a></div>
+<header class="header">
+<a class="logo" href="#home" aria-label="IBR الرئيسية"><img src="assets/ibr-logo.png" alt="شعار IBR"><span>أثاث خشبي</span></a>
+<button id="menuBtn" class="menu-btn" aria-label="القائمة">☰</button>
+<nav id="nav"><a href="#home">الرئيسية</a><a href="#products">المنتجات</a><a href="#about">من نحن</a><a href="#contact">التواصل</a><a href="#cart" class="cart-nav">السلة <b id="cartCount">0</b></a></nav>
+</header>
+<main id="app">
+<section class="hero" id="home">
+<div class="hero-copy"><small>تفاصيل من روح الخشب</small><h1>اختر أثاثك<br><em>على ذوقك</em></h1><p>قطع خشبية تجمع بين جمال التصميم ودفء الخامة، تصنع بعناية في ورشة IBR.</p><a class="btn primary" href="#products">تصفح المنتجات <span>←</span></a></div>
+<div class="hero-photo" role="img" aria-label="أثاث خشبي بتصميم أنيق"></div>
+<div class="hero-note">IBR · WOOD FURNITURE</div>
+</section>
+<section class="perks wrap"><div><i>✧</i><strong>صناعة بعناية</strong><small>اهتمام بالتفاصيل</small></div><div><i>⌂</i><strong>ورشة مكة</strong><small>صناعة محلية</small></div><div><i>♧</i><strong>تصاميم خشبية</strong><small>لمسة دافئة لمساحتك</small></div><div><i>♡</i><strong>خدمة مباشرة</strong><small>نتواصل معك بعد الطلب</small></div></section>
+<section class="section wrap" id="featured"><div class="section-title"><div><small>اختيارات IBR</small><h2>منتجات مميزة</h2></div><a href="#products" class="link">كل المنتجات ←</a></div><div id="featuredGrid" class="grid"><div class="notice">يتم تحميل المنتجات…</div></div></section>
+<section class="section wrap" id="latest"><div class="section-title"><div><small>أضيفت مؤخراً</small><h2>أحدث المنتجات</h2></div><a href="#products" class="link">كل المنتجات ←</a></div><div id="latestGrid" class="grid"><div class="notice">يتم تحميل المنتجات…</div></div></section>
+<section class="about-banner" id="about"><div class="wrap about-copy"><small>حكاية IBR</small><h2>الخشب.. دفء التفاصيل</h2><p>في ورشة IBR للأثاث الخشبي بمكة المكرمة، نعتني بتفاصيل القطع الخشبية ونؤمن أن الأثاث الجميل يمنح المكان روحاً ودفئاً.</p><a class="btn outline" href="#contact">تواصل معنا</a></div></section>
+<section class="section wrap" id="products"><div class="section-title"><div><small>تسوق حسب احتياجك</small><h2>جميع المنتجات</h2></div></div><div class="toolbar"><input id="search" type="search" placeholder="ابحث عن منتج…" aria-label="بحث المنتجات"><select id="category"><option value="">كل التصنيفات</option><option>الكراسي</option><option>أطقم الكراسي والطاولات</option><option>الطاولات</option><option>حوامل النباتات والمزهريات</option><option>أثاث الأطفال</option></select><select id="sort"><option value="new">الأحدث</option><option value="price-asc">السعر: الأقل أولاً</option><option value="price-desc">السعر: الأعلى أولاً</option></select></div><div id="productsGrid" class="grid"><div class="notice">يتم تحميل المنتجات…</div></div></section>
+<section class="section wrap" id="cart"><div class="section-title"><div><small>خطوتك نحو اقتناء قطعتك</small><h2>سلة المشتريات</h2></div></div><div id="cartContent"></div></section>
+<section class="section wrap" id="contact"><div class="contact-box"><div><small>نحن بالقرب منك</small><h2>يسعدنا تواصلك</h2><p>ورشة IBR للأثاث الخشبي · مكة المكرمة، المملكة العربية السعودية</p><a class="btn primary" href="https://wa.me/966595811980" target="_blank" rel="noopener">واتساب الورشة</a></div><div class="contact-mark">IBR</div></div></section>
+<section class="section wrap admin-section" id="admin"><div class="section-title"><div><small>مساحة الإدارة</small><h2>لوحة الإدارة</h2></div></div><div id="adminRoot"></div></section>
+</main>
+<footer><div class="footer-wrap wrap"><div class="footer-brand"><img src="assets/ibr-logo.png" alt="IBR"><p>أثاث خشبي يصنع بعناية في مكة المكرمة.</p></div><div><strong>روابط</strong><a href="#home">الرئيسية</a><a href="#products">المنتجات</a><a href="#about">من نحن</a><a href="#contact">التواصل</a></div><div><strong>تواصل</strong><a href="https://wa.me/966595811980" target="_blank" rel="noopener">+966 59 581 1980</a><span>مكة المكرمة، السعودية</span></div></div><div class="copyright">© <span id="year"></span> IBR | أثاث خشبي — جميع الحقوق محفوظة</div></footer>
+<dialog id="productDialog"><div class="modal"><button class="close" id="closeDialog" aria-label="إغلاق">×</button><div id="modalContent"></div></div></dialog>
+<script src="app.js"></script>
+</body></html>
