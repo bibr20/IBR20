@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#68452e">
+    <meta name="description" content="قائمة المنتجات المحفوظة في متجر IBR20 للأثاث الخشبي">
+    <title>المحفوظات | IBR20</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/wishlist.css">
+
+    <!-- 1. مكتبة Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- 2. ملف المتجر -->
+    <script src="assets/js/store.js"></script>
+
+    <!-- 3. نظام تسجيل الدخول -->
+    <script src="assets/js/auth.js"></script>
+
+    <script defer src="assets/js/wishlist.js"></script>
+
+
+
+</head>
+
+<body class="wishlist-page">
+
+    <header class="wl-header">
+        <a class="wl-brand" href="index.html" aria-label="IBR20 الرئيسية">
+            <span class="wl-brand-mark">IBR</span>
+            <span>
+                <strong>IBR20</strong>
+                <small>أثاث خشبي</small>
+            </span>
+        </a>
+
+        <nav class="wl-nav" aria-label="التنقل الرئيسي">
+            <a href="index.html">الرئيسية</a>
+            <a href="products.html">المنتجات</a>
+            <a href="about.html">من نحن</a>
+            <a href="contact.html">التواصل</a>
+        </nav>
+
+        <a class="wl-cart-link" href="cart.html">
+            السلة
+            <span id="wlCartCount">0</span>
+        </a>
+    </header>
+
+    <main class="wl-main">
+
+        <section class="wl-hero">
+            <div>
+                <p class="wl-eyebrow">IBR20 COLLECTION</p>
+                <h1>منتجاتك المحفوظة</h1>
+                <p class="wl-hero-copy">
+                    احتفظ بمنتجاتك المفضلة، ونظم اختياراتك، وقارن بينها في مكان واحد.
+                </p>
+            </div>
+
+            <div class="wl-hero-stats">
+                <div>
+                    <strong id="wlTotalCount">0</strong>
+                    <span>منتج محفوظ</span>
+                </div>
+                <div>
+                    <strong id="wlListCount">1</strong>
+                    <span>قائمة</span>
+                </div>
+                <div>
+                    <strong id="wlCompareCount">0</strong>
+                    <span>للمقارنة</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="wl-toolbar">
+            <div class="wl-list-controls">
+                <label class="wl-field-label" for="wlListSelect">القائمة الحالية</label>
+
+                <select id="wlListSelect" aria-label="اختر القائمة"></select>
+
+                <button class="wl-btn wl-btn-primary" id="wlNewListBtn" type="button">
+                    + قائمة جديدة
+                </button>
+
+                <button class="wl-btn wl-btn-soft" id="wlRenameListBtn" type="button">
+                    إعادة تسمية
+                </button>
+
+                <button class="wl-icon-btn wl-danger-icon" id="wlDeleteListBtn" type="button" title="حذف القائمة"
+                    aria-label="حذف القائمة">
+                    ×
+                </button>
+            </div>
+
+            <div class="wl-search-wrap">
+                <input id="wlSearch" type="search" placeholder="ابحث في منتجاتك المحفوظة..." autocomplete="off">
+            </div>
+        </section>
+
+        <section class="wl-filter-row">
+            <div class="wl-chips" aria-label="تصفية المنتجات">
+                <button class="wl-chip is-active" data-filter="all" type="button">الكل</button>
+                <button class="wl-chip" data-filter="available" type="button">متوفر</button>
+                <button class="wl-chip" data-filter="unavailable" type="button">غير متوفر</button>
+                <button class="wl-chip" data-filter="discount" type="button">عليه تخفيض</button>
+            </div>
+
+            <div class="wl-sort-compare">
+                <label for="wlSort">ترتيب حسب</label>
+                <select id="wlSort">
+                    <option value="newest">الأحدث حفظًا</option>
+                    <option value="name">الاسم</option>
+                    <option value="price-low">السعر: الأقل</option>
+                    <option value="price-high">السعر: الأعلى</option>
+                    <option value="discount">أعلى تخفيض</option>
+                </select>
+
+                <button class="wl-btn wl-btn-outline" id="wlCompareBtn" type="button">
+                    مقارنة
+                    <span id="wlCompareButtonCount">0</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="wl-bulkbar" id="wlBulkBar" hidden>
+            <label class="wl-select-all">
+                <input type="checkbox" id="wlSelectAll">
+                تحديد الكل
+            </label>
+
+            <span>المحدد: <strong id="wlSelectedCount">0</strong></span>
+
+            <button class="wl-text-btn" id="wlMoveSelectedBtn" type="button">
+                نقل إلى قائمة
+            </button>
+
+            <button class="wl-text-btn" id="wlAddSelectedBtn" type="button">
+                إضافة إلى السلة
+            </button>
+
+            <button class="wl-text-btn wl-danger-text" id="wlRemoveSelectedBtn" type="button">
+                حذف المحدد
+            </button>
+        </section>
+
+        <section class="wl-products-section">
+            <div class="wl-section-heading">
+                <div>
+                    <h2 id="wlCurrentListTitle">قائمتي المفضلة</h2>
+                    <p id="wlCurrentListDescription">المنتجات التي اخترتها بعناية</p>
+                </div>
+
+                <button class="wl-btn wl-btn-outline" id="wlShareBtn" type="button">
+                    مشاركة القائمة
+                </button>
+            </div>
+
+            <div class="wl-status" id="wlStatus" role="status" aria-live="polite"></div>
+
+            <div class="wl-products-grid" id="wlProducts"></div>
+
+            <div class="wl-empty" id="wlEmpty" hidden>
+                <div class="wl-empty-icon">♡</div>
+                <h3>لا توجد منتجات في هذه القائمة</h3>
+                <p>أضف المنتجات التي تعجبك لتتمكن من الرجوع إليها لاحقًا.</p>
+                <a href="products.html" class="wl-btn wl-btn-primary">تصفح المنتجات</a>
+            </div>
+        </section>
+
+        <section class="wl-recommendations wl-panel">
+            <div class="wl-panel-heading">
+                <div>
+                    <h2>قد تعجبك أيضًا</h2>
+                    <p class="wl-muted">اقتراحات من منتجات المتجر المتاحة</p>
+                </div>
+            </div>
+            <div class="wl-recommendation-grid" id="wlRecommendations"></div>
+        </section>
+
+        <section class="wl-lower-grid">
+
+            <div class="wl-panel">
+                <div class="wl-panel-heading">
+                    <div>
+                        <h2>تنبيهات المنتجات</h2>
+                        <p class="wl-muted">تابع تغيّر الأسعار وتوفر المنتجات</p>
+                    </div>
+                    <button class="wl-icon-btn" id="wlNotifyPermissionBtn" type="button" title="إعداد إشعارات المتصفح">
+                        ♧
+                    </button>
+                </div>
+
+                <div class="wl-alert-list" id="wlAlerts"></div>
+
+                <p class="wl-muted">
+                    تتم مراجعة التنبيهات عند فتح الصفحة أو تحديث بيانات المنتجات.
+                    لا تعمل التنبيهات في الخلفية عند إغلاق المتجر.
+                </p>
+            </div>
+
+            <div class="wl-panel">
+                <div class="wl-panel-heading">
+                    <div>
+                        <h2>شاهدتها مؤخرًا</h2>
+                        <p class="wl-muted">المنتجات التي تصفحتها مؤخرًا</p>
+                    </div>
+                </div>
+
+                <div class="wl-mini-products" id="wlRecent"></div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="wl-footer">
+        <span>© IBR20 - جميع الحقوق محفوظة</span>
+        <div>
+            <a href="index.html">الرئيسية</a>
+            <a href="products.html">المنتجات</a>
+            <a href="contact.html">تواصل معنا</a>
+        </div>
+    </footer>
+
+    <dialog class="wl-dialog" id="wlDialog">
+        <form id="wlDialogForm" method="dialog">
+            <button class="wl-dialog-close" id="wlDialogClose" type="button" aria-label="إغلاق">×</button>
+
+            <h3 id="wlDialogTitle">إدارة القائمة</h3>
+
+            <div id="wlDialogBody"></div>
+
+            <div class="wl-dialog-actions">
+                <button class="wl-btn wl-btn-primary" id="wlDialogConfirm" type="submit">
+                    تأكيد
+                </button>
+                <button class="wl-btn wl-btn-soft" id="wlDialogCancel" type="button">
+                    إلغاء
+                </button>
+            </div>
+        </form>
+    </dialog>
+
+    <div class="wl-toast" id="wlToast" role="status" aria-live="polite"></div>
+
+    <!-- IBR20 Analytics Engine -->
+    <script src="assets/js/ibr-analytics.js"></script>
+
+    <!-- IBR20 Analytics Consent -->
+    <script src="assets/js/ibr-analytics-consent.js"></script>
+
+</body>
+
+</html>

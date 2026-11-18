@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#68452e">
+    <meta name="description" content="سلة مشتريات IBR للأثاث الخشبي — راجع منتجاتك وخصوماتك وأكمل طلبك بسهولة.">
+
+    <title>السلة | IBR أثاث خشبي</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        /* =========================================
+           IBR20 — CART PAGE
+           تصميم متجاوب مع الحفاظ على هوية المتجر
+        ========================================= */
+
+        .cart-page-card {
+            overflow: hidden;
+        }
+
+        .cart-intro,
+        .cart-form-description {
+            color: #777;
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .cart-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 0;
+            margin-top: 12px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            font-size: 20px;
+        }
+
+        .cart-summary .price {
+            color: #68452e;
+            font-size: 22px;
+        }
+
+        /* روابط المنتج */
+
+        .cart-product-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: inherit;
+            text-decoration: none;
+            min-width: 0;
+        }
+
+        .cart-product-link:hover b {
+            color: #68452e;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .cart-product-link:focus-visible {
+            outline: 2px solid #9b7657;
+            outline-offset: 4px;
+            border-radius: 8px;
+        }
+
+        .cart-product-image {
+            width: 88px;
+            height: 88px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex: 0 0 88px;
+            background: #f5f1eb;
+        }
+
+        .cart-product-name {
+            display: block;
+            font-weight: 700;
+            line-height: 1.7;
+        }
+
+        .cart-product-meta {
+            min-width: 0;
+        }
+
+        /* الأسعار والخصومات */
+
+        .cart-price-area {
+            margin-top: 8px;
+            line-height: 1.8;
+        }
+
+        .cart-discount-badge {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            margin-top: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: #f8eee7;
+            color: #8a4327;
+            border: 1px solid #ead4c5;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .cart-old-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 13px;
+            margin-inline-end: 6px;
+        }
+
+        .cart-current-price {
+            color: #68452e;
+            font-weight: 800;
+        }
+
+        .cart-item-saving {
+            color: #39734b;
+            font-size: 12px;
+            margin-top: 4px;
+            font-weight: 700;
+        }
+
+        /* الكمية */
+
+        .cart-quantity-control {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 5px;
+            border: 1px solid #e8dfd6;
+            border-radius: 30px;
+            background: #fff;
+            white-space: nowrap;
+        }
+
+        .cart-quantity-control button {
+            width: 32px;
+            height: 32px;
+            border: 0;
+            border-radius: 50%;
+            background: #f5f0ea;
+            color: #68452e;
+            font-size: 20px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-quantity-control button:hover:not(:disabled) {
+            background: #68452e;
+            color: #fff;
+        }
+
+        .cart-quantity-control button:disabled {
+            opacity: .35;
+            cursor: not-allowed;
+        }
+
+        .cart-quantity-value {
+            min-width: 22px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .cart-stock-note {
+            color: #777;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .cart-stock-warning {
+            color: #a34c2d;
+            font-size: 12px;
+            margin-top: 5px;
+            line-height: 1.6;
+        }
+
+        /* أزرار المنتج */
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .cart-remove-button {
+            border: 0;
+            background: transparent;
+            color: #9b5a45;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 5px 0;
+        }
+
+        .cart-remove-button:hover {
+            color: #71331f;
+            text-decoration: underline;
+        }
+
+        .cart-line-total {
+            color: #68452e;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        /* ملخص الخصومات */
+
+        .cart-discount-summary {
+            display: grid;
+            gap: 10px;
+            margin-top: 14px;
+            padding: 17px;
+            background: #faf8f5;
+            border: 1px solid #eee6dd;
+            border-radius: 12px;
+            line-height: 1.8;
+        }
+
+        .cart-discount-summary:empty {
+            display: none;
+        }
+
+        .cart-discount-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cart-savings-value {
+            color: #39734b;
+            font-weight: 800;
+        }
+
+        .cart-final-total {
+            padding-top: 10px;
+            margin-top: 4px;
+            border-top: 1px solid #e7ded4;
+            color: #68452e;
+            font-size: 18px;
+        }
+
+        .cart-savings-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: #f1f6ef;
+            border: 1px solid #dce9d8;
+            border-radius: 10px;
+            color: #356642;
+            line-height: 1.8;
+        }
+
+        .cart-savings-banner strong {
+            white-space: nowrap;
+        }
+
+        /* ملاحظات الشحن */
+
+        .cart-shipping-note {
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: #f8f4ef;
+            border: 1px solid #eadfd3;
+            border-radius: 10px;
+            color: #68452e;
+            line-height: 1.9;
+            font-size: 14px;
+        }
+
+        /* التنبيهات والتراجع */
+
+        .cart-feedback {
+            margin: 12px 0;
+            line-height: 1.8;
+        }
+
+        .cart-feedback:empty {
+            display: none;
+        }
+
+        .cart-feedback-message {
+            padding: 12px 14px;
+            border-radius: 9px;
+            background: #faf8f5;
+            border: 1px solid #e8dfd6;
+            color: #68452e;
+            font-size: 13px;
+        }
+
+        .cart-undo-button {
+            margin-inline-start: 10px;
+            padding: 5px 10px;
+            border: 1px solid #b99a7c;
+            border-radius: 7px;
+            color: #68452e;
+            background: #fff;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        /* التوصيات */
+
+        .cart-recommendations {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #eee6dd;
+        }
+
+        .cart-recommendations[hidden] {
+            display: none !important;
+        }
+
+        .cart-recommendations-heading {
+            margin-bottom: 6px;
+            color: #68452e;
+        }
+
+        .cart-recommendations-description {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .cart-recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .cart-recommendation-card {
+            min-width: 0;
+            overflow: hidden;
+            border: 1px solid #eee6dd;
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        .cart-recommendation-image-link {
+            display: block;
+            background: #f6f2ed;
+        }
+
+        .cart-recommendation-image {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+        }
+
+        .cart-recommendation-info {
+            padding: 12px;
+        }
+
+        .cart-recommendation-info h3 {
+            font-size: 14px;
+            line-height: 1.7;
+            margin: 0 0 7px;
+        }
+
+        .cart-recommendation-info h3 a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .cart-recommendation-price {
+            display: block;
+            color: #68452e;
+            font-weight: 800;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .cart-recommendation-info .btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            padding: 9px 7px;
+        }
+
+        .cart-recommendation-empty {
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* أزرار متابعة التسوق */
+
+        .cart-navigation-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .cart-navigation-actions a {
+            text-decoration: none;
+            text-align: center;
+        }
+
+        /* النموذج */
+
+        .cart-section-title {
+            margin-top: 30px;
+            margin-bottom: 8px;
+        }
+
+        .cart-form-description {
+            font-size: 14px;
+        }
+
+        #checkout-form button:disabled {
+            opacity: .6;
+            cursor: wait;
+        }
+
+        #checkout-form[hidden] {
+            display: none !important;
+        }
+
+        /* الثقة */
+
+        .cart-trust {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .cart-trust-item {
+            padding: 14px 9px;
+            text-align: center;
+            background: #faf8f5;
+            border: 1px solid #eee6dd;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #68452e;
+            line-height: 1.7;
+        }
+
+        .cart-trust-item span {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .cart-privacy {
+            margin-top: 14px;
+            color: #777;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* تأكيد الطلب */
+
+        .order-success-card {
+            margin-top: 25px;
+            padding: 25px 20px;
+            text-align: center;
+            background: #faf8f5;
+            border: 1px solid #e8ddcf;
+            border-radius: 14px;
+        }
+
+        .order-success-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+            color: #39734b;
+        }
+
+        .order-success-card h2 {
+            color: #68452e;
+            margin-bottom: 10px;
+        }
+
+        .order-success-card p {
+            color: #777;
+            line-height: 1.9;
+        }
+
+        .order-number-box {
+            margin: 20px auto;
+            padding: 15px;
+            max-width: 340px;
+            background: #fff;
+            border: 1px dashed #b99a7c;
+            border-radius: 10px;
+        }
+
+        .order-number-box strong {
+            display: block;
+            color: #68452e;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .order-number-value {
+            font-size: 23px;
+            font-weight: bold;
+            color: #382719;
+            direction: ltr;
+            unicode-bidi: embed;
+        }
+
+        .order-success-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .order-success-actions a,
+        .order-success-actions button {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .order-copy-message {
+            margin-top: 12px;
+            color: #39734b;
+            font-size: 13px;
+            min-height: 22px;
+        }
+
+        /* استجابة الشاشات */
+
+        @media (max-width: 850px) {
+            .cart-recommendations-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .cart-summary {
+                font-size: 17px;
+            }
+
+            .cart-summary .price {
+                font-size: 19px;
+            }
+
+            .cart-trust {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-trust-item {
+                text-align: right;
+            }
+
+            .cart-navigation-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .cart-navigation-actions a {
+                width: 100%;
+            }
+
+            .cart-savings-banner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .cart-product-image {
+                width: 70px;
+                height: 70px;
+                flex-basis: 70px;
+            }
+
+            .cart-recommendations-grid {
+                gap: 10px;
+            }
+
+            .cart-recommendation-info {
+                padding: 9px;
+            }
+
+            .cart-recommendation-info h3 {
+                font-size: 12px;
+            }
+
+            .order-success-actions {
+                flex-direction: column;
+            }
+
+            .order-success-actions a,
+            .order-success-actions button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- رأس المتجر -->
+    <header class="site-header">
+
+        <a class="brand" href="index.html">
+            <span class="brand-mark">IBR</span>
+            <span>أثاث خشبي</span>
+        </a>
+
+        <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false" type="button">
+            ☰
+        </button>
+
+        <nav class="nav">
+            <a href="index.html">الرئيسية</a>
+            <a href="products.html">المنتجات</a>
+            <a href="IBR20_about.html">من نحن</a>
+            <a href="contact.html">التواصل والاستفسارات</a>
+            <a href="track-order.html">تتبّع طلبك</a>
+            <a href="track-inquiry.html">متابعة الاستفسار</a>
+            <a href="wishlist.html">القائمة المفضلة</a>
+            <a class="active" href="cart.html">
+                السلة
+                <span class="cart-count">0</span>
+            </a>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <section class="page-hero">
+            <div class="wrap">
+                <h1>سلة المشتريات</h1>
+                <p>راجع منتجاتك وخصوماتك وتأكد من تفاصيل طلبك قبل الإرسال.</p>
+            </div>
+        </section>
+
+        <section class="section wrap">
+
+            <div class="content-card cart-page-card">
+
+                <p class="cart-intro">
+                    أهلاً بك في متجر IBR20.
+                    راجع المنتجات والكميات والأسعار،
+                    ثم أدخل بياناتك لإرسال طلبك.
+                </p>
+
+                <!-- تنبيهات السلة والتراجع عن الحذف -->
+                <div id="cart-feedback" class="cart-feedback" aria-live="polite"></div>
+
+                <!-- المنتجات -->
+                <div id="cart-items"></div>
+
+                <!-- ملخص الإجمالي -->
+                <div class="cart-summary">
+                    <b>إجمالي المنتجات بعد الخصم</b>
+                    <b class="price" id="cart-total">0 ر.س</b>
+                </div>
+
+                <!-- تفصيل الأسعار -->
+                <div id="cart-discount-summary" class="cart-discount-summary" aria-live="polite"></div>
+
+                <!-- شريط التوفير -->
+                <div id="cart-savings-banner" class="cart-savings-banner" hidden>
+                    <span>وفّرت من مشترياتك في هذه السلة</span>
+                    <strong id="cart-savings-total">0 ر.س</strong>
+                </div>
+
+                <!-- الشحن -->
+                <div class="cart-shipping-note">
+                    <strong>رسوم التوصيل:</strong>
+                    توصيل مجاني للمنجات لتي فوق 250 ريال
+                </div>
+
+                <!-- متابعة التسوق -->
+                <div class="cart-navigation-actions">
+                    <a class="btn btn-outline" href="products.html">
+                        متابعة التسوق
+                    </a>
+                </div>
+
+                <!-- توصيات المنتجات -->
+                <section id="cart-recommendations" class="cart-recommendations" hidden>
+                    <h2 class="cart-recommendations-heading">
+                        قد تناسبك هذه المنتجات
+                    </h2>
+
+                    <p class="cart-recommendations-description">
+                        اختر منتجات مكملة قد تناسب اختياراتك.
+                    </p>
+
+                    <div id="cart-recommendations-list" class="cart-recommendations-grid"></div>
+                </section>
+
+                <!-- نموذج الطلب -->
+                <h2 class="cart-section-title">
+                    بيانات الطلب والتوصيل
+                </h2>
+
+                <p class="cart-form-description">
+                    يرجى إدخال بيانات صحيحة حتى يتمكن فريق المتجر
+                    من التواصل معك وتأكيد الطلب وتحديد رسوم التوصيل.
+                </p>
+
+                <form id="checkout-form">
+
+                    <div class="form-grid">
+
+                        <div class="field">
+                            <label for="customer-name">الاسم الكامل *</label>
+                            <input id="customer-name" name="name" type="text" autocomplete="name" minlength="2"
+                                maxlength="120" placeholder="اكتب اسمك الكامل" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="customer-phone">رقم الجوال *</label>
+                            <input id="customer-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                                minlength="8" maxlength="20" placeholder="05xxxxxxxx" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="customer-city">المدينة *</label>
+                            <input id="customer-city" name="city" type="text" autocomplete="address-level2"
+                                minlength="2" maxlength="100" placeholder="مثال: مكة المكرمة" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="customer-neighborhood">الحي</label>
+                            <input id="customer-neighborhood" name="neighborhood" type="text"
+                                autocomplete="address-level3" maxlength="100" placeholder="اسم الحي">
+                        </div>
+
+                        <div class="field full">
+                            <label for="customer-address">
+                                العنوان التفصيلي (اختياري)
+                            </label>
+                            <input id="customer-address" name="address" type="text" autocomplete="street-address"
+                                maxlength="500" placeholder="الشارع أو أقرب معلم">
+                        </div>
+
+                        <div class="field full">
+                            <label for="customer-notes">
+                                ملاحظات إضافية (اختياري)
+                            </label>
+                            <textarea id="customer-notes" name="notes" maxlength="1000" rows="4"
+                                placeholder="أي تفاصيل أو تعليمات إضافية للطلب..."></textarea>
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-primary" type="submit" style="margin-top:18px">
+                        أرسل طلبك
+                    </button>
+
+                </form>
+
+                <!-- الثقة -->
+                <div class="cart-trust">
+
+                    <div class="cart-trust-item">
+                        <span>🚚</span>
+                        تحديد التوصيل بعد التواصل
+                    </div>
+
+                    <div class="cart-trust-item">
+                        <span>💳</span>
+                        الدفع عند الاستلام
+                    </div>
+
+                    <div class="cart-trust-item">
+                        <span>🤝</span>
+                        تأكيد الطلب مع فريق المتجر
+                    </div>
+
+                </div>
+
+                <p class="cart-privacy">
+                    🔒 نستخدم بياناتك لمعالجة الطلب والتواصل معك
+                    بشأن التأكيد والتوصيل.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- تذييل المتجر -->
+    <footer class="footer">
+
+        <div class="footer-inner">
+
+            <div>
+                <h3>IBR · أثاث خشبي</h3>
+                <p>
+                    أثاث نصنعه ليفهم احتياجاتك.
+                    ورشة للأثاث الخشبي في مكة المكرمة،
+                    مع اهتمام بالتفاصيل والتصميم العملي.
+                </p>
+            </div>
+
+            <div>
+                <h3>روابط المتجر</h3>
+
+                <div class="footer-links">
+                    <a href="products.html">المنتجات</a>
+                    <a href="IBR20_about.html">من نحن</a>
+                    <a href="contact.html">التواصل والاستفسارات</a>
+                    <a href="track-order.html">تتبّع طلبك</a>
+                    <a href="track-inquiry.html">متابعة الاستفسار</a>
+                    <a href="wishlist.html">القائمة المفضلة</a>
+                    <a href="cart.html">سلة المشتريات</a>
+                </div>
+            </div>
+
+            <div>
+                <h3>تواصل معنا</h3>
+                <p>مكة المكرمة</p>
+
+                <a href="https://wa.me/966595811980" target="_blank" rel="noopener noreferrer">
+                    واتساب: +966595811980
+                </a>
+            </div>
+
+        </div>
+
+        <div class="copyright">
+            © IBR20 — جميع الحقوق محفوظة
+        </div>
+
+    </footer>
+    <!-- 1. مكتبة Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- 2. ملف المتجر -->
+    <script src="assets/js/store.js"></script>
+
+    <!-- 3. نظام تسجيل الدخول -->
+    <script src="assets/js/auth.js"></script>
+
+    <!-- 4. نظام التحليلات وتتبع الطلبات -->
+    <script src="assets/js/ibr-analytics.js"></script>
+
+    <script src="assets/js/ibr-analytics-consent.js"></script>
+
+</body>
+
+</html>

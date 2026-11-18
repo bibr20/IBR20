@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>مركز خدمة العملاء | IBR20</title>
+
+    <meta name="theme-color" content="#f7f3ed">
+    <meta name="description" content="مركز إدارة عملاء متجر IBR20، ومتابعة الطلبات والاستفسارات والرسائل والتقييمات.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- ملفات التنسيق -->
+
+    <link rel="stylesheet" href="../CSS/admin-common.css">
+    <link rel="stylesheet" href="../CSS/admin-customers.css">
+
+    <!-- تحسينات التصميم الخاصة بمركز العملاء -->
+
+    <style>
+        :root {
+            --customers-bg: #f7f4ee;
+            --customers-white: #fff;
+            --customers-brown: #60452f;
+            --customers-dark: #46301f;
+            --customers-muted: #8a8176;
+            --customers-border: #eae2d7;
+            --customers-soft: #f5eee5;
+            --customers-shadow: 0 8px 26px rgba(65, 45, 25, .045);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 25px;
+        }
+
+        body.admin-customers-page {
+            font-family: "Almarai", sans-serif;
+            background: var(--customers-bg);
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
+
+        /* رابط تجاوز القائمة */
+
+        .admin-skip-link {
+            position: fixed;
+            top: -100px;
+            right: 15px;
+            z-index: 10000;
+            padding: 12px 18px;
+            border-radius: 9px;
+            background: var(--customers-brown);
+            color: white;
+            text-decoration: none;
+        }
+
+        .admin-skip-link:focus {
+            top: 15px;
+        }
+
+        /* شاشة التحميل */
+
+        .admin-loading-screen {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 25px;
+            background: var(--customers-bg);
+        }
+
+        .admin-loading-content {
+            text-align: center;
+            color: var(--customers-muted);
+            font-size: 13px;
+        }
+
+        .admin-loading-spinner {
+            width: 39px;
+            height: 39px;
+            margin: 0 auto 17px;
+            border: 3px solid #e8dfd2;
+            border-top-color: var(--customers-brown);
+            border-radius: 50%;
+            animation: customers-spin .8s linear infinite;
+        }
+
+        @keyframes customers-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* الهيكل العام */
+
+        .admin-layout {
+            min-height: 100vh;
+        }
+
+        .admin-main {
+            min-width: 0;
+        }
+
+        .admin-content {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 25px;
+        }
+
+        /* القائمة الجانبية */
+
+        .admin-sidebar {
+            background: #fff;
+            border-left: 1px solid var(--customers-border);
+        }
+
+        .admin-sidebar-brand {
+            padding: 25px 20px;
+            border-bottom: 1px solid var(--customers-border);
+        }
+
+        .admin-brand-link {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            text-decoration: none;
+        }
+
+        .admin-brand-name {
+            color: var(--customers-brown);
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .admin-brand-description {
+            color: var(--customers-muted);
+            font-size: 11px;
+        }
+
+        .admin-navigation {
+            padding: 18px 12px;
+        }
+
+        .admin-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            min-height: 45px;
+            padding: 11px 14px;
+            margin-bottom: 5px;
+            border: 0;
+            border-radius: 10px;
+            background: transparent;
+            color: #766b5f;
+            font-family: inherit;
+            font-size: 12px;
+            text-align: right;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background .2s, color .2s;
+        }
+
+        .admin-nav-link:hover {
+            background: var(--customers-soft);
+            color: var(--customers-brown);
+        }
+
+        .admin-nav-link.active {
+            background: #f1e7da;
+            color: var(--customers-brown);
+            font-weight: 700;
+        }
+
+        .admin-nav-icon {
+            width: 25px;
+            height: 25px;
+            display: grid;
+            place-items: center;
+            flex: 0 0 25px;
+            border-radius: 7px;
+            background: rgba(96, 69, 47, .07);
+            font-size: 16px;
+        }
+
+        .admin-sidebar-bottom {
+            padding: 15px 12px;
+            border-top: 1px solid var(--customers-border);
+        }
+
+        /* الشريط العلوي */
+
+        .admin-topbar {
+            min-height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 17px 25px;
+            border-bottom: 1px solid var(--customers-border);
+            background: #fff;
+        }
+
+        .admin-topbar-title h1 {
+            margin: 0 0 7px;
+            color: var(--customers-dark);
+            font-size: 20px;
+        }
+
+        .admin-topbar-title p {
+            margin: 0;
+            color: var(--customers-muted);
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .admin-topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .admin-user-label {
+            max-width: 220px;
+            overflow: hidden;
+            color: var(--customers-brown);
+            font-size: 11px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .admin-mobile-menu-button {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--customers-border);
+            border-radius: 9px;
+            background: white;
+            color: var(--customers-brown);
+            font-size: 19px;
+            cursor: pointer;
+        }
+
+        /* مقدمة الصفحة */
+
+        .admin-page-intro {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 22px;
+            padding: 23px 25px;
+            border: 1px solid var(--customers-border);
+            border-radius: 15px;
+            background:
+                linear-gradient(110deg, rgba(245, 238, 229, .65), #fff 70%);
+            box-shadow: var(--customers-shadow);
+        }
+
+        .admin-page-intro h2 {
+            margin: 0 0 10px;
+            color: var(--customers-dark);
+            font-size: 18px;
+        }
+
+        .admin-page-intro p {
+            max-width: 700px;
+            margin: 0;
+            color: var(--customers-muted);
+            font-size: 12px;
+            line-height: 2;
+        }
+
+        /* التنقل بين أقسام العملاء */
+
+        .customers-section-navigation {
+            position: sticky;
+            top: 10px;
+            z-index: 20;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-bottom: 24px;
+            padding: 11px;
+            border: 1px solid var(--customers-border);
+            border-radius: 13px;
+            background: rgba(255, 255, 255, .96);
+            box-shadow: 0 5px 18px rgba(65, 45, 25, .04);
+            backdrop-filter: blur(10px);
+        }
+
+        .customers-section-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 39px;
+            padding: 9px 16px;
+            border: 1px solid transparent;
+            border-radius: 9px;
+            background: #f8f5f0;
+            color: var(--customers-brown);
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: .2s;
+        }
+
+        .customers-section-link:hover {
+            border-color: #dfcbb4;
+            background: #f1e7da;
+            transform: translateY(-1px);
+        }
+
+        /* بطاقات الأقسام */
+
+        .customers-panel {
+            min-width: 0;
+            margin-bottom: 23px;
+            padding: 23px;
+            border: 1px solid var(--customers-border);
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: var(--customers-shadow);
+            scroll-margin-top: 85px;
+        }
+
+        .admin-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 21px;
+            padding-bottom: 17px;
+            border-bottom: 1px solid #f0ebe4;
+        }
+
+        .admin-panel-header h2 {
+            margin: 0 0 8px;
+            color: var(--customers-dark);
+            font-size: 16px;
+        }
+
+        .admin-panel-header p {
+            margin: 0;
+            color: var(--customers-muted);
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .customers-section-count {
+            min-width: 42px;
+            min-height: 39px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 11px;
+            border: 1px solid #eadbca;
+            border-radius: 10px;
+            background: var(--customers-soft);
+            color: var(--customers-brown);
+            font-size: 13px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* البحث والتصفية */
+
+        .customers-toolbar {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(210px, 270px);
+            gap: 15px;
+            margin-bottom: 19px;
+            padding: 16px;
+            border: 1px solid #f0ebe4;
+            border-radius: 12px;
+            background: #fcfaf7;
+        }
+
+        .customers-search,
+        .customers-filter {
+            min-width: 0;
+        }
+
+        .customers-search label,
+        .customers-filter label {
+            display: block;
+            margin-bottom: 9px;
+            color: #665744;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .customers-search input,
+        .customers-filter select {
+            width: 100%;
+            min-height: 44px;
+            padding: 10px 13px;
+            border: 1px solid #e5ddd2;
+            border-radius: 9px;
+            outline: none;
+            background: #fff;
+            color: #514638;
+            font-size: 12px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .customers-search input:focus,
+        .customers-filter select:focus {
+            border-color: #a88a6a;
+            box-shadow: 0 0 0 3px rgba(152, 116, 82, .10);
+        }
+
+        .customers-search input::placeholder {
+            color: #aaa197;
+        }
+
+        /* مناطق عرض البيانات */
+
+        .customers-data-container {
+            min-width: 0;
+            overflow-x: auto;
+            border-radius: 10px;
+        }
+
+        .admin-empty-state {
+            min-height: 190px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 15px;
+            border: 1px dashed #e7ded2;
+            border-radius: 12px;
+            background: #fdfbf8;
+            text-align: center;
+        }
+
+        .admin-empty-icon {
+            width: 47px;
+            height: 47px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 13px;
+            border-radius: 14px;
+            background: var(--customers-soft);
+            color: var(--customers-brown);
+            font-size: 22px;
+        }
+
+        .admin-empty-state h3 {
+            margin: 0 0 9px;
+            color: var(--customers-dark);
+            font-size: 13px;
+        }
+
+        .admin-empty-state p {
+            max-width: 480px;
+            margin: 0;
+            color: var(--customers-muted);
+            font-size: 11px;
+            line-height: 2;
+        }
+
+        /* التنبيه */
+
+        .admin-notice {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 22px 0;
+            padding: 16px 18px;
+            border: 1px solid #e8dfd2;
+            border-radius: 12px;
+            background: #f8f4ed;
+        }
+
+        .admin-notice-icon {
+            width: 25px;
+            height: 25px;
+            flex: 0 0 25px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #eee2d2;
+            color: var(--customers-brown);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .admin-notice p {
+            margin: 0;
+            color: #766b5f;
+            font-size: 11px;
+            line-height: 2;
+        }
+
+        /* التذييل */
+
+        .admin-footer {
+            padding: 20px;
+            border-top: 1px solid var(--customers-border);
+            color: var(--customers-muted);
+            text-align: center;
+            font-size: 10px;
+        }
+
+        /* طبقة القائمة الجانبية */
+
+        .admin-sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 90;
+            background: rgba(35, 27, 20, .42);
+            backdrop-filter: blur(2px);
+        }
+
+        /* تحسين الوصول */
+
+        .admin-nav-link:focus-visible,
+        .customers-section-link:focus-visible,
+        .admin-mobile-menu-button:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 3px solid rgba(152, 116, 82, .28);
+            outline-offset: 2px;
+        }
+
+        /* الأجهزة المتوسطة */
+
+        @media (max-width: 1000px) {
+            .admin-content {
+                padding: 20px;
+            }
+
+            .customers-panel {
+                padding: 19px;
+            }
+        }
+
+        /* الجوال */
+
+        @media (max-width: 760px) {
+            .admin-content {
+                padding: 14px;
+            }
+
+            .admin-topbar {
+                min-height: 72px;
+                padding: 13px 16px;
+            }
+
+            .admin-topbar-title h1 {
+                font-size: 17px;
+            }
+
+            .admin-topbar-title p {
+                font-size: 10px;
+            }
+
+            .admin-mobile-menu-button {
+                display: inline-grid;
+                place-items: center;
+            }
+
+            .admin-page-intro {
+                padding: 18px;
+            }
+
+            .admin-page-intro h2 {
+                font-size: 16px;
+            }
+
+            .customers-section-navigation {
+                top: 5px;
+                gap: 7px;
+                padding: 8px;
+            }
+
+            .customers-section-link {
+                flex: 1 1 auto;
+                padding: 9px 11px;
+                font-size: 10px;
+            }
+
+            .customers-panel {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .customers-toolbar {
+                grid-template-columns: 1fr;
+                gap: 13px;
+                padding: 13px;
+            }
+
+            .admin-panel-header h2 {
+                font-size: 14px;
+            }
+
+            .admin-user-label {
+                max-width: 125px;
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .admin-content {
+                padding: 10px;
+            }
+
+            .admin-topbar {
+                gap: 8px;
+            }
+
+            .admin-topbar-title h1 {
+                font-size: 15px;
+            }
+
+            .admin-topbar-actions {
+                gap: 7px;
+            }
+
+            .admin-page-intro {
+                padding: 15px;
+            }
+
+            .customers-section-link {
+                min-width: 0;
+                gap: 6px;
+                padding: 9px 7px;
+            }
+
+            .admin-panel-header {
+                align-items: flex-start;
+            }
+
+            .customers-section-count {
+                min-width: 36px;
+                min-height: 34px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+
+
+    <!-- مكتبة Supabase -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <!-- تهيئة المتجر والاتصال المشترك -->
+
+    <script src="../../assets/js/store.js"></script>
+
+
+    <!-- ملفات الإدارة المشتركة -->
+
+    <script src="../js/admin-common.js" defer></script>
+    <script src="../js/admin-page-guard.js" defer></script>
+
+
+    <!-- خدمات إدارة العملاء: ترتيب التحميل محفوظ -->
+
+    <script src="../js/orders-service.js" defer></script>
+    <script src="../js/messages-service.js" defer></script>
+    <script src="../js/customers-service.js" defer></script>
+    <script src="../js/customer-profile.js" defer></script>
+    <script src="../js/order-timeline.js" defer></script>
+    <script src="../js/customer-tasks.js" defer></script>
+    <script src="../js/customer-reports.js" defer></script>
+
+    <!-- خدمات العملاء -->
+    <script src="../js/customer-communications.js" defer></script>
+
+    <!-- المتحكم الرئيسي لإدارة العملاء والطلبات والاستفسارات -->
+    <script src="../js/admin-customers.js" defer></script>
+
+    <!-- خدمة التقييمات -->
+    <script src="../js/reviews-service.js" defer></script>
+
+    <!-- متحكم إدارة وعرض التقييمات -->
+    <script src="../js/admin-reviews.js" defer></script>
+
+</head>
+
+
+<body class="admin-body admin-page admin-customers-page">
+
+
+    <!-- رابط تجاوز القائمة -->
+
+    <a href="#customers-main" class="admin-skip-link">
+        الانتقال إلى المحتوى الرئيسي
+    </a>
+
+
+    <!-- شاشة التحقق من صلاحية المدير -->
+
+    <div class="admin-loading-screen" data-admin-loading role="status" aria-live="polite">
+
+        <div class="admin-loading-content">
+
+            <div class="admin-loading-spinner" aria-hidden="true">
+            </div>
+
+            <p>جارٍ التحقق من صلاحية الدخول...</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- المحتوى الإداري -->
+
+    <div class="admin-layout" data-admin-content hidden>
+
+
+        <!-- طبقة خلفية القائمة الجانبية للجوال -->
+
+        <div class="admin-sidebar-overlay" data-admin-sidebar-overlay hidden aria-hidden="true">
+        </div>
+
+
+        <!-- القائمة الجانبية -->
+
+        <aside class="admin-sidebar" id="admin-sidebar" aria-label="القائمة الجانبية">
+
+
+            <div class="admin-sidebar-brand">
+
+                <a href="admin.html" class="admin-brand-link">
+
+                    <span class="admin-brand-name">
+                        IBR20
+                    </span>
+
+                    <span class="admin-brand-description">
+                        إدارة المتجر
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <nav class="admin-navigation" aria-label="القائمة الرئيسية">
+
+                <a href="admin.html" class="admin-nav-link">
+
+                    <span class="admin-nav-icon" aria-hidden="true">
+                        ⌂
+                    </span>
+
+                    <span>الرئيسية</span>
+
+                </a>
+
+
+                <a href="admin-customers.html" class="admin-nav-link active" aria-current="page">
+
+                    <span class="admin-nav-icon" aria-hidden="true">
+                        ♙
+                    </span>
+
+                    <span>العملاء والطلبات</span>
+
+                </a>
+
+
+                <a href="admin-store.html" class="admin-nav-link">
+
+                    <span class="admin-nav-icon" aria-hidden="true">
+                        ▦
+                    </span>
+
+                    <span>إدارة المتجر</span>
+
+                </a>
+
+
+                <a href="admin-analytics.html" class="admin-nav-link">
+
+                    <span class="admin-nav-icon" aria-hidden="true">
+                        ▥
+                    </span>
+
+                    <span>التحليلات والإحصاءات</span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="admin-sidebar-bottom">
+
+                <a href="../../index.html" class="admin-nav-link">
+
+                    <span class="admin-nav-icon" aria-hidden="true">
+                        ↗
+                    </span>
+
+                    <span>زيارة المتجر</span>
+
+                </a>
+
+
+                <button type="button" class="admin-nav-link admin-logout-button" data-admin-logout>
+
+                    <span class="admin-nav-icon" aria-hidden="true">
+                        ⇥
+                    </span>
+
+                    <span>تسجيل الخروج</span>
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- المنطقة الرئيسية -->
+
+        <main class="admin-main" id="customers-main">
+
+
+            <!-- الشريط العلوي -->
+
+            <header class="admin-topbar">
+
+                <div class="admin-topbar-title">
+
+                    <h1>مركز خدمة العملاء</h1>
+
+                    <p>
+                        إدارة علاقات العملاء ومتابعة الطلبات والاستفسارات
+                    </p>
+
+                </div>
+
+
+                <div class="admin-topbar-actions">
+
+                    <span class="admin-user-label" data-admin-email>
+                        المدير
+                    </span>
+
+
+                    <button type="button" class="admin-mobile-menu-button" data-admin-menu-toggle
+                        aria-label="فتح القائمة" aria-expanded="false" aria-controls="admin-sidebar">
+
+                        ☰
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- محتوى الصفحة -->
+
+            <div class="admin-content">
+
+
+                <!-- مقدمة الصفحة -->
+
+                <section class="admin-page-intro">
+
+                    <div>
+
+                        <h2>إدارة العملاء والتواصل</h2>
+
+                        <p>
+                            مساحة موحدة لمتابعة تعاملات عملاء متجر IBR20،
+                            وتنظيم الطلبات والاستفسارات والردود.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- التنقل بين الأقسام -->
+
+                <nav class="customers-section-navigation" aria-label="التنقل بين أقسام مركز خدمة العملاء">
+
+                    <a href="#orders-section" class="customers-section-link">
+
+                        <span aria-hidden="true">▤</span>
+                        <span>الطلبات</span>
+
+                    </a>
+
+
+                    <a href="#messages-section" class="customers-section-link">
+
+                        <span aria-hidden="true">✉</span>
+                        <span>الاستفسارات والرسائل</span>
+
+                    </a>
+
+
+                    <a href="#reviews-section" class="customers-section-link">
+
+                        <span aria-hidden="true">☆</span>
+                        <span>التقييمات</span>
+
+                    </a>
+
+                </nav>
+
+
+                <!-- القسم الأول: الطلبات -->
+
+                <section class="admin-panel customers-panel" id="orders-section" aria-labelledby="orders-heading">
+
+
+                    <div class="admin-panel-header">
+
+                        <div>
+
+                            <h2 id="orders-heading">
+                                طلبات العملاء
+                            </h2>
+
+                            <p>
+                                متابعة الطلبات المسجلة ومراجعة حالتها
+                                وبيانات العملاء.
+                            </p>
+
+                        </div>
+
+
+                        <span class="customers-section-count" data-customers-count="orders" aria-label="عدد الطلبات">
+
+                            0
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- البحث والتصفية -->
+
+                    <div class="customers-toolbar">
+
+
+                        <div class="customers-search">
+
+                            <label for="orders-search">
+                                البحث في الطلبات
+                            </label>
+
+                            <input type="search" id="orders-search" name="orders_search"
+                                placeholder="رقم الطلب، اسم العميل، رقم الهاتف..." autocomplete="off" data-orders-search
+                                data-customers-search="orders" aria-label="البحث في طلبات العملاء">
+
+                        </div>
+
+
+                        <div class="customers-filter">
+
+                            <label for="orders-filter">
+                                تصفية حسب حالة الطلب
+                            </label>
+
+                            <select id="orders-filter" name="orders_filter" data-orders-filter
+                                data-customers-filter="orders" aria-label="تصفية الطلبات حسب الحالة">
+
+                                <option value="">جميع الطلبات</option>
+                                <option value="new">طلب جديد</option>
+                                <option value="contacting">جارٍ التواصل</option>
+                                <option value="confirmed">مؤكد</option>
+                                <option value="preparing">قيد التجهيز</option>
+                                <option value="shipped">تم الشحن</option>
+                                <option value="delivered">تم التسليم</option>
+                                <option value="cancelled">ملغي</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- مساحة عرض الطلبات -->
+
+                    <div class="customers-data-container" data-customers-orders aria-live="polite" aria-busy="false">
+
+                        <div class="admin-empty-state">
+
+                            <span class="admin-empty-icon" aria-hidden="true">
+                                ▤
+                            </span>
+
+                            <h3>طلبات العملاء</h3>
+
+                            <p>
+                                ستظهر هنا الطلبات المسجلة في قاعدة البيانات
+                                بعد تحميلها.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- القسم الثاني: الرسائل والاستفسارات -->
+
+                <section class="admin-panel customers-panel" id="messages-section" aria-labelledby="messages-heading">
+
+
+                    <div class="admin-panel-header">
+
+                        <div>
+
+                            <h2 id="messages-heading">
+                                استفسارات ورسائل العملاء
+                            </h2>
+
+                            <p>
+                                متابعة الرسائل والاستفسارات والردود
+                                وملاحظات الإدارة.
+                            </p>
+
+                        </div>
+
+
+                        <span class="customers-section-count" data-customers-count="messages"
+                            aria-label="عدد الرسائل والاستفسارات">
+
+                            0
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- البحث والتصفية -->
+
+                    <div class="customers-toolbar">
+
+
+                        <div class="customers-search">
+
+                            <label for="messages-search">
+                                البحث في الرسائل والاستفسارات
+                            </label>
+
+                            <input type="search" id="messages-search" name="messages_search"
+                                placeholder="اسم العميل، الهاتف، رقم الاستفسار، محتوى الرسالة..." autocomplete="off"
+                                data-messages-search data-customers-search="messages"
+                                aria-label="البحث في رسائل العملاء">
+
+                        </div>
+
+
+                        <div class="customers-filter">
+
+                            <label for="messages-filter">
+                                تصفية حسب حالة الرسالة
+                            </label>
+
+                            <select id="messages-filter" name="messages_filter" data-messages-filter
+                                data-customers-filter="messages" aria-label="تصفية الرسائل حسب الحالة">
+
+                                <option value="">جميع الرسائل</option>
+                                <option value="new">جديدة</option>
+                                <option value="in_review">قيد المراجعة</option>
+                                <option value="answered">تمت الإجابة</option>
+                                <option value="closed">مغلقة</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- مساحة عرض الرسائل -->
+
+                    <div class="customers-data-container" data-customers-messages aria-live="polite" aria-busy="false">
+
+                        <div class="admin-empty-state">
+
+                            <span class="admin-empty-icon" aria-hidden="true">
+                                ✉
+                            </span>
+
+                            <h3>رسائل العملاء</h3>
+
+                            <p>
+                                ستظهر هنا استفسارات ورسائل العملاء
+                                بعد تحميل البيانات.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- القسم الثالث: التقييمات -->
+
+                <section class="admin-panel customers-panel" id="reviews-section" aria-labelledby="reviews-heading">
+
+
+                    <div class="admin-panel-header">
+
+                        <div>
+
+                            <h2 id="reviews-heading">
+                                تقييمات العملاء
+                            </h2>
+
+                            <p>
+                                متابعة آراء العملاء وتقييماتهم للمنتجات
+                                وجودة تجربتهم مع المتجر.
+                            </p>
+
+                        </div>
+
+
+                        <span class="customers-section-count" data-customers-count="reviews" aria-label="عدد التقييمات">
+
+                            0
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- مساحة عرض التقييمات -->
+                    <!-- مساحة عرض التقييمات -->
+                    <div class="customers-data-container" data-customers-reviews aria-live="polite" aria-busy="false">
+                        <div class="admin-empty-state">
+                            <span class="admin-empty-icon" aria-hidden="true">☆</span>
+
+                            <h3>جاري تحميل تقييمات المنتجات</h3>
+
+                            <p>
+                                يتم الآن جلب التقييمات ومراجعتها من قاعدة بيانات المتجر.
+                            </p>
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- الملاحظة التشغيلية -->
+
+                <div class="admin-notice" role="note">
+
+                    <span class="admin-notice-icon" aria-hidden="true">
+                        ⓘ
+                    </span>
+
+                    <p>
+                        تُحمّل بيانات الطلبات والرسائل وفق صلاحيات المدير
+                        وسياسات الحماية المعتمدة في Supabase.
+                        لا تُعرض الملاحظات الإدارية الداخلية للعملاء.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- تذييل الصفحة -->
+
+            <footer class="admin-footer">
+
+                <p>
+                    IBR20 — نظام إدارة المتجر
+                </p>
+
+            </footer>
+
+
+        </main>
+
+    </div>
+
+
+    <!-- تهيئة صفحة إدارة العملاء -->
+
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            async function () {
+
+                "use strict";
+
+                try {
+
+                    /* التحقق من ملفات الإدارة */
+
+                    if (!window.IBRAdmin) {
+                        throw new Error(
+                            "ملف admin-common.js لم يتم تحميله."
+                        );
+                    }
+
+
+                    /* التحقق من اتصال Supabase */
+
+                    if (!window.supabaseClient) {
+                        throw new Error(
+                            "اتصال Supabase غير متوفر. تحقق من store.js."
+                        );
+                    }
+
+
+                    /* التحقق من المتحكم الرئيسي */
+
+                    if (!window.IBRAdminCustomers) {
+                        throw new Error(
+                            "ملف admin-customers.js لم يتم تحميله. تحقق من مساره."
+                        );
+                    }
+
+
+                    /* تهيئة مركز خدمة العملاء */
+
+                    const result = await window.IBRAdminCustomers.init({
+
+                        client: window.supabaseClient,
+
+                        tables: {
+                            orders: "orders",
+                            messages: "customer_messages",
+                            reviews: null
+                        },
+
+                        fields: {
+
+                            orders: {
+                                id: "id",
+                                orderNumber: "order_number",
+                                createdAt: "created_at",
+                                status: "status",
+                                customerName: "customer_name",
+                                customerPhone: "customer_phone",
+                                total: "total_amount",
+                                deliveryDate: "expected_delivery_date",
+                                adminNote: "admin_note"
+                            },
+
+                            messages: {
+                                id: "id",
+                                createdAt: "created_at",
+                                status: "status",
+                                customerName: "customer_name",
+                                customerPhone: "customer_phone",
+                                message: "message",
+                                adminNote: "admin_note"
+                            },
+
+                            reviews: {}
+
+                        },
+
+                        limits: {
+                            orders: 200,
+                            messages: 100,
+                            reviews: 100
+                        },
+
+                        whatsappCountryCode: "966"
+
+                    });
+
+                    if (!result || result.success !== true) {
+                        throw new Error(
+                            result?.error?.message ||
+                            (result?.unauthorized
+                                ? "تعذر التحقق من صلاحية المدير."
+                                : "لم تكتمل تهيئة صفحة إدارة العملاء.")
+                        );
+                    }
+
+
+                    console.info(
+                        "IBR20: تم تشغيل صفحة إدارة العملاء بنجاح."
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "خطأ في تهيئة صفحة إدارة العملاء:",
+                        error
+                    );
+
+                    if (
+                        window.IBRAdmin &&
+                        typeof window.IBRAdmin.showAlert === "function"
+                    ) {
+
+                        window.IBRAdmin.showAlert(
+                            error.message ||
+                            "تعذر تشغيل صفحة إدارة العملاء.",
+                            "error"
+                        );
+
+                    }
+
+                }
+
+            }
+        );
+    </script>
+
+</body>
+
+</html>

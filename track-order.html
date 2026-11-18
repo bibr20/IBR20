@@ -1,0 +1,1386 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#68452e">
+  <meta name="description" content="تتبّع طلبك من متجر IBR للأثاث الخشبي.">
+  <title>تتبّع طلبك | IBR للأثاث الخشبي</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brown: #68452e;
+      --dark: #382719;
+      --beige: #f5efe7;
+      --cream: #fcfaf7;
+      --text: #382f28;
+      --muted: #897d72;
+      --border: #e9e0d6;
+      --success: #397653;
+      --danger: #a94442;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--text);
+      font-family: "Tajawal", sans-serif;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    .topbar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 17px 20px;
+    }
+
+    .topbar-inner {
+      max-width: 1050px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .brand {
+      color: var(--brown);
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .back-link {
+      color: var(--brown);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .page {
+      width: min(92%, 760px);
+      margin: 45px auto;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 27px;
+    }
+
+    .intro-icon {
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--beige);
+      color: var(--brown);
+      font-size: 27px;
+    }
+
+    h1 {
+      margin: 0 0 9px;
+      font-size: 29px;
+      color: var(--dark);
+    }
+
+    .intro p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 27px;
+      box-shadow: 0 8px 30px rgba(56, 39, 25, .045);
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      height: 51px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0 14px;
+      font-size: 16px;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    input:focus {
+      border-color: var(--brown);
+      box-shadow: 0 0 0 3px rgba(104, 69, 46, .09);
+    }
+
+    input::placeholder {
+      color: #b4aaa0;
+    }
+
+    .hint {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 7px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 52px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--brown);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+
+    .submit-btn:hover {
+      background: var(--dark);
+    }
+
+    .submit-btn:active {
+      transform: scale(.99);
+    }
+
+    .submit-btn:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
+
+    .message {
+      display: none;
+      margin-top: 17px;
+      padding: 13px 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .message.error {
+      display: block;
+      background: #fff2f0;
+      color: var(--danger);
+      border: 1px solid #f1d5d1;
+    }
+
+    .message.info {
+      display: block;
+      background: #f4f0e9;
+      color: var(--brown);
+      border: 1px solid var(--border);
+    }
+
+    .result {
+      display: none;
+      margin-top: 25px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+
+    .result-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .result-heading h2 {
+      margin: 0;
+      font-size: 19px;
+      color: var(--dark);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 30px;
+      background: var(--beige);
+      color: var(--brown);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .status-badge.cancelled {
+      background: #fff0ee;
+      color: var(--danger);
+    }
+
+    .status-badge.delivered {
+      background: #edf6ef;
+      color: var(--success);
+    }
+
+    /* شريط مراحل الطلب */
+
+    .tracking-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 19px 15px;
+      margin-bottom: 19px;
+    }
+
+    .tracking-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 21px;
+    }
+
+    .tracking-top strong {
+      color: var(--dark);
+      font-size: 15px;
+    }
+
+    .refresh-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--brown);
+      padding: 9px 13px;
+      border-radius: 9px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .refresh-btn:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .steps-scroll {
+      overflow-x: auto;
+      padding: 4px 2px 12px;
+      scrollbar-width: thin;
+      scrollbar-color: #c8b5a4 transparent;
+    }
+
+    .steps {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      min-width: 570px;
+      position: relative;
+    }
+
+    .steps::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      right: 8%;
+      left: 8%;
+      height: 3px;
+      background: #e5ddd4;
+      z-index: 0;
+    }
+
+    .steps-progress {
+      position: absolute;
+      top: 16px;
+      right: 8%;
+      height: 3px;
+      width: 0;
+      background: var(--success);
+      z-index: 1;
+      transition: width .35s ease;
+    }
+
+    .step {
+      position: relative;
+      z-index: 2;
+      width: 16.66%;
+      text-align: center;
+      color: #a99d92;
+    }
+
+    .step-circle {
+      width: 34px;
+      height: 34px;
+      margin: 0 auto 9px;
+      border: 2px solid #ddd3c9;
+      background: #fff;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: #a99d92;
+    }
+
+    .step.done .step-circle {
+      border-color: var(--success);
+      background: var(--success);
+      color: #fff;
+    }
+
+    .step.active .step-circle {
+      border-color: var(--brown);
+      background: var(--brown);
+      color: #fff;
+      box-shadow: 0 0 0 5px rgba(104, 69, 46, .10);
+    }
+
+    .step.done,
+    .step.active {
+      color: var(--dark);
+    }
+
+    .step-label {
+      display: block;
+      font-size: 11px;
+      line-height: 1.6;
+      font-weight: 700;
+      max-width: 90px;
+      margin: auto;
+    }
+
+    .current-status {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 14px;
+      margin-top: 13px;
+      line-height: 1.8;
+    }
+
+    .current-status strong {
+      display: block;
+      color: var(--brown);
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .current-status p {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .cancelled-box {
+      display: none;
+      background: #fff2f0;
+      color: var(--danger);
+      border: 1px solid #f1d5d1;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .last-update {
+      margin-top: 13px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .order-number-box {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 18px;
+    }
+
+    .small-label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .number-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .order-number {
+      color: var(--brown);
+      font-size: 19px;
+      font-weight: 800;
+      direction: ltr;
+      overflow-wrap: anywhere;
+    }
+
+    .copy-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--brown);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .detail-item {
+      padding: 13px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      min-width: 0;
+    }
+
+    .detail-value {
+      font-weight: 700;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .items-title {
+      margin: 20px 0 12px;
+      font-size: 16px;
+    }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .item-image {
+      width: 58px;
+      height: 58px;
+      border-radius: 9px;
+      object-fit: cover;
+      background: var(--beige);
+      flex-shrink: 0;
+    }
+
+    .item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-name {
+      font-weight: 700;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .item-meta {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .item-total {
+      font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 18px;
+      margin-top: 8px;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    .delivery-note {
+      background: #f7f4ef;
+      border-radius: 10px;
+      padding: 13px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      margin-top: 18px;
+    }
+
+    .bottom-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .bottom-links a {
+      display: inline-block;
+      padding: 11px 20px;
+      border-radius: 9px;
+      font-weight: 700;
+      font-size: 14px;
+      background: var(--brown);
+      color: #fff;
+    }
+
+    .bottom-links a.secondary {
+      background: var(--beige);
+      color: var(--brown);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 25px 15px;
+    }
+
+    /* قسم تقييم منتجات الطلب */
+    .review-section {
+      display: none;
+      margin-top: 22px;
+      padding: 23px 20px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    .review-section h3 {
+      margin: 0 0 9px;
+      color: var(--dark);
+      font-size: 19px;
+    }
+
+    .review-section p {
+      margin: 0 0 17px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .review-action {
+      display: inline-block;
+      padding: 12px 27px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--brown);
+      color: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .review-action:hover {
+      background: var(--dark);
+    }
+
+    .review-thanks {
+      color: var(--success) !important;
+      font-weight: 700;
+      margin-bottom: 0 !important;
+    }
+
+    .review-error {
+      color: var(--danger) !important;
+      margin-bottom: 0 !important;
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        margin: 28px auto;
+      }
+
+      .panel {
+        padding: 19px;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+
+      .details-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .order-number {
+        font-size: 16px;
+      }
+
+      .tracking-card {
+        padding: 15px 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">IBR20</a>
+      <a class="back-link" href="index.html">العودة إلى المتجر ←</a>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <section class="intro">
+      <div class="intro-icon">⌕</div>
+      <h1>تتبّع طلبك</h1>
+      <p>
+        أدخل رقم الطلب ورقم الجوال المسجل عند الشراء<br>
+        لمعرفة آخر تحديثات طلبك.
+      </p>
+    </section>
+
+    <section class="panel">
+
+      <form id="trackingForm">
+
+        <div class="field">
+          <label for="orderNumber">رقم الطلب</label>
+          <input id="orderNumber" name="orderNumber" type="text" placeholder="مثال: IBR00001" autocomplete="off"
+            required>
+        </div>
+
+        <div class="field">
+          <label for="customerPhone">رقم الجوال</label>
+          <input id="customerPhone" name="customerPhone" type="tel" inputmode="tel"
+            placeholder="أدخل رقم الجوال المستخدم عند الطلب" autocomplete="tel" required>
+          <span class="hint">استخدم نفس الرقم الذي أدخلته في صفحة إتمام الطلب.</span>
+        </div>
+
+        <button class="submit-btn" id="trackButton" type="submit">
+          تتبّع الطلب
+        </button>
+
+      </form>
+
+      <div id="message" class="message" role="alert"></div>
+
+      <section id="result" class="result" aria-live="polite">
+
+        <div class="result-heading">
+          <h2>تفاصيل طلبك</h2>
+          <span id="statusBadge" class="status-badge">حالة الطلب</span>
+        </div>
+
+        <!-- شريط مراحل الطلب -->
+        <section class="tracking-card" id="trackingCard">
+
+          <div class="tracking-top">
+            <strong>مراحل تجهيز طلبك</strong>
+            <button class="refresh-btn" id="refreshButton" type="button">
+              ↻ تحديث حالة الطلب
+            </button>
+          </div>
+
+          <div class="steps-scroll" id="stepsScroll">
+            <div class="steps" id="steps">
+              <div class="steps-progress" id="stepsProgress"></div>
+
+              <div class="step" data-step="0">
+                <div class="step-circle">1</div>
+                <span class="step-label">استلام الطلب</span>
+              </div>
+
+              <div class="step" data-step="1">
+                <div class="step-circle">2</div>
+                <span class="step-label">التواصل والتأكيد</span>
+              </div>
+
+              <div class="step" data-step="2">
+                <div class="step-circle">3</div>
+                <span class="step-label">تم التأكيد</span>
+              </div>
+
+              <div class="step" data-step="3">
+                <div class="step-circle">4</div>
+                <span class="step-label">التصنيع والتجهيز</span>
+              </div>
+
+              <div class="step" data-step="4">
+                <div class="step-circle">5</div>
+                <span class="step-label">في الطريق إليك</span>
+              </div>
+
+              <div class="step" data-step="5">
+                <div class="step-circle">6</div>
+                <span class="step-label">تم التسليم</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="current-status" id="currentStatus">
+            <strong id="currentStatusTitle">حالة الطلب</strong>
+            <p id="currentStatusMessage"></p>
+          </div>
+
+          <div class="cancelled-box" id="cancelledBox">
+            <strong>تم إلغاء هذا الطلب</strong>
+            <div>إذا كنت تعتقد أن هذا الإلغاء حدث بالخطأ، يرجى التواصل مع متجر IBR للاستفسار.</div>
+          </div>
+
+          <div class="last-update">
+            آخر تحديث لحالة طلبك:
+            <strong id="lastUpdated">—</strong>
+          </div>
+
+        </section>
+
+        <div class="order-number-box">
+          <span class="small-label">رقم الطلب</span>
+          <div class="number-row">
+            <strong id="resultOrderNumber" class="order-number"></strong>
+            <button class="copy-btn" id="copyOrderNumber" type="button">
+              نسخ الرقم
+            </button>
+          </div>
+        </div>
+
+        <div class="details-grid">
+
+          <div class="detail-item">
+            <span class="small-label">تاريخ الطلب</span>
+            <div id="createdAt" class="detail-value">—</div>
+          </div>
+
+          <div class="detail-item">
+            <span class="small-label">طريقة الدفع</span>
+            <div id="paymentMethod" class="detail-value">الدفع عند الاستلام</div>
+          </div>
+
+          <div class="detail-item">
+            <span class="small-label">موعد التسليم المتوقع</span>
+            <div id="deliveryDate" class="detail-value">سيتم تحديده لاحقاً</div>
+          </div>
+
+          <div class="detail-item">
+            <span class="small-label">تاريخ التسليم</span>
+            <div id="deliveredAt" class="detail-value">—</div>
+          </div>
+
+        </div>
+
+        <div id="itemsSection">
+          <h3 class="items-title">المنتجات في الطلب</h3>
+          <div id="orderItems"></div>
+        </div>
+
+        <div class="total-row">
+          <span>إجمالي الطلب</span>
+          <span id="orderTotal">—</span>
+        </div>
+
+        <div class="delivery-note">
+          طريقة الدفع: الدفع عند الاستلام.
+          يمكنك استخدام زر تحديث حالة الطلب لمعرفة آخر المستجدات.
+          يتم تحديث المراحل من إدارة متجر IBR.
+        </div>
+
+        <!-- تقييم منتجات الطلب -->
+        <section id="reviewSection" class="review-section">
+
+          <h3>كيف كانت تجربتك مع منتجات IBR؟</h3>
+
+          <p>
+            يسعدنا معرفة رأيك ومشاركة تجربتك معنا.
+            تقييمك يساعدنا على تطوير منتجاتنا.
+          </p>
+
+          <div id="reviewContent"></div>
+
+        </section>
+
+        <div class="bottom-links">
+          <a href="products.html">متابعة التسوق</a>
+          <a href="index.html" class="secondary">الصفحة الرئيسية</a>
+        </div>
+
+      </section>
+    </section>
+
+  </main>
+
+  <footer>
+    © <span id="currentYear"></span> IBR20 للأثاث الخشبي — جميع الحقوق محفوظة
+  </footer>
+  <!-- مكتبة Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- الاتصال المركزي وقاعدة بيانات المتجر -->
+  <script src="assets/js/store.js"></script>
+
+  <!-- نظام تسجيل الدخول -->
+  <script src="assets/js/auth.js"></script>
+
+  <!-- IBR20 Analytics Engine -->
+  <script src="assets/js/ibr-analytics.js"></script>
+
+  <!-- IBR20 Analytics Consent -->
+  <script src="assets/js/ibr-analytics-consent.js"></script>
+
+
+  <script>
+    "use strict";
+
+    const form = document.getElementById("trackingForm");
+    const trackButton = document.getElementById("trackButton");
+    const refreshButton = document.getElementById("refreshButton");
+    const message = document.getElementById("message");
+    const result = document.getElementById("result");
+
+    let lastOrderNumber = "";
+    let lastCustomerPhone = "";
+
+    document.getElementById("currentYear").textContent =
+      new Date().getFullYear();
+
+    // تعبئة رقم الطلب تلقائياً عند العودة من صفحة التأكيد
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderFromLink = urlParams.get("order");
+
+    if (orderFromLink) {
+      document.getElementById("orderNumber").value = orderFromLink;
+    } else {
+      const savedOrder = localStorage.getItem("ibr-last-order-number");
+      if (savedOrder) {
+        document.getElementById("orderNumber").value = savedOrder;
+      }
+    }
+
+    // الحالات المعتمدة في قاعدة بيانات متجر IBR
+    const statusLabels = {
+      new: "تم استلام الطلب",
+      contacting: "جاري التواصل لتأكيد الطلب",
+      confirmed: "تم تأكيد الطلب",
+      preparing: "قيد التصنيع والتجهيز",
+      shipped: "في الطريق إليك",
+      delivered: "تم التسليم",
+      cancelled: "تم إلغاء الطلب"
+    };
+
+    const statusMessages = {
+      new: "استلمنا طلبك بنجاح. سيقوم فريق IBR بمراجعته والتواصل معك لتأكيد التفاصيل.",
+      contacting: "فريق IBR يعمل حالياً على التواصل معك لتأكيد الطلب والتفاصيل.",
+      confirmed: "تم تأكيد طلبك. ننتقل الآن إلى مرحلة التصنيع والتجهيز.",
+      preparing: "طلبك قيد التصنيع والتجهيز بعناية. سنحدّث الحالة عند انتقاله إلى مرحلة التوصيل.",
+      shipped: "طلبك في الطريق إليك. يرجى متابعة التحديثات لمعرفة موعد التسليم المتوقع.",
+      delivered: "تم تسليم طلبك بنجاح. شكراً لثقتك بمتجر IBR.",
+      cancelled: "تم إلغاء الطلب. إذا كنت بحاجة إلى توضيح، يرجى التواصل مع متجر IBR."
+    };
+
+    const statusSteps = [
+      "new",
+      "contacting",
+      "confirmed",
+      "preparing",
+      "shipped",
+      "delivered"
+    ];
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "message " + type;
+    }
+
+    function hideMessage() {
+      message.textContent = "";
+      message.className = "message";
+    }
+
+    function formatDate(value) {
+      if (!value) return "—";
+
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "—";
+
+      return new Intl.DateTimeFormat("ar-SA", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }).format(date);
+    }
+
+    function formatDateTime(value) {
+      if (!value) return "—";
+
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "—";
+
+      return new Intl.DateTimeFormat("ar-SA", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    function formatMoney(value) {
+      if (value === null || value === undefined || value === "") {
+        return "—";
+      }
+
+      return new Intl.NumberFormat("ar-SA", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(Number(value)) + " ر.س";
+    }
+
+    function getStatusLabel(status) {
+      return statusLabels[status] || "قيد التحديث";
+    }
+
+    // تحديث شريط مراحل الطلب
+    function renderProgress(status) {
+      const steps = document.querySelectorAll(".step");
+      const progress = document.getElementById("stepsProgress");
+      const cancelledBox = document.getElementById("cancelledBox");
+      const trackingCard = document.getElementById("trackingCard");
+      const currentStatus = document.getElementById("currentStatus");
+      const badge = document.getElementById("statusBadge");
+
+      steps.forEach(step => {
+        step.classList.remove("done", "active");
+      });
+
+      cancelledBox.style.display = "none";
+      currentStatus.style.display = "block";
+      trackingCard.querySelector(".steps-scroll").style.display = "block";
+      progress.style.width = "0";
+
+      if (status === "cancelled") {
+        cancelledBox.style.display = "block";
+        currentStatus.style.display = "none";
+        trackingCard.querySelector(".steps-scroll").style.display = "none";
+        badge.className = "status-badge cancelled";
+
+        return;
+      }
+
+      const currentIndex = statusSteps.indexOf(status);
+
+      if (currentIndex === -1) {
+        document.getElementById("currentStatusTitle").textContent =
+          "حالة الطلب قيد التحديث";
+
+        document.getElementById("currentStatusMessage").textContent =
+          "لم يتم التعرف على المرحلة الحالية. يرجى تحديث الحالة لاحقاً.";
+
+        return;
+      }
+
+      steps.forEach((step, index) => {
+        if (index < currentIndex) {
+          step.classList.add("done");
+          step.querySelector(".step-circle").textContent = "✓";
+        } else {
+          step.querySelector(".step-circle").textContent = index + 1;
+        }
+
+        if (index === currentIndex) {
+          step.classList.add("active");
+        }
+      });
+
+      const progressPercent = currentIndex / (statusSteps.length - 1);
+      progress.style.width = (84 * progressPercent) + "%";
+
+      document.getElementById("currentStatusTitle").textContent =
+        getStatusLabel(status);
+
+      document.getElementById("currentStatusMessage").textContent =
+        statusMessages[status] || "سيتم تحديث تفاصيل طلبك عند انتقاله إلى المرحلة التالية.";
+
+      badge.className = "status-badge";
+
+      if (status === "delivered") {
+        badge.classList.add("delivered");
+      }
+    }
+
+    // عرض المنتجات
+    function renderItems(items) {
+      const container = document.getElementById("orderItems");
+      const section = document.getElementById("itemsSection");
+
+      container.innerHTML = "";
+
+      if (!Array.isArray(items) || items.length === 0) {
+        section.style.display = "none";
+        return;
+      }
+
+      section.style.display = "block";
+
+      items.forEach(function (item) {
+        const row = document.createElement("div");
+        row.className = "order-item";
+
+        const image = document.createElement("img");
+        image.className = "item-image";
+        image.alt = item.product_name || "منتج";
+
+        if (item.product_image_url) {
+          image.src = item.product_image_url;
+        }
+
+        const info = document.createElement("div");
+        info.className = "item-info";
+
+        const name = document.createElement("div");
+        name.className = "item-name";
+        name.textContent = item.product_name || "منتج";
+
+        const meta = document.createElement("div");
+        meta.className = "item-meta";
+        meta.textContent = "الكمية: " + (item.quantity ?? "—");
+
+        info.appendChild(name);
+        info.appendChild(meta);
+
+        const total = document.createElement("div");
+        total.className = "item-total";
+        total.textContent = formatMoney(item.line_total);
+
+        row.appendChild(image);
+        row.appendChild(info);
+        row.appendChild(total);
+
+        container.appendChild(row);
+      });
+    }
+
+    // عرض تفاصيل الطلب
+    function renderOrder(order, items) {
+      document.getElementById("resultOrderNumber").textContent =
+        order.order_number || "—";
+
+      document.getElementById("statusBadge").textContent =
+        getStatusLabel(order.status);
+
+      document.getElementById("createdAt").textContent =
+        formatDateTime(order.created_at);
+
+      document.getElementById("lastUpdated").textContent =
+        formatDateTime(order.updated_at || order.created_at);
+
+      document.getElementById("paymentMethod").textContent =
+        order.payment_method === "cod"
+          ? "الدفع عند الاستلام"
+          : (order.payment_method || "—");
+
+      document.getElementById("deliveryDate").textContent =
+        order.expected_delivery_date
+          ? formatDate(order.expected_delivery_date)
+          : "سيتم تحديده لاحقاً";
+
+      document.getElementById("deliveredAt").textContent =
+        order.delivered_at
+          ? formatDateTime(order.delivered_at)
+          : "لم يتم التسليم بعد";
+
+      document.getElementById("orderTotal").textContent =
+        formatMoney(order.total_amount);
+
+      renderProgress(order.status);
+      renderItems(items);
+
+      result.style.display = "block";
+    }
+
+
+    // =====================================
+    // إنشاء رابط تقييم منتجات الطلب
+    // =====================================
+
+    async function renderReviewSection(order, orderNumber, customerPhone) {
+
+      const section = document.getElementById("reviewSection");
+      const content = document.getElementById("reviewContent");
+
+      section.style.display = "none";
+      content.innerHTML = "";
+
+      // إظهار قسم التقييم للطلبات المسلّمة فقط
+      if (order.status !== "delivered") {
+        return;
+      }
+
+      section.style.display = "block";
+      content.textContent = "جاري تجهيز رابط التقييم...";
+
+      try {
+
+        const { data, error } = await window.supabaseClient.functions.invoke(
+          "ibr-customer-review-link",
+          {
+            body: {
+              order_number: orderNumber,
+              customer_phone: customerPhone
+            }
+          }
+        );
+
+        if (error) {
+          throw error;
+        }
+
+        // جميع منتجات الطلب تم تقييمها
+        if (data && data.already_completed) {
+
+          content.innerHTML = `
+                <p class="review-thanks">
+                    شكرًا لك! لقد أكملت تقييم جميع منتجات طلبك.
+                    نقدر مشاركتك تجربتك مع متجر IBR.
+                </p>
+            `;
+
+          return;
+        }
+
+        if (
+          !data ||
+          !data.success ||
+          !data.eligible ||
+          !data.review_url
+        ) {
+          throw new Error("تعذر إنشاء رابط التقييم.");
+        }
+
+        // التحقق من عنوان الرابط
+        const destination = new URL(data.review_url);
+
+        if (destination.hostname !== "ibr20.store") {
+          throw new Error("عنوان رابط التقييم غير صالح.");
+        }
+
+        // عند الاختبار المحلي، افتح صفحة review.html المحلية
+        if (
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1"
+        ) {
+          destination.protocol = window.location.protocol;
+          destination.host = window.location.host;
+          destination.pathname = "/review.html";
+        }
+
+        content.innerHTML = `
+            <a
+                href="${destination.href}"
+                class="review-action"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                قيّم منتجات طلبك
+            </a>
+
+            <p style="margin-top:12px;font-size:12px;color:var(--muted);">
+                رابط التقييم صالح لمدة 30 يومًا.
+            </p>
+        `;
+
+      } catch (error) {
+
+        console.error("Review link error:", error);
+
+        content.innerHTML = `
+            <p class="review-error">
+                تعذر تجهيز رابط التقييم حاليًا.
+                يمكنك المحاولة مرة أخرى.
+            </p>
+
+            <button
+                type="button"
+                class="review-action"
+                id="retryReviewButton"
+                style="margin-top:12px;"
+            >
+                إعادة المحاولة
+            </button>
+        `;
+
+        document
+          .getElementById("retryReviewButton")
+          .addEventListener("click", () => {
+            renderReviewSection(order, orderNumber, customerPhone);
+          });
+      }
+    }
+
+
+    // جلب الطلب من Supabase
+    async function fetchOrder(orderNumber, customerPhone, isRefresh) {
+      hideMessage();
+
+      if (isRefresh) {
+        refreshButton.disabled = true;
+        refreshButton.textContent = "جارٍ التحديث...";
+      } else {
+        trackButton.disabled = true;
+        trackButton.textContent = "جارٍ البحث عن طلبك...";
+      }
+
+      try {
+        const { data, error } = await window.supabaseClient.rpc(
+          "track_ibr_order",
+          {
+            p_order_number: orderNumber,
+            p_customer_phone: customerPhone
+          }
+        );
+
+        if (error) {
+          console.error("Tracking error:", error);
+          throw new Error("تعذر التحقق من الطلب حالياً. يرجى المحاولة لاحقاً.");
+        }
+
+        if (!data || data.found !== true || !data.order) {
+          result.style.display = "none";
+
+          showMessage(
+            "لم يتم العثور على طلب بهذه البيانات. تأكد من رقم الطلب ورقم الجوال.",
+            "error"
+          );
+
+          return false;
+        }
+
+        lastOrderNumber = orderNumber;
+        lastCustomerPhone = customerPhone;
+
+        renderOrder(data.order, data.items || []);
+        await renderReviewSection(data.order, orderNumber, customerPhone);
+
+        if (isRefresh) {
+          showMessage("تم تحديث حالة طلبك بنجاح.", "info");
+        } else {
+          showMessage("تم العثور على طلبك بنجاح.", "info");
+        }
+
+        return true;
+
+      } catch (error) {
+        console.error(error);
+
+        showMessage(
+          error.message || "حدث خطأ أثناء البحث. حاول مرة أخرى.",
+          "error"
+        );
+
+        return false;
+
+      } finally {
+        if (isRefresh) {
+          refreshButton.disabled = false;
+          refreshButton.textContent = "↻ تحديث حالة الطلب";
+        } else {
+          trackButton.disabled = false;
+          trackButton.textContent = "تتبّع الطلب";
+        }
+      }
+    }
+
+    // البحث الأول عن الطلب
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      result.style.display = "none";
+
+      const orderNumber = document.getElementById("orderNumber")
+        .value.trim();
+
+      const customerPhone = document.getElementById("customerPhone")
+        .value.trim();
+
+      if (!orderNumber || !customerPhone) {
+        showMessage("يرجى إدخال رقم الطلب ورقم الجوال.", "error");
+        return;
+      }
+
+      await fetchOrder(orderNumber, customerPhone, false);
+    });
+
+    // تحديث الحالة دون إعادة إدخال البيانات
+    refreshButton.addEventListener("click", async function () {
+      if (!lastOrderNumber || !lastCustomerPhone) {
+        showMessage("يرجى البحث عن طلبك أولاً.", "error");
+        return;
+      }
+
+      await fetchOrder(lastOrderNumber, lastCustomerPhone, true);
+    });
+
+    // نسخ رقم الطلب
+    document.getElementById("copyOrderNumber")
+      .addEventListener("click", async function () {
+        const number = document.getElementById("resultOrderNumber")
+          .textContent;
+
+        if (!number || number === "—") return;
+
+        try {
+          await navigator.clipboard.writeText(number);
+
+          this.textContent = "تم النسخ ✓";
+
+          setTimeout(() => {
+            this.textContent = "نسخ الرقم";
+          }, 1800);
+
+        } catch (error) {
+          showMessage(
+            "تعذر النسخ تلقائياً. يمكنك تحديد رقم الطلب ونسخه.",
+            "info"
+          );
+        }
+      });
+
+  </script>
+
+</body>
+
+</html>

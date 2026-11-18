@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#382719">
+  <meta name="description" content="مرحباً بك في IBR20 — أناقة الخشب في عالم طفلك. اكتشف تشكيلتنا من الأثاث الخشبي.">
+  <title>IBR20 | أناقة الخشب في عالم طفلك</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap');
+
+    :root {
+      --wood: #55351f;
+      --wood-deep: #2d1d13;
+      --cream: #f7eee2;
+      --slide-time: 10000ms;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: "Alexandria", Tahoma, sans-serif;
+      background: #2d1d13;
+    }
+
+    a { color: inherit; }
+
+    .hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      min-height: 390px;
+      height: 100%;
+      max-height: 520px;
+      display: grid;
+      place-items: center;
+      color: var(--cream);
+      background: #7b5a3f;
+      touch-action: pan-y;
+    }
+
+    .slides,
+    .slide,
+    .hero-shade,
+    .grain {
+      position: absolute;
+      inset: 0;
+    }
+
+    .slides {
+      z-index: -3;
+      overflow: hidden;
+      background: #8b6b4e;
+    }
+
+    .slide {
+      opacity: 0;
+      background-image: var(--image);
+      background-size: cover;
+      background-position: center 52%;
+      transform: scale(1.055);
+      transition: opacity 1.25s ease, transform 6s cubic-bezier(.2,.65,.25,1);
+    }
+
+    .slide.is-active {
+      opacity: 1;
+      transform: scale(1);
+      will-change: opacity, transform;
+    }
+
+    .hero-shade {
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(38,24,14,.28), rgba(48,31,19,.57) 48%, rgba(38,24,14,.24)),
+        linear-gradient(0deg, rgba(30,19,12,.55), transparent 34%, rgba(35,22,13,.15));
+    }
+
+    .grain {
+      z-index: -1;
+      pointer-events: none;
+      opacity: .12;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+    }
+
+    .hero-content {
+      width: min(900px, calc(100% - 36px));
+      text-align: center;
+      padding: 50px 20px 150px;
+      margin-top: -18px;
+      text-shadow: 0 2px 22px rgba(30,18,10,.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    .welcome {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin: 0 0 32px;
+      font-size: clamp(18px, 2.2vw, 27px);
+      font-weight: 400;
+      letter-spacing: .02em;
+      color: #fff4e8;
+    }
+
+    .welcome strong {
+      font-family: Georgia, serif;
+      font-size: 1.12em;
+      letter-spacing: .06em;
+    }
+
+    .welcome-line {
+      width: clamp(22px, 6vw, 76px);
+      height: 1px;
+      background: rgba(255,235,211,.8);
+    }
+
+    .eyebrow {
+      margin: 0 0 13px;
+      font-size: 11px;
+      letter-spacing: .24em;
+      color: #f1d6b8;
+    }
+
+    h1 {
+      margin: 0 auto 18px;
+      max-width: 850px;
+      font-family: "Amiri", Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(38px, 6.1vw, 76px);
+      line-height: 1.3;
+      color: #fff7ed;
+      text-wrap: balance;
+      animation: textIn .85s both;
+    }
+
+    .subtitle {
+      margin: 0 auto;
+      max-width: 660px;
+      font-size: clamp(14px, 1.65vw, 19px);
+      line-height: 1.9;
+      color: rgba(255,246,235,.94);
+      animation: textIn .95s .08s both;
+    }
+
+    .main-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      min-height: 58px;
+      margin-top: 35px;
+      padding: 0 30px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      color: #fff8ef;
+      background: rgba(87,48,23,.88);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: 0 12px 35px rgba(35,20,10,.2);
+      transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+    }
+
+    .main-cta:hover {
+      transform: translateY(-3px);
+      background: #392416;
+      box-shadow: 0 16px 38px rgba(35,20,10,.28);
+    }
+
+    .cta-arrow {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .slide-status {
+      position: absolute;
+      z-index: 4;
+      bottom: 142px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: grid;
+      justify-items: center;
+      gap: 13px;
+      width: min(220px, 50vw);
+    }
+
+    .dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+    }
+
+    .dot {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 0;
+      padding: 0;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      cursor: pointer;
+      background: rgba(255,244,230,.62);
+      transition: width .3s ease, background .3s ease, transform .3s ease;
+    }
+
+    .dot:hover {
+      transform: scale(1.25);
+      background: #fff0dc;
+    }
+
+    .dot:focus-visible {
+      outline: 2px solid #fff0dc;
+      outline-offset: 5px;
+    }
+
+    .dot.is-active {
+      width: 24px;
+      border-radius: 8px;
+      background: #fff0dc;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 2px;
+      overflow: hidden;
+      background: rgba(255,245,230,.3);
+    }
+
+    #progress {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: #fff0dc;
+    }
+
+    #progress.run {
+      animation: progress var(--slide-time) linear forwards;
+    }
+
+    /* أسهم البنر على الكمبيوتر واللابتوب */
+    .banner-arrow {
+      position: absolute;
+      z-index: 5;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff8ef;
+      background: rgba(45,29,19,.48);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 30px;
+      line-height: 1;
+      transition: background .25s ease, transform .25s ease;
+    }
+
+    .banner-arrow:hover {
+      background: rgba(45,29,19,.85);
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .banner-arrow:focus-visible {
+      outline: 2px solid #fff0dc;
+      outline-offset: 4px;
+    }
+
+    .banner-arrow-prev { right: 22px; }
+    .banner-arrow-next { left: 22px; }
+
+    .bottom-nav {
+      position: absolute;
+      z-index: 3;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1060px, calc(100% - 42px));
+      min-height: 86px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      align-items: stretch;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,.6);
+      border-radius: 24px;
+      background: rgba(250,241,228,.91);
+      color: #603b21;
+      box-shadow: 0 15px 50px rgba(34,20,10,.2);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .nav-link {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-width: 0;
+      border-radius: 16px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      transition: background .25s ease, color .25s ease, transform .25s ease;
+    }
+
+    .nav-link + .nav-link::before {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background: rgba(125,83,48,.25);
+    }
+
+    .nav-link svg {
+      width: 23px;
+      height: 23px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: rgba(137,91,52,.12);
+      color: #382416;
+      transform: translateY(-2px);
+    }
+
+    @keyframes textIn {
+      from { opacity: 0; transform: translateY(13px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes progress {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        min-height: 390px;
+        height: 100%;
+        max-height: 460px;
+      }
+
+      .slide { background-position: center center; }
+
+      .hero-shade {
+        background: linear-gradient(
+          0deg,
+          rgba(34,21,13,.72),
+          rgba(42,27,17,.42) 48%,
+          rgba(40,26,16,.28)
+        );
+      }
+
+      .hero-content {
+        width: calc(100% - 24px);
+        padding: 18px 8px 125px;
+        margin-top: -18px;
+      }
+
+      .welcome {
+        gap: 10px;
+        margin-bottom: 14px;
+        font-size: 15px;
+      }
+
+      .welcome-line { width: 22px; }
+
+      .eyebrow { font-size: 9px; }
+
+      h1 {
+        font-size: clamp(29px, 8.2vw, 44px);
+        line-height: 1.28;
+      }
+
+      .subtitle {
+        max-width: 340px;
+        font-size: 12px;
+        line-height: 1.65;
+      }
+
+      .main-cta {
+        min-height: 44px;
+        margin-top: 16px;
+        padding: 0 22px;
+        font-size: 12px;
+      }
+
+      .slide-status {
+        bottom: 105px;
+        width: 145px;
+        gap: 8px;
+      }
+
+      /* إخفاء الأسهم في الجوال والاعتماد على السحب */
+      .banner-arrow { display: none; }
+
+      .bottom-nav {
+        bottom: 8px;
+        width: calc(100% - 18px);
+        min-height: 65px;
+        padding: 4px 3px;
+        border-radius: 16px;
+      }
+
+      .nav-link {
+        gap: 5px;
+        font-size: clamp(9px, 2.7vw, 11px);
+      }
+
+      .nav-link svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .nav-link + .nav-link::before {
+        top: 22%;
+        height: 56%;
+      }
+    }
+
+    @media (max-width: 370px) {
+      .bottom-nav { width: calc(100% - 10px); }
+      .nav-link { font-size: 8.5px; }
+      .nav-link svg { width: 18px; height: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+
+      .slide { transform: none !important; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .slide:not(.is-active) { will-change: auto; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="hero" aria-label="واجهة متجر IBR20">
+
+    <div class="slides" id="slides" aria-hidden="true">
+      <!-- تُضاف الصور تلقائياً من Supabase -->
+    </div>
+
+    <div class="hero-shade"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <section class="hero-content" aria-live="polite" aria-atomic="true">
+      <p class="welcome">
+        <span class="welcome-line"></span>
+        مرحباً بك في <strong>IBR20</strong>
+        <span class="welcome-line"></span>
+      </p>
+
+      <p class="eyebrow">IBR20 · أثاث خشبي</p>
+
+      <h1 id="slide-title">هنا تبدأ حكاية ركنه الصغير</h1>
+
+      <p class="subtitle" id="slide-subtitle">
+        تصاميم تمنح طفلك مساحة قريبة من عالمه.
+      </p>
+
+      <a class="main-cta" href="../../products.html" target="_top">
+        <span>اكتشف تصاميمنا</span>
+        <span class="cta-arrow" aria-hidden="true">←</span>
+      </a>
+    </section>
+
+    <!-- أسهم الكمبيوتر -->
+    <button
+      class="banner-arrow banner-arrow-prev"
+      id="prev-slide"
+      type="button"
+      aria-label="الصورة السابقة"
+    >‹</button>
+
+    <button
+      class="banner-arrow banner-arrow-next"
+      id="next-slide"
+      type="button"
+      aria-label="الصورة التالية"
+    >›</button>
+
+    <div class="slide-status" aria-label="مؤشر الشرائح">
+      <div class="dots" id="dots" role="group" aria-label="اختيار صورة البنر"></div>
+      <div class="progress-track">
+        <span id="progress"></span>
+      </div>
+    </div>
+
+    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+
+      <a class="nav-link active" href="../../index.html" target="_top" aria-current="page">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
+        </svg>
+        <span>الرئيسية</span>
+      </a>
+
+      <a class="nav-link" href="../../products.html" target="_top">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="4" y="4" width="6" height="6" rx="1"/>
+          <rect x="14" y="4" width="6" height="6" rx="1"/>
+          <rect x="4" y="14" width="6" height="6" rx="1"/>
+          <rect x="14" y="14" width="6" height="6" rx="1"/>
+        </svg>
+        <span>المنتجات</span>
+      </a>
+
+      <a class="nav-link" href="../../IBR20_about.html" target="_top">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="9" cy="8" r="3.2"/>
+          <path d="M2.8 20c.3-3.5 2.5-5.4 6.2-5.4s5.9 1.9 6.2 5.4z"/>
+          <path d="M16 5.2a3 3 0 0 1 0 5.7M17 14.8c2.5.5 3.8 2.2 4.1 5.2h-3"/>
+        </svg>
+        <span>من نحن</span>
+      </a>
+
+      <a class="nav-link" href="../../contact.html" target="_top">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3v18M3 12h18"/>
+          <path d="M5.5 5.5 18.5 18.5M18.5 5.5 5.5 18.5" opacity=".55"/>
+        </svg>
+        <span>اطلب تصميمك الخاص</span>
+      </a>
+
+      <a class="nav-link" href="../../cart.html" target="_top">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 8h14l1 12H4z"/>
+          <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+        </svg>
+        <span>السلة</span>
+      </a>
+
+    </nav>
+  </main>
+
+  <script>
+  (() => {
+    "use strict";
+
+    const FALLBACK_IMAGES = [
+      "https://edttlagqjrcqccxnbcej.supabase.co/storage/v1/object/public/product-images/IBR-001.jpg",
+      "https://edttlagqjrcqccxnbcej.supabase.co/storage/v1/object/public/product-images/IBR-002.jpg",
+      "https://edttlagqjrcqccxnbcej.supabase.co/storage/v1/object/public/product-images/IBR-003.jpg",
+      "https://edttlagqjrcqccxnbcej.supabase.co/storage/v1/object/public/product-images/IBR-004.jpg",
+      "https://edttlagqjrcqccxnbcej.supabase.co/storage/v1/object/public/product-images/IBR-007.jpg",
+      "https://edttlagqjrcqccxnbcej.supabase.co/storage/v1/object/public/product-images/IBR-008.jpg",
+      "https://edttlagqjrcqccxnbcej.supabase.co/storage/v1/object/public/product-images/IBR-009.jpg"
+    ];
+
+    const content = [
+      ["هنا تبدأ حكاية ركنه الصغير", "تصاميم تمنح طفلك مساحة قريبة من عالمه."],
+      ["مساحة صغيرة لأفكار كبيرة", "مكان للرسم والتعلّم واكتشاف أشياء جديدة."],
+      ["لأناقة الخشب.. في عالم طفلك", "تفاصيل خشبية تضيف دفئاً إلى يومه."],
+      ["لكل فكرة مساحة تستحقها", "مساحة تساعد طفلك على التعلّم والابتكار."],
+      ["تفاصيل تنسجم مع عالم طفلك", "اختيارات تجمع بين البساطة وجمال الخشب."],
+      ["اختر ما ينسجم مع منزلك", "تصاميم تتناغم مع المساحة والذوق."],
+      ["لحظات صغيرة تصنع ذكريات جميلة", "أثاث يرافق لحظات اللعب والتعلّم."]
+    ];
+
+    const slidesContainer = document.getElementById("slides");
+    const dotsContainer = document.getElementById("dots");
+    const title = document.getElementById("slide-title");
+    const subtitle = document.getElementById("slide-subtitle");
+    const progress = document.getElementById("progress");
+    const prevButton = document.getElementById("prev-slide");
+    const nextButton = document.getElementById("next-slide");
+
+    const duration = 10000;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let slides = [];
+    let dots = [];
+    let current = 0;
+    let timer = null;
+    let startedAt = 0;
+    let remaining = duration;
+    let paused = document.hidden;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let imagesLoaded = false;
+
+    function createSlides(images) {
+      slidesContainer.innerHTML = "";
+      dotsContainer.innerHTML = "";
+
+      images.forEach((image, index) => {
+        const slide = document.createElement("div");
+        slide.className = "slide" + (index === 0 ? " is-active" : "");
+        slide.style.setProperty("--image", `url("${image.url}")`);
+        slide.setAttribute("role", "img");
+        slide.setAttribute("aria-label", image.alt || `صورة البنر ${index + 1}`);
+        slidesContainer.appendChild(slide);
+
+        const dot = document.createElement("button");
+        dot.className = "dot" + (index === 0 ? " is-active" : "");
+        dot.type = "button";
+        dot.setAttribute("aria-label", `الصورة ${index + 1}`);
+
+        if (index === 0) {
+          dot.setAttribute("aria-current", "true");
+        }
+
+        dot.addEventListener("click", () => {
+          show(index);
+          schedule(duration);
+        });
+
+        dotsContainer.appendChild(dot);
+      });
+
+      slides = [...slidesContainer.querySelectorAll(".slide")];
+      dots = [...dotsContainer.querySelectorAll(".dot")];
+      current = 0;
+      show(0);
+      schedule(duration);
+      imagesLoaded = true;
+    }
+
+    function getSlideContent(index) {
+      return content[index % content.length];
+    }
+
+    function resetProgress(time = duration) {
+      progress.classList.remove("run");
+      progress.style.animation = "none";
+      void progress.offsetWidth;
+      progress.style.animation = "";
+      progress.style.setProperty("--slide-time", `${time}ms`);
+      progress.classList.add("run");
+    }
+
+    function show(index, time = duration) {
+      if (!slides.length) return;
+
+      current = (index + slides.length) % slides.length;
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("is-active", i === current);
+      });
+
+      dots.forEach((dot, i) => {
+        const active = i === current;
+        dot.classList.toggle("is-active", active);
+
+        if (active) {
+          dot.setAttribute("aria-current", "true");
+        } else {
+          dot.removeAttribute("aria-current");
+        }
+      });
+
+      const text = getSlideContent(current);
+
+      title.style.animation = "none";
+      subtitle.style.animation = "none";
+      void title.offsetWidth;
+
+      title.textContent = text[0];
+      subtitle.textContent = text[1];
+
+      if (!reduceMotion) {
+        title.style.animation = "textIn .85s both";
+        subtitle.style.animation = "textIn .95s .08s both";
+      }
+
+      preload(current + 1);
+
+      remaining = time;
+      startedAt = performance.now();
+      resetProgress(time);
+    }
+
+    function preload(index) {
+      if (!slides.length) return;
+
+      const next = slides[(index + slides.length) % slides.length];
+      const match = next.style.getPropertyValue("--image").match(/url\(["']?(.*?)["']?\)/);
+
+      if (!match || !match[1]) return;
+
+      const img = new Image();
+      img.decoding = "async";
+      img.src = match[1];
+    }
+
+    function stopTimer() {
+      if (timer !== null) {
+        window.clearTimeout(timer);
+      }
+      timer = null;
+    }
+
+    function schedule(time = duration) {
+      stopTimer();
+
+      if (paused || reduceMotion || slides.length < 2) return;
+
+      startedAt = performance.now();
+
+      timer = window.setTimeout(() => {
+        show(current + 1);
+        schedule(duration);
+      }, time);
+    }
+
+    function pause() {
+      if (paused) return;
+
+      paused = true;
+
+      if (timer !== null) {
+        remaining = Math.max(
+          0,
+          remaining - (performance.now() - startedAt)
+        );
+      }
+
+      stopTimer();
+      progress.classList.remove("run");
+    }
+
+    function resume() {
+      if (!paused) return;
+
+      paused = false;
+
+      if (!document.hidden && !reduceMotion) {
+        resetProgress(remaining);
+        schedule(remaining);
+      }
+    }
+
+    function moveNext() {
+      if (slides.length < 2) return;
+      show(current + 1);
+      schedule(duration);
+    }
+
+    function movePrev() {
+      if (slides.length < 2) return;
+      show(current - 1);
+      schedule(duration);
+    }
+
+    prevButton.addEventListener("click", movePrev);
+    nextButton.addEventListener("click", moveNext);
+
+    // السحب باليد على الجوال
+    const hero = document.querySelector(".hero");
+
+    hero.addEventListener("touchstart", (event) => {
+      if (!event.touches || event.touches.length !== 1) return;
+
+      touchStartX = event.touches[0].clientX;
+      touchStartY = event.touches[0].clientY;
+    }, { passive: true });
+
+    hero.addEventListener("touchend", (event) => {
+      if (!event.changedTouches || !event.changedTouches.length) return;
+
+      const endX = event.changedTouches[0].clientX;
+      const endY = event.changedTouches[0].clientY;
+
+      const diffX = endX - touchStartX;
+      const diffY = endY - touchStartY;
+
+      if (Math.abs(diffX) < 45 || Math.abs(diffX) < Math.abs(diffY)) {
+        return;
+      }
+
+      // في صفحة RTL: السحب لليسار يعرض الصورة التالية.
+      if (diffX < 0) {
+        moveNext();
+      } else {
+        movePrev();
+      }
+    }, { passive: true });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) pause();
+      else resume();
+    });
+
+    const nav = document.querySelector(".bottom-nav");
+
+    nav.addEventListener("focusin", pause);
+
+    nav.addEventListener("focusout", (event) => {
+      if (!nav.contains(event.relatedTarget)) {
+        resume();
+      }
+    });
+
+    nav.addEventListener("pointerenter", pause);
+    nav.addEventListener("pointerleave", resume);
+
+    if (reduceMotion) {
+      paused = true;
+      progress.classList.remove("run");
+    }
+
+    // الصور الاحتياطية حتى لو تعذر الاتصال بقاعدة البيانات
+    function loadFallbackImages() {
+      createSlides(
+        FALLBACK_IMAGES.map((url, index) => ({
+          url,
+          alt: `أثاث IBR20 - صورة ${index + 1}`
+        }))
+      );
+    }
+
+    // انتظار عميل Supabase الذي أنشأته الصفحة الرئيسية في store.js
+    async function getSupabaseClient() {
+      for (let attempt = 0; attempt < 24; attempt++) {
+        try {
+          if (
+            window.parent &&
+            window.parent !== window &&
+            window.parent.supabaseClient
+          ) {
+            return window.parent.supabaseClient;
+          }
+        } catch (error) {
+          console.warn("تعذر الوصول إلى عميل Supabase من الصفحة الرئيسية.", error);
+          return null;
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 250));
+      }
+
+      return null;
+    }
+
+    async function loadBannerImages() {
+      const client = await getSupabaseClient();
+
+      if (!client) {
+        console.warn("لم يتم العثور على عميل Supabase. سيتم عرض الصور الاحتياطية.");
+        loadFallbackImages();
+        return;
+      }
+
+      try {
+        const { data, error } = await client
+          .from("banner_images")
+          .select("image_url, alt_text, sort_order")
+          .eq("is_active", true)
+          .order("sort_order", { ascending: true })
+          .order("created_at", { ascending: true });
+
+        if (error) {
+          throw error;
+        }
+
+        const validImages = (data || []).filter(item =>
+          item.image_url &&
+          typeof item.image_url === "string" &&
+          /^https?:\/\//i.test(item.image_url)
+        );
+
+        if (validImages.length > 0) {
+          createSlides(
+            validImages.map(item => ({
+              url: item.image_url,
+              alt: item.alt_text || "أثاث IBR20 الخشبي"
+            }))
+          );
+
+          console.log("تم تحميل صور البنر من لوحة الإدارة:", validImages.length);
+        } else {
+          console.info("لا توجد صور بنر نشطة حالياً. سيتم عرض الصور الاحتياطية.");
+          loadFallbackImages();
+        }
+
+      } catch (error) {
+        console.error("تعذر تحميل صور البنر من Supabase:", error);
+
+        if (!imagesLoaded) {
+          loadFallbackImages();
+        }
+      }
+    }
+
+    loadBannerImages();
+
+  })();
+  </script>
+
+</body>
+</html>

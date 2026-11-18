@@ -1,0 +1,986 @@
+
+/* =====================================================
+   IBR20 ADMIN — DASHBOARD
+   Unified Luxury Design System
+   الهوية البصرية المعتمدة من صفحة التحليلات
+===================================================== */
+
+/* =====================================================
+   1. لوحة الألوان
+===================================================== */
+
+.admin-dashboard,
+.admin-dashboard-page {
+    --dash-ink: #30271f;
+    --dash-muted: #81766b;
+    --dash-line: #e9e1d8;
+    --dash-page: #f5f1eb;
+    --dash-paper: #fbf9f6;
+    --dash-card: #ffffff;
+    --dash-wood: #76543a;
+    --dash-wood-dark: #563b29;
+    --dash-sand: #eee4d8;
+    --dash-green: #47745d;
+    --dash-red: #a6534b;
+
+    --dash-shadow: 0 4px 16px rgba(48, 39, 31, .045);
+    --dash-shadow-hover: 0 12px 28px rgba(48, 39, 31, .09);
+
+    color: var(--dash-ink);
+}
+
+/* =====================================================
+   2. التخطيط العام
+===================================================== */
+
+.admin-dashboard {
+    display: grid;
+    gap: 22px;
+    min-width: 0;
+}
+
+.admin-dashboard *,
+.admin-dashboard-page .admin-dashboard * {
+    box-sizing: border-box;
+}
+
+/* =====================================================
+   3. بطاقة الترحيب
+===================================================== */
+
+.admin-welcome {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 155px;
+    padding: 27px 30px;
+    overflow: hidden;
+
+    background: linear-gradient(
+        115deg,
+        #30271f 0%,
+        #563b29 52%,
+        #76543a 100%
+    );
+
+    border: 1px solid rgba(255, 255, 255, .06);
+    border-radius: 17px;
+    color: #fff;
+
+    box-shadow: 0 9px 27px rgba(48, 39, 31, .14);
+}
+
+.admin-welcome::before,
+.admin-welcome::after {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    border: 1px solid rgba(255, 255, 255, .11);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.admin-welcome::before {
+    width: 240px;
+    height: 240px;
+    left: -65px;
+    top: -125px;
+}
+
+.admin-welcome::after {
+    width: 180px;
+    height: 180px;
+    left: 65px;
+    bottom: -130px;
+}
+
+.admin-welcome-content {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+}
+
+.admin-welcome-label {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #d8c2a8;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .35px;
+}
+
+.admin-welcome h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.6;
+}
+
+.admin-welcome p {
+    margin: 8px 0 0;
+    color: #eadfd4;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.admin-welcome-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+.admin-welcome .admin-btn-primary {
+    background: #fff;
+    color: var(--dash-wood-dark);
+    border-color: #fff;
+}
+
+.admin-welcome .admin-btn-primary:hover {
+    background: var(--dash-sand);
+    border-color: var(--dash-sand);
+    color: var(--dash-wood-dark);
+}
+
+.admin-welcome .admin-btn-secondary {
+    background: rgba(255, 255, 255, .10);
+    border-color: rgba(255, 255, 255, .25);
+    color: #fff;
+}
+
+.admin-welcome .admin-btn-secondary:hover {
+    background: rgba(255, 255, 255, .18);
+    border-color: rgba(255, 255, 255, .4);
+}
+
+/* =====================================================
+   4. شبكة الإحصاءات
+===================================================== */
+
+.admin-dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.admin-dashboard-stat {
+    position: relative;
+    min-width: 0;
+    padding: 18px;
+
+    background: var(--dash-card);
+    border: 1px solid var(--dash-line);
+    border-radius: 14px;
+
+    box-shadow: var(--dash-shadow);
+
+    transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        border-color .22s ease;
+}
+
+.admin-dashboard-stat:hover {
+    transform: translateY(-3px);
+    border-color: #d8c8b8;
+    box-shadow: var(--dash-shadow-hover);
+}
+
+.admin-dashboard-stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.admin-dashboard-stat-title {
+    color: var(--dash-muted);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.7;
+}
+
+.admin-dashboard-stat-icon {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    border-radius: 11px;
+    background: var(--dash-sand);
+    color: var(--dash-wood);
+
+    font-size: 19px;
+}
+
+.admin-dashboard-stat-value {
+    display: block;
+    margin-top: 13px;
+    color: var(--dash-wood-dark);
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-dashboard-stat-description {
+    display: block;
+    margin-top: 5px;
+    color: var(--dash-muted);
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* روابط الإحصاءات */
+
+.admin-dashboard-stat a {
+    display: block;
+    margin-top: 12px;
+    padding-top: 9px;
+
+    border-top: 1px solid #f0ebe5;
+
+    color: var(--dash-wood);
+    font-size: 10px;
+    font-weight: 800;
+    text-decoration: none;
+
+    transition: color .2s ease;
+}
+
+.admin-dashboard-stat a:hover {
+    color: var(--dash-wood-dark);
+}
+
+/* =====================================================
+   5. تقسيم المحتوى
+===================================================== */
+
+.admin-dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(270px, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.admin-dashboard-column {
+    display: grid;
+    gap: 18px;
+    min-width: 0;
+}
+
+/* =====================================================
+   6. عناوين الأقسام
+===================================================== */
+
+.admin-dashboard-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.admin-dashboard-section-title h3 {
+    margin: 0;
+    color: var(--dash-wood-dark);
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.6;
+}
+
+.admin-dashboard-section-title a {
+    color: var(--dash-wood);
+    font-size: 11px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.admin-dashboard-section-title a:hover {
+    color: var(--dash-wood-dark);
+    text-decoration: underline;
+}
+
+/* =====================================================
+   7. أحدث الطلبات
+===================================================== */
+
+.admin-recent-orders {
+    display: grid;
+    gap: 0;
+}
+
+.admin-recent-order {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 0;
+
+    border-bottom: 1px solid #f0ebe5;
+}
+
+.admin-recent-order:last-child {
+    border-bottom: 0;
+}
+
+.admin-recent-order-main {
+    min-width: 0;
+}
+
+.admin-recent-order-main strong {
+    display: block;
+    color: var(--dash-ink);
+    font-size: 12px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.admin-recent-order-main small {
+    display: block;
+    margin-top: 4px;
+    color: var(--dash-muted);
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+.admin-recent-order-meta {
+    flex-shrink: 0;
+    text-align: left;
+}
+
+.admin-recent-order-price {
+    display: block;
+    color: var(--dash-wood-dark);
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-recent-order-status {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* =====================================================
+   8. الاستفسارات والرسائل
+===================================================== */
+
+.admin-recent-messages {
+    display: grid;
+    gap: 0;
+}
+
+.admin-recent-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 13px 0;
+
+    border-bottom: 1px solid #f0ebe5;
+}
+
+.admin-recent-message:last-child {
+    border-bottom: 0;
+}
+
+.admin-message-avatar {
+    width: 37px;
+    height: 37px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+    background: var(--dash-sand);
+    color: var(--dash-wood);
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.admin-recent-message-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-recent-message-content strong {
+    display: block;
+    color: var(--dash-ink);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-recent-message-content p {
+    display: -webkit-box;
+    margin: 4px 0;
+
+    overflow: hidden;
+    color: var(--dash-muted);
+
+    font-size: 11px;
+    line-height: 1.8;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.admin-recent-message-content small {
+    color: #9a8e82;
+    font-size: 10px;
+}
+
+/* =====================================================
+   9. الإجراءات السريعة
+===================================================== */
+
+.admin-quick-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.admin-quick-action {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px;
+
+    background: var(--dash-card);
+    border: 1px solid var(--dash-line);
+    border-radius: 11px;
+
+    color: var(--dash-ink);
+    text-decoration: none;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.admin-quick-action:hover {
+    background: var(--dash-paper);
+    border-color: #d7c2ae;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(48, 39, 31, .055);
+}
+
+.admin-quick-action-icon {
+    width: 35px;
+    height: 35px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+    background: var(--dash-sand);
+    color: var(--dash-wood);
+
+    font-size: 17px;
+}
+
+.admin-quick-action strong {
+    display: block;
+    color: var(--dash-ink);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.admin-quick-action small {
+    display: block;
+    margin-top: 3px;
+    color: var(--dash-muted);
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+/* =====================================================
+   10. التنبيهات
+===================================================== */
+
+.admin-dashboard-alerts {
+    display: grid;
+    gap: 9px;
+}
+
+.admin-dashboard-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+
+    border: 1px solid var(--dash-line);
+    border-radius: 10px;
+    background: var(--dash-paper);
+}
+
+.admin-dashboard-alert-icon {
+    flex-shrink: 0;
+    font-size: 16px;
+}
+
+.admin-dashboard-alert strong {
+    display: block;
+    color: var(--dash-ink);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.admin-dashboard-alert p {
+    margin: 3px 0 0;
+    color: var(--dash-muted);
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* =====================================================
+   11. ملخص حالة المتجر
+===================================================== */
+
+.admin-store-health {
+    display: grid;
+    gap: 13px;
+}
+
+.admin-store-health-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 11px;
+
+    border-bottom: 1px solid #f0ebe5;
+}
+
+.admin-store-health-item:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.admin-store-health-item span {
+    color: #695b4e;
+    font-size: 11px;
+}
+
+.admin-store-health-item strong {
+    color: var(--dash-wood-dark);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* =====================================================
+   12. حالات عدم وجود بيانات
+===================================================== */
+
+.admin-dashboard-no-data {
+    padding: 20px 12px;
+    text-align: center;
+    color: var(--dash-muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* =====================================================
+   13. توافق تصميم لوحة الإدارة مع admin.html
+===================================================== */
+
+.admin-dashboard-page .admin-dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.admin-dashboard-page .admin-dashboard-stat {
+    position: relative;
+    min-width: 0;
+    padding: 18px;
+
+    background: var(--dash-card);
+    border: 1px solid var(--dash-line);
+    border-radius: 14px;
+
+    box-shadow: var(--dash-shadow);
+
+    transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        border-color .22s ease;
+}
+
+.admin-dashboard-page .admin-dashboard-stat:hover {
+    transform: translateY(-3px);
+    border-color: #d8c8b8;
+    box-shadow: var(--dash-shadow-hover);
+}
+
+.admin-dashboard-page .admin-dashboard-stat > span {
+    display: block;
+    color: var(--dash-muted);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.7;
+}
+
+.admin-dashboard-page .admin-dashboard-stat > strong {
+    display: block;
+    margin-top: 13px;
+    color: var(--dash-wood-dark);
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-dashboard-page .admin-recent-panel {
+    min-width: 0;
+    padding: 20px;
+
+    background: var(--dash-card);
+    border: 1px solid var(--dash-line);
+    border-radius: 14px;
+
+    box-shadow: var(--dash-shadow);
+}
+
+.admin-dashboard-page .admin-recent-panel h2 {
+    margin: 0 0 16px;
+    color: var(--dash-wood-dark);
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.admin-dashboard-page .admin-recent-item {
+    padding: 13px 0;
+    border-bottom: 1px solid #f0ebe5;
+}
+
+.admin-dashboard-page .admin-recent-item:last-child {
+    border-bottom: 0;
+}
+
+/* =====================================================
+   14. حالات التركيز وإمكانية الوصول
+===================================================== */
+
+.admin-dashboard a:focus-visible,
+.admin-dashboard button:focus-visible,
+.admin-dashboard-page .admin-dashboard a:focus-visible,
+.admin-dashboard-page .admin-dashboard button:focus-visible {
+    outline: 3px solid rgba(118, 84, 58, .28);
+    outline-offset: 3px;
+}
+
+/* =====================================================
+   15. الشاشات المتوسطة
+===================================================== */
+
+@media (max-width: 1150px) {
+    .admin-dashboard-stats,
+    .admin-dashboard-page .admin-dashboard-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =====================================================
+   16. الأجهزة اللوحية والجوال
+===================================================== */
+
+@media (max-width: 760px) {
+    .admin-dashboard {
+        gap: 15px;
+    }
+
+    .admin-welcome {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 22px 19px;
+    }
+
+    .admin-welcome h2 {
+        font-size: 20px;
+    }
+
+    .admin-welcome-actions {
+        width: 100%;
+    }
+
+    .admin-welcome-actions .admin-btn {
+        flex: 1;
+    }
+
+    .admin-dashboard-grid {
+        gap: 15px;
+    }
+
+    .admin-dashboard-column {
+        gap: 15px;
+    }
+
+    .admin-dashboard-page .admin-recent-panel {
+        padding: 16px;
+    }
+}
+
+/* =====================================================
+   17. الهواتف الصغيرة
+===================================================== */
+
+@media (max-width: 480px) {
+    .admin-dashboard-stats,
+    .admin-dashboard-page .admin-dashboard-stats {
+        gap: 9px;
+    }
+
+    .admin-dashboard-stat,
+    .admin-dashboard-page .admin-dashboard-stat {
+        padding: 13px;
+    }
+
+    .admin-dashboard-stat-value,
+    .admin-dashboard-page .admin-dashboard-stat > strong {
+        font-size: 22px;
+    }
+
+    .admin-dashboard-stat-icon {
+        width: 33px;
+        height: 33px;
+        font-size: 16px;
+    }
+
+    .admin-quick-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-recent-order {
+        align-items: flex-start;
+    }
+
+    .admin-dashboard-section-title {
+        align-items: flex-start;
+    }
+
+    .admin-dashboard-page .admin-recent-panel {
+        padding: 14px;
+    }
+}
+
+/* =====================================================
+   18. تقليل الحركة حسب إعدادات الجهاز
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-dashboard *,
+    .admin-dashboard-page .admin-dashboard * {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .category-tiles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .category-tile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-width: 125px;
+            min-height: 105px;
+            padding: 13px;
+            border: 1px solid #eadfd3;
+            border-radius: 13px;
+            background: #fff;
+            color: #68452e;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            transition: .2s ease;
+        }
+
+        .category-tile:hover,
+        .category-tile.is-active {
+            border-color: #68452e;
+            background: #f7f0e8;
+        }
+
+        .category-icon {
+            font-size: 23px;
+        }
+
+        .category-tile b {
+            font-size: 13px;
+        }
+
+        .category-tile small {
+            color: #92765f;
+            font-size: 11px;
+        }
+
+        .subcategory-panel {
+            display: none;
+            margin-top: 18px;
+            padding: 15px;
+            border: 1px solid #eee4da;
+            border-radius: 12px;
+            background: #fcfaf7;
+        }
+
+        .subcategory-panel.is-visible {
+            display: block;
+        }
+
+        .subcategory-heading {
+            margin: 0 0 12px;
+            color: #68452e;
+            font-size: 14px;
+        }
+
+        .subcategory-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .subcategory-button {
+            padding: 9px 16px;
+            border: 1px solid #e4d6c8;
+            border-radius: 30px;
+            background: #fff;
+            color: #68452e;
+            font-family: inherit;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .subcategory-button:hover,
+        .subcategory-button.is-active {
+            background: #68452e;
+            border-color: #68452e;
+            color: #fff;
+        }
+
+        /* =====================================
+           قائمة خيارات المنتج
+        ===================================== */
+
+        .product-more {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 30;
+        }
+
+        .product-more-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            border: 1px solid rgba(104, 69, 46, .15);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .97);
+            color: #68452e;
+            font-size: 25px;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .10);
+        }
+
+        .product-more-btn:hover {
+            background: #68452e;
+            color: #fff;
+        }
+
+        .product-more-menu {
+            position: absolute;
+            top: 44px;
+            left: 0;
+            z-index: 40;
+            width: 190px;
+            padding: 7px;
+            background: #fff;
+            border: 1px solid #eadfd3;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+        }
+
+        .product-more-menu[hidden] {
+            display: none !important;
+        }
+
+        .product-more-menu button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 11px 9px;
+            border: 0;
+            border-radius: 8px;
+            background: transparent;
+            color: #493729;
+            font-family: inherit;
+            font-size: 13px;
+            text-align: right;
+            cursor: pointer;
+        }
+
+        .product-more-menu button:hover {
+            background: #f7f1e9;
+        }
+
+        .product-more-menu button span {
+            width: 20px;
+            color: #8a6243;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .catalog-empty {
+            grid-column: 1 / -1;
+            padding: 35px 15px;
+            text-align: center;
+            color: #92765f;
+        }
+

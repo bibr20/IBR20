@@ -1,0 +1,1462 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#68452e">
+    <meta name="description" content="IBR للأثاث الخشبي — أثاث خشبي بتصاميم عملية ولمسات أنيقة في جميع أنحاء المملكة العربية السعودية.">
+    <title>التواصل | IBR أثاث خشبي</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        /* بطاقة المنتج المرتبط بالاستفسار */
+        .inquiry-product-card {
+            display: none;
+            margin-bottom: 24px;
+            padding: 16px;
+            border: 1px solid #e8dfd5;
+            border-radius: 14px;
+            background: #faf8f5;
+        }
+
+        .inquiry-product-card h3 {
+            margin: 0 0 14px;
+            color: #68452e;
+            font-size: 17px;
+        }
+
+        .inquiry-product-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .inquiry-product-image {
+            width: 105px;
+            height: 105px;
+            flex-shrink: 0;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #eee8e1;
+        }
+
+        .inquiry-product-info {
+            min-width: 0;
+        }
+
+        .inquiry-product-name {
+            margin: 0 0 9px;
+            color: #3e3026;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .inquiry-product-detail {
+            margin: 5px 0;
+            color: #76685d;
+            font-size: 13px;
+        }
+
+        .inquiry-product-price {
+            color: #68452e;
+            font-weight: 700;
+        }
+
+        .inquiry-loading {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #f5f0e9;
+            color: #68452e;
+            display: none;
+        }
+
+        /* توسيط نموذج التواصل */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 850px);
+            justify-content: center;
+        }
+
+        #contact-form {
+            width: 100%;
+        }
+
+        /* إرفاق الصور */
+        .attachment-area {
+            margin-top: 20px;
+            padding: 16px;
+            border: 1px dashed #cdbba9;
+            border-radius: 12px;
+            background: #faf8f5;
+        }
+
+        .attachment-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .attachment-title {
+            margin: 0;
+            color: #49372a;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .attachment-help {
+            margin: 0;
+            color: #817366;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .attachment-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 10px 16px;
+            border: 1px solid #b99b80;
+            border-radius: 9px;
+            background: #fff;
+            color: #68452e;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+
+        .attachment-button:hover {
+            background: #f1e9e0;
+        }
+
+        .attachment-button:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .attachment-previews {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .attachment-preview {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            border: 1px solid #e5dbd1;
+            border-radius: 10px;
+            background: #eee8e1;
+        }
+
+        .attachment-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .attachment-remove {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 27px;
+            height: 27px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(70, 35, 25, .88);
+            color: #fff;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .attachment-name {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+            padding: 5px;
+            background: rgba(0, 0, 0, .55);
+            color: #fff;
+            font-size: 10px;
+            text-align: center;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        /* شاشة نجاح الاستفسار */
+        .inquiry-success {
+            display: none;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 35px 24px;
+            border: 1px solid #e8dfd5;
+            border-radius: 16px;
+            background: #fff;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 66px;
+            height: 66px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #e9f4e9;
+            color: #287a3b;
+            font-size: 34px;
+            font-weight: 700;
+        }
+
+        .inquiry-success h2 {
+            margin: 0 0 12px;
+            color: #49372a;
+        }
+
+        .inquiry-success p {
+            color: #75685e;
+            line-height: 1.9;
+        }
+
+        .inquiry-number-box {
+            margin: 22px 0;
+            padding: 17px;
+            border: 1px solid #e8dfd5;
+            border-radius: 12px;
+            background: #faf8f5;
+        }
+
+        .inquiry-number-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #817366;
+            font-size: 13px;
+        }
+
+        .inquiry-number-value {
+            display: block;
+            direction: ltr;
+            color: #68452e;
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .copy-inquiry-number {
+            margin-top: 12px;
+            padding: 8px 15px;
+            border: 1px solid #cdbba9;
+            border-radius: 8px;
+            background: #fff;
+            color: #68452e;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .success-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .success-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 22px;
+            border: 1px solid #b99b80;
+            border-radius: 9px;
+            color: #68452e;
+            background: #fff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .success-secondary:hover {
+            background: #f5efe9;
+        }
+
+        @media (max-width: 480px) {
+            .inquiry-product-content {
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .inquiry-product-image {
+                width: 85px;
+                height: 85px;
+            }
+
+            .inquiry-product-name {
+                font-size: 14px;
+            }
+
+            .attachment-previews {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .inquiry-success {
+                padding: 28px 16px;
+            }
+
+            .success-actions {
+                flex-direction: column;
+            }
+
+            .success-actions a {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <a class="brand" href="index.html">
+        <span class="brand-mark">IBR</span>
+        <span>أثاث خشبي</span>
+    </a>
+
+    <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false">☰</button>
+
+    <nav class="nav">
+        <a href="index.html">الرئيسية</a>
+        <a href="products.html">المنتجات</a>
+        <a href="IBR20_about.html">من نحن</a>
+        <a href="contact.html">التواصل والاستفسارات</a>
+        <a href="track-order.html">تتبّع طلبك</a>
+        <a href="track-inquiry.html">متابعة الاستفسار</a> 
+        <a href="wishlist.html">القائمة المفضلة</a>
+        <a href="cart.html">السلة <span class="cart-count">0</span></a>
+    </nav>
+</header>
+
+<main>
+    <section class="page-hero">
+        <div class="wrap">
+            <h1>تواصل معنا</h1>
+            <p>يسعدنا الاستماع إلى فكرتك ومناقشة التفاصيل.</p>
+        </div>
+    </section>
+
+    <section class="section wrap">
+
+        <div class="contact-layout">
+
+            <form class="content-card" id="contact-form">
+
+                <h2>أرسل استفسارك</h2>
+
+                <p style="color:#817366;font-size:13px;line-height:1.8;margin-bottom:20px">
+                    اكتب تفاصيل استفسارك، ويمكنك إرفاق صور توضح فكرتك أو التصميم الذي ترغب به.
+                </p>
+
+                <!-- حالة تحميل بيانات المنتج -->
+                <div id="inquiry-loading" class="inquiry-loading">
+                    جارٍ تحميل بيانات المنتج...
+                </div>
+
+                <!-- بطاقة المنتج المرتبط بالاستفسار -->
+                <div id="inquiry-product-card" class="inquiry-product-card">
+
+                    <h3>المنتج محل الاستفسار</h3>
+
+                    <div class="inquiry-product-content">
+
+                        <img
+                            id="inquiry-product-image"
+                            class="inquiry-product-image"
+                            src=""
+                            alt="صورة المنتج">
+
+                        <div class="inquiry-product-info">
+
+                            <p
+                                id="inquiry-product-name"
+                                class="inquiry-product-name">
+                            </p>
+
+                            <p class="inquiry-product-detail">
+                                رقم المنتج:
+                                <span id="inquiry-product-sku">—</span>
+                            </p>
+
+                            <p class="inquiry-product-detail inquiry-product-price">
+                                السعر:
+                                <span id="inquiry-product-price">—</span>
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label for="contact-name">الاسم</label>
+                        <input
+                            id="contact-name"
+                            name="name"
+                            required
+                            maxlength="120">
+                    </div>
+
+                    <div class="field">
+                        <label for="contact-phone">رقم الجوال</label>
+                        <input
+                            id="contact-phone"
+                            name="phone"
+                            type="tel"
+                            required
+                            maxlength="30">
+                    </div>
+
+                    <div class="field full">
+                        <label for="contact-subject">الموضوع</label>
+                        <input
+                            id="contact-subject"
+                            name="subject"
+                            required
+                            maxlength="200">
+                    </div>
+
+                    <div class="field full">
+                        <label for="contact-message">تفاصيل الاستفسار</label>
+                        <textarea
+                            id="contact-message"
+                            name="message"
+                            required
+                            maxlength="5000"
+                            placeholder="اكتب تفاصيل استفسارك هنا..."></textarea>
+                    </div>
+
+                </div>
+
+                <!-- إرسل تصميمك الخاص+-->
+                <div class="attachment-area">
+
+                    <div class="attachment-heading">
+
+                        <div>
+                            <p class="attachment-title">📎 صور إضافية (اختياري)</p>
+                            <p class="attachment-help">
+                                يمكنك إرفاق 3 صور كحد أقصى، بصيغة JPG أو PNG أو WEBP.
+                                الحد الأقصى 5MB لكل صورة.
+                            </p>
+                        </div>
+
+                        <label
+                            for="contact-images"
+                            class="attachment-button"
+                            id="attachment-button">
+                            <span>＋</span>
+                         إرسل تصميمك الخاص أو صور توضيحية
+                        </label>
+
+                    </div>
+
+                    <input
+                        type="file"
+                        id="contact-images"
+                        accept="image/jpeg,image/png,image/webp"
+                        multiple
+                        hidden>
+
+                    <div
+                        id="attachment-previews"
+                        class="attachment-previews">
+                    </div>
+
+                </div>
+
+                <div
+                    id="contact-feedback"
+                    role="status"
+                    aria-live="polite"
+                    style="display:none;margin-top:15px;padding:12px;border-radius:8px">
+                </div>
+
+                <button
+                    class="btn btn-primary"
+                    id="contact-submit"
+                    type="submit"
+                    style="margin-top:15px">
+
+                    إرسال استفسارك
+
+                </button>
+
+            </form>
+
+            <!-- شاشة نجاح الاستفسار -->
+            <section
+                id="inquiry-success"
+                class="inquiry-success"
+                aria-live="polite">
+
+                <div class="success-icon">✓</div>
+
+                <h2>تم استلام استفسارك بنجاح</h2>
+
+                <p>
+                    شكراً لتواصلك مع IBR للأثاث الخشبي.
+                    تم تسجيل استفسارك، وستقوم الإدارة بمراجعته والتواصل معك.
+                </p>
+
+                <div class="inquiry-number-box">
+
+                    <span class="inquiry-number-label">
+                        رقم استفسارك المرجعي
+                    </span>
+
+                    <strong
+                        id="success-inquiry-number"
+                        class="inquiry-number-value">
+                    </strong>
+
+                    <button
+                        type="button"
+                        id="copy-inquiry-number"
+                        class="copy-inquiry-number">
+                        نسخ رقم الاستفسار
+                    </button>
+
+                </div>
+
+                <p style="font-size:13px">
+                    احتفظ برقم الاستفسار ورقم الجوال المستخدم لتتمكن من متابعة حالة استفسارك.
+                </p>
+
+                <div class="success-actions">
+
+                    <a
+                        id="track-inquiry-link"
+                        class="btn btn-primary"
+                        href="track-inquiry.html">
+                        تتبّع استفسارك
+                    </a>
+
+                    <a
+                        class="success-secondary"
+                        href="products.html">
+                        أكمل التسوق
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="footer-inner">
+
+        <div>
+            <h3>IBR · أثاث خشبي</h3>
+            <p>أثاث نصنعه ليفهم احتياجاتك. ورشة للأثاث الخشبي، مع اهتمام بالتفاصيل والتصميم العملي.</p>
+        </div>
+
+        <div>
+            <h3>روابط المتجر</h3>
+
+            <div class="footer-links">
+              <a href="products.html">المنتجات</a>
+              <a href="IBR20_about.html">من نحن</a>
+              <a href="contact.html">التواصل والاستفسارات</a>
+              <a href="track-order.html">تتبّع طلبك</a>
+              <a href="track-inquiry.html">متابعة الاستفسار</a>
+              <a href="wishlist.html">القائمة المفضلة</a>
+              <a href="cart.html">سلة المشتريات</a>
+            </div>
+        </div>
+
+        <div>
+            <h3>تواصل معنا</h3>
+
+            <a
+                href="https://wa.me/966595811980"
+                target="_blank"
+                rel="noopener">
+                واتساب
+            </a>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        © IBR20 — جميع الحقوق محفوظة
+    </div>
+</footer>
+
+<!-- 1. مكتبة Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 2. ملف المتجر -->
+<script src="assets/js/store.js"></script>
+
+<!-- 3. نظام تسجيل الدخول -->
+<script src="assets/js/auth.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // =====================================
+    // 1. عناصر الصفحة
+    // =====================================
+
+    const form = document.getElementById("contact-form");
+
+    const button = document.getElementById("contact-submit");
+
+    const feedback = document.getElementById("contact-feedback");
+
+    const loading = document.getElementById("inquiry-loading");
+
+    const productCard = document.getElementById("inquiry-product-card");
+
+    const productImage = document.getElementById("inquiry-product-image");
+
+    const productName = document.getElementById("inquiry-product-name");
+
+    const productSku = document.getElementById("inquiry-product-sku");
+
+    const productPrice = document.getElementById("inquiry-product-price");
+
+    const subjectInput = document.getElementById("contact-subject");
+
+    const messageInput = document.getElementById("contact-message");
+
+    const imageInput = document.getElementById("contact-images");
+
+    const previewsContainer = document.getElementById("attachment-previews");
+
+    const attachmentButton = document.getElementById("attachment-button");
+
+    const successSection = document.getElementById("inquiry-success");
+
+    const successNumber = document.getElementById("success-inquiry-number");
+
+    const copyNumberButton = document.getElementById("copy-inquiry-number");
+
+    const trackLink = document.getElementById("track-inquiry-link");
+
+
+    // =====================================
+    // 2. إعدادات المرفقات
+    // =====================================
+
+    const ATTACHMENT_BUCKET = "ibr20-contact-attachments";
+
+    const MAX_IMAGES = 3;
+
+    const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+
+    const ALLOWED_IMAGE_TYPES = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+    let selectedImages = [];
+
+    let previewUrls = [];
+
+
+    // =====================================
+    // 3. متغيرات الاستفسار
+    // =====================================
+
+    let inquiryProduct = null;
+
+    let isProductInquiry = false;
+
+    let productLoadingFailed = false;
+
+    let submissionCompleted = false;
+
+    let isSubmitting = false;
+
+
+    // =====================================
+    // 4. عرض رسائل الحالة
+    // =====================================
+
+    function showFeedback(message, success) {
+
+        feedback.style.display = "block";
+
+        feedback.textContent = message;
+
+        feedback.style.background = success
+            ? "#e8f5e9"
+            : "#ffebee";
+
+        feedback.style.color = success
+            ? "#1b5e20"
+            : "#b71c1c";
+    }
+
+
+    // =====================================
+    // 5. تنسيق السعر
+    // =====================================
+
+    function formatPrice(price) {
+
+        const number = Number(price);
+
+        if (!Number.isFinite(number)) {
+            return "غير محدد";
+        }
+
+        return new Intl.NumberFormat("ar-SA", {
+            maximumFractionDigits: 2
+        }).format(number) + " ر.س";
+    }
+
+
+    // =====================================
+    // 6. إدارة معاينة الصور
+    // =====================================
+
+    function clearPreviewUrls() {
+
+        previewUrls.forEach(url => {
+            URL.revokeObjectURL(url);
+        });
+
+        previewUrls = [];
+    }
+
+
+    function renderImagePreviews() {
+
+        clearPreviewUrls();
+
+        previewsContainer.replaceChildren();
+
+        selectedImages.forEach((file, index) => {
+
+            const previewUrl = URL.createObjectURL(file);
+
+            previewUrls.push(previewUrl);
+
+            const item = document.createElement("div");
+
+            item.className = "attachment-preview";
+
+            const image = document.createElement("img");
+
+            image.src = previewUrl;
+
+            image.alt = "الصورة المرفقة " + (index + 1);
+
+            const removeButton = document.createElement("button");
+
+            removeButton.type = "button";
+
+            removeButton.className = "attachment-remove";
+
+            removeButton.textContent = "×";
+
+            removeButton.setAttribute(
+                "aria-label",
+                "حذف الصورة " + (index + 1)
+            );
+
+            removeButton.addEventListener("click", () => {
+
+                selectedImages.splice(index, 1);
+
+                renderImagePreviews();
+
+                showFeedback(
+                    "تم حذف الصورة من المرفقات.",
+                    true
+                );
+            });
+
+            const fileName = document.createElement("span");
+
+            fileName.className = "attachment-name";
+
+            fileName.textContent = file.name;
+
+            item.appendChild(image);
+
+            item.appendChild(removeButton);
+
+            item.appendChild(fileName);
+
+            previewsContainer.appendChild(item);
+        });
+
+
+        attachmentButton.style.opacity =
+            selectedImages.length >= MAX_IMAGES ? ".5" : "1";
+    }
+
+
+    // =====================================
+    // 7. اختيار الصور والتحقق منها
+    // =====================================
+
+    imageInput.addEventListener("change", () => {
+
+        const files = Array.from(imageInput.files || []);
+
+        imageInput.value = "";
+
+        if (!files.length) {
+            return;
+        }
+
+        let rejectedCount = 0;
+
+        let addedCount = 0;
+
+        files.forEach(file => {
+
+            if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+                rejectedCount++;
+                return;
+            }
+
+            if (file.size > MAX_IMAGE_SIZE || file.size === 0) {
+                rejectedCount++;
+                return;
+            }
+
+            if (selectedImages.length >= MAX_IMAGES) {
+                rejectedCount++;
+                return;
+            }
+
+            selectedImages.push(file);
+
+            addedCount++;
+        });
+
+
+        renderImagePreviews();
+
+
+        if (rejectedCount > 0) {
+
+            showFeedback(
+                "تمت إضافة " + addedCount +
+                " صورة. لم تتم إضافة " + rejectedCount +
+                " ملف؛ تحقق من نوع الصور وحجمها والحد الأقصى المسموح.",
+                false
+            );
+
+        } else if (addedCount > 0) {
+
+            showFeedback(
+                "تمت إضافة الصور. يمكنك معاينتها أو حذف أي صورة قبل الإرسال.",
+                true
+            );
+        }
+    });
+
+
+    // =====================================
+    // 8. تحميل بيانات المنتج من Supabase
+    // =====================================
+
+    async function loadInquiryProduct() {
+
+        const params = new URLSearchParams(window.location.search);
+
+        const productId = params.get("product_id");
+
+        if (!productId) {
+            return;
+        }
+
+        isProductInquiry = true;
+
+        loading.style.display = "block";
+
+        button.disabled = true;
+
+        button.textContent = "جارٍ تحميل بيانات المنتج...";
+
+        const client = window.supabaseClient;
+
+        if (!client) {
+
+            productLoadingFailed = true;
+
+            loading.textContent =
+                "تعذر الاتصال بقاعدة البيانات لتحميل المنتج. يرجى تحديث الصفحة.";
+
+            return;
+        }
+
+        try {
+
+            const { data: product, error } = await client
+
+                .from("products")
+
+                .select(`
+                    id,
+                    name,
+                    sku,
+                    price,
+                    product_images (
+                        image_url,
+                        is_primary,
+                        sort_order
+                    )
+                `)
+
+                .eq("id", productId)
+
+                .eq("is_active", true)
+
+                .eq("is_available", true)
+
+                .maybeSingle();
+
+
+            if (error) {
+                throw error;
+            }
+
+            if (!product) {
+                throw new Error("المنتج غير موجود أو غير متاح.");
+            }
+
+
+            const images = Array.isArray(product.product_images)
+                ? [...product.product_images].sort((a, b) => {
+
+                    if (a.is_primary !== b.is_primary) {
+                        return a.is_primary ? -1 : 1;
+                    }
+
+                    return (a.sort_order || 0) - (b.sort_order || 0);
+                })
+                : [];
+
+
+            const primaryImage =
+                images.find(image => image.image_url)?.image_url || null;
+
+
+            inquiryProduct = {
+                id: product.id,
+                name: product.name,
+                sku: product.sku || null,
+                price: product.price,
+                image_url: primaryImage
+            };
+
+
+            // عرض بطاقة المنتج
+            productName.textContent = inquiryProduct.name;
+
+            productSku.textContent = inquiryProduct.sku || "غير محدد";
+
+            productPrice.textContent = formatPrice(inquiryProduct.price);
+
+
+            if (inquiryProduct.image_url) {
+
+                productImage.src = inquiryProduct.image_url;
+
+                productImage.alt = inquiryProduct.name;
+
+                productImage.style.display = "block";
+
+                productImage.onerror = () => {
+                    productImage.style.display = "none";
+                };
+
+            } else {
+
+                productImage.style.display = "none";
+            }
+
+
+            productCard.style.display = "block";
+
+            loading.style.display = "none";
+
+
+            // تعبئة الموضوع والنص المبدئي
+            subjectInput.value =
+                "استفسار عن المنتج: " + inquiryProduct.name;
+
+            messageInput.value =
+                "السلام عليكم، أود الاستفسار عن هذا المنتج.";
+
+
+            button.disabled = false;
+
+            button.textContent = "إرسال استفسارك";
+
+        } catch (error) {
+
+            console.error("Product inquiry loading error:", error);
+
+            productLoadingFailed = true;
+
+            loading.textContent =
+                "تعذر تحميل بيانات المنتج. يرجى العودة إلى صفحة المنتج والمحاولة مرة أخرى.";
+
+            loading.style.display = "block";
+
+            productCard.style.display = "none";
+
+            button.disabled = true;
+
+            button.textContent = "تعذر تحميل المنتج";
+        }
+    }
+
+
+    // =====================================
+    // 9. إنشاء اسم آمن للملف
+    // =====================================
+
+    function createSafeFileName(fileName) {
+
+        const extension = fileName.split(".").pop().toLowerCase();
+
+        const allowedExtensions = ["jpg", "jpeg", "png", "webp"];
+
+        const safeExtension = allowedExtensions.includes(extension)
+            ? extension
+            : "jpg";
+
+        return crypto.randomUUID() + "." + safeExtension;
+    }
+
+
+    // =====================================
+    // 10. رفع الصور إلى المخزن الخاص
+    // =====================================
+
+    async function uploadInquiryImages(client) {
+
+        const uploadedPaths = [];
+
+        try {
+
+            for (const file of selectedImages) {
+
+                const filePath =
+                    "inquiries/" + createSafeFileName(file.name);
+
+
+                const { error } = await client
+
+                    .storage
+
+                    .from(ATTACHMENT_BUCKET)
+
+                    .upload(filePath, file, {
+                        cacheControl: "3600",
+                        upsert: false,
+                        contentType: file.type
+                    });
+
+
+                if (error) {
+                    throw error;
+                }
+
+                uploadedPaths.push(filePath);
+            }
+
+            return uploadedPaths;
+
+        } catch (error) {
+
+            // حذف الصور التي رُفعت إذا فشلت عملية الرفع
+            if (uploadedPaths.length) {
+
+                const { error: cleanupError } = await client
+
+                    .storage
+
+                    .from(ATTACHMENT_BUCKET)
+
+                    .remove(uploadedPaths);
+
+
+                if (cleanupError) {
+                    console.error(
+                        "Attachment cleanup error:",
+                        cleanupError
+                    );
+                }
+            }
+
+            throw error;
+        }
+    }
+
+
+    // =====================================
+    // 11. إرسال الاستفسار إلى Supabase
+    // =====================================
+
+    form.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+
+        if (isSubmitting || submissionCompleted) {
+            return;
+        }
+
+
+        if (productLoadingFailed) {
+
+            showFeedback(
+                "لا يمكن إرسال الاستفسار لأن بيانات المنتج لم يتم تحميلها. يرجى تحديث الصفحة والمحاولة مرة أخرى.",
+                false
+            );
+
+            return;
+        }
+
+
+        if (isProductInquiry && !inquiryProduct) {
+
+            showFeedback(
+                "يرجى الانتظار حتى يتم تحميل بيانات المنتج.",
+                false
+            );
+
+            return;
+        }
+
+
+        const client = window.supabaseClient;
+
+        if (!client) {
+
+            showFeedback(
+                "تعذر الاتصال بقاعدة البيانات. يرجى تحديث الصفحة والمحاولة مرة أخرى.",
+                false
+            );
+
+            return;
+        }
+
+
+        const data = new FormData(form);
+
+
+        const customerName = String(
+            data.get("name") || ""
+        ).trim();
+
+
+        const customerPhone = String(
+            data.get("phone") || ""
+        ).trim();
+
+
+        const subject = String(
+            data.get("subject") || ""
+        ).trim();
+
+
+        const message = String(
+            data.get("message") || ""
+        ).trim();
+
+
+        // التحقق من البيانات
+        if (customerName.length < 2 || customerName.length > 120) {
+
+            showFeedback("يرجى إدخال اسم صحيح.", false);
+
+            return;
+        }
+
+
+        if (customerPhone.length < 5 || customerPhone.length > 30) {
+
+            showFeedback("يرجى إدخال رقم جوال صحيح.", false);
+
+            return;
+        }
+
+
+        if (!subject || subject.length > 200) {
+
+            showFeedback("يرجى إدخال موضوع صحيح للاستفسار.", false);
+
+            return;
+        }
+
+
+        if (message.length < 2 || message.length > 5000) {
+
+            showFeedback("يرجى كتابة تفاصيل الاستفسار.", false);
+
+            return;
+        }
+
+
+        if (selectedImages.length > MAX_IMAGES) {
+
+            showFeedback("الحد الأقصى هو 3 صور.", false);
+
+            return;
+        }
+
+
+        // منع الضغط المتكرر
+        isSubmitting = true;
+
+        button.disabled = true;
+
+        attachmentButton.style.pointerEvents = "none";
+
+        button.textContent = "جارٍ تجهيز الاستفسار...";
+
+
+        let uploadedPaths = [];
+
+
+        try {
+
+            // رفع الصور أولاً
+            if (selectedImages.length > 0) {
+
+                button.textContent = "جارٍ رفع الصور...";
+
+                uploadedPaths = await uploadInquiryImages(client);
+            }
+
+
+            // تجهيز مسارات الصور بصيغة يفهمها كود لوحة الإدارة
+            const attachmentPath = uploadedPaths.length
+                ? JSON.stringify(uploadedPaths)
+                : null;
+
+
+            // تجهيز بيانات المنتج
+            const productData = isProductInquiry && inquiryProduct
+                ? {
+                    p_product_id: inquiryProduct.id,
+                    p_product_name: inquiryProduct.name,
+                    p_product_sku: inquiryProduct.sku,
+                    p_product_image_url: inquiryProduct.image_url
+                }
+                : {
+                    p_product_id: null,
+                    p_product_name: null,
+                    p_product_sku: null,
+                    p_product_image_url: null
+                };
+
+
+            // استدعاء الإجراء الآمن الذي يعيد رقم الاستفسار
+            button.textContent = "جارٍ حفظ الاستفسار...";
+
+            const { data: inquiryNumber, error } = await client.rpc(
+                "submit_customer_inquiry",
+                {
+                    p_customer_name: customerName,
+                    p_customer_phone: customerPhone,
+                    p_subject: subject,
+                    p_message: message,
+                    p_message_type: isProductInquiry
+                        ? "product_question"
+                        : "general",
+                    ...productData,
+                    p_attachment_path: attachmentPath
+                }
+            );
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            if (
+                typeof inquiryNumber !== "string" ||
+                !inquiryNumber.trim()
+            ) {
+                throw new Error(
+                    "لم يتم استلام رقم الاستفسار من قاعدة البيانات."
+                );
+            }
+
+
+            // =====================================
+            // 12. نجاح الإرسال وعرض رقم الاستفسار
+            // =====================================
+
+            submissionCompleted = true;
+
+            successNumber.textContent = inquiryNumber;
+
+
+            // تجهيز رابط صفحة تتبع الاستفسار
+            const trackingUrl = new URL(
+                "track-inquiry.html",
+                window.location.href
+            );
+
+            trackingUrl.searchParams.set("number", inquiryNumber);
+
+            trackLink.href = trackingUrl.toString();
+
+
+            // إخفاء النموذج وإظهار شاشة النجاح
+            form.style.display = "none";
+
+            successSection.style.display = "block";
+
+
+            // الانتقال إلى شاشة النجاح
+            successSection.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+
+            // تنظيف معاينات الصور من الذاكرة
+            selectedImages = [];
+
+            clearPreviewUrls();
+
+            previewsContainer.replaceChildren();
+
+
+        } catch (error) {
+
+            console.error("Contact submission error:", error);
+
+
+            // إذا رُفعت الصور لكن فشل حفظ الاستفسار نحاول حذفها
+            if (uploadedPaths.length) {
+
+                const { error: cleanupError } = await client
+
+                    .storage
+
+                    .from(ATTACHMENT_BUCKET)
+
+                    .remove(uploadedPaths);
+
+
+                if (cleanupError) {
+                    console.error(
+                        "Attachment cleanup error:",
+                        cleanupError
+                    );
+                }
+            }
+
+
+            showFeedback(
+                "لم نتمكن من إرسال الاستفسار حالياً. لم يتم تأكيد حفظه. يرجى المحاولة مرة أخرى.",
+                false
+            );
+
+
+            isSubmitting = false;
+
+            button.disabled = false;
+
+            attachmentButton.style.pointerEvents = "auto";
+
+            button.textContent = "إرسال استفسارك";
+        }
+
+    });
+
+
+    // =====================================
+    // 13. نسخ رقم الاستفسار
+    // =====================================
+
+    copyNumberButton.addEventListener("click", async () => {
+
+        const number = successNumber.textContent.trim();
+
+        if (!number) {
+            return;
+        }
+
+        try {
+
+            await navigator.clipboard.writeText(number);
+
+            copyNumberButton.textContent = "تم نسخ الرقم ✓";
+
+        } catch (error) {
+
+            // بديل للمتصفحات التي لا تسمح بالنسخ المباشر
+            const temporaryInput = document.createElement("textarea");
+
+            temporaryInput.value = number;
+
+            temporaryInput.style.position = "fixed";
+
+            temporaryInput.style.opacity = "0";
+
+            document.body.appendChild(temporaryInput);
+
+            temporaryInput.select();
+
+            document.execCommand("copy");
+
+            temporaryInput.remove();
+
+            copyNumberButton.textContent = "تم نسخ الرقم ✓";
+        }
+    });
+
+
+    // =====================================
+    // 14. بدء تحميل المنتج عند فتح الصفحة
+    // =====================================
+
+    loadInquiryProduct();
+
+
+    // تنظيف روابط المعاينة عند مغادرة الصفحة
+    window.addEventListener("beforeunload", clearPreviewUrls);
+
+});
+</script>
+
+</body>
+</html>

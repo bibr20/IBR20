@@ -1,0 +1,843 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4efe8">
+    <meta name="description" content="تحليلات وإحصاءات متجر IBR للأثاث الخشبي.">
+    <title>التحليلات والإحصاءات | IBR</title>
+
+    <!-- تنسيقات لوحة الإدارة -->
+    <link rel="stylesheet" href="../CSS/admin-common.css">
+    <link rel="stylesheet" href="../CSS/admin-analytics.css">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Store Core -->
+    <script src="../../assets/js/store.js"></script>
+
+    <!-- Admin Core -->
+    <script src="../js/admin-common.js"></script>
+    <script src="../js/admin-page-guard.js"></script>
+
+    <!-- Analytics System -->
+    <script src="../js/admin-analytics.js"></script>
+</head>
+
+<body class="admin-body admin-page admin-analytics-page">
+
+    <!-- التحقق من صلاحيات الإدارة -->
+    <div class="analytics-auth-loading" data-admin-loading>
+        <div class="analytics-spinner"></div>
+        <p>جارٍ التحقق من صلاحيات الإدارة...</p>
+    </div>
+
+    <div class="admin-layout" data-admin-content hidden>
+
+        <!-- القائمة الجانبية -->
+        <aside class="admin-sidebar" data-admin-sidebar>
+
+            <a class="admin-brand" href="admin.html">
+                <span class="admin-brand-mark">IBR</span>
+                <span>
+                    <strong>إدارة المتجر</strong>
+                    <small>الأثاث الخشبي</small>
+                </span>
+            </a>
+
+            <nav class="admin-nav" aria-label="القائمة الرئيسية للإدارة">
+
+                <a class="admin-nav-link" href="admin.html">
+                    <span>⌂</span>
+                    النظرة العامة
+                </a>
+
+                <a class="admin-nav-link" href="admin-customers.html">
+                    <span>♙</span>
+                    العملاء والطلبات
+                </a>
+
+                <a class="admin-nav-link" href="admin-store.html">
+                    <span>▦</span>
+                    إدارة المتجر
+                </a>
+
+                <a class="admin-nav-link is-active"
+                   href="admin-analytics.html"
+                   aria-current="page">
+                    <span>▥</span>
+                    التحليلات والإحصاءات
+                </a>
+
+            </nav>
+
+            <div class="admin-sidebar-bottom">
+                <span class="admin-sidebar-caption">مساحة الإدارة</span>
+
+                <button class="admin-logout-button"
+                        type="button"
+                        data-admin-logout>
+                    تسجيل الخروج
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="admin-main">
+
+            <!-- الشريط العلوي -->
+            <header class="admin-topbar">
+
+                <button class="admin-menu-toggle"
+                        type="button"
+                        data-admin-menu-toggle
+                        aria-label="فتح القائمة">
+                    ☰
+                </button>
+
+                <div class="admin-topbar-title">
+                    <span class="admin-eyebrow">IBR / ANALYTICS</span>
+                    <strong>مركز التحليلات</strong>
+                </div>
+
+                <div class="admin-topbar-user">
+                    <span class="admin-user-dot"></span>
+                    <span data-admin-email>حساب الإدارة</span>
+                </div>
+
+            </header>
+
+            <div class="analytics-page-content">
+
+                <!-- مقدمة الصفحة -->
+                <section class="analytics-heading">
+
+                    <div>
+                        <span class="analytics-kicker">
+                            قرارات أوضح، اعتمادًا على بيانات المتجر
+                        </span>
+
+                        <h1>التحليلات والإحصاءات</h1>
+
+                        <p>
+                            رؤية شاملة لأداء المبيعات والمنتجات والعملاء
+                            وسلوك الزوار وخدمة العملاء.
+                        </p>
+                    </div>
+
+                    <div class="analytics-heading-actions">
+
+                        <button class="analytics-button analytics-button-light"
+                                type="button"
+                                data-analytics-export>
+                            تصدير CSV
+                        </button>
+
+                        <button class="analytics-button analytics-button-primary"
+                                type="button"
+                                data-analytics-refresh>
+                            <span aria-hidden="true">↻</span>
+                            تحديث البيانات
+                        </button>
+
+                    </div>
+
+                </section>
+
+                <!-- أدوات تحديد الفترة -->
+                <section class="analytics-toolbar"
+                         aria-label="خيارات الفترة الزمنية">
+
+                    <div class="analytics-period-tabs"
+                         role="group"
+                         aria-label="الفترة">
+
+                        <button type="button" data-period="today">
+                            اليوم
+                        </button>
+
+                        <button type="button" data-period="7">
+                            7 أيام
+                        </button>
+
+                        <button type="button"
+                                data-period="30"
+                                class="is-selected">
+                            30 يومًا
+                        </button>
+
+                        <button type="button" data-period="90">
+                            90 يومًا
+                        </button>
+
+                        <button type="button" data-period="365">
+                            سنة
+                        </button>
+
+                        <button type="button" data-period="all">
+                            كل المدة
+                        </button>
+
+                    </div>
+
+                    <div class="analytics-custom-range">
+
+                        <label>
+                            من
+                            <input type="date" data-date-from>
+                        </label>
+
+                        <label>
+                            إلى
+                            <input type="date" data-date-to>
+                        </label>
+
+                        <button type="button"
+                                class="analytics-button analytics-button-small"
+                                data-apply-range>
+                            تطبيق
+                        </button>
+
+                    </div>
+
+                    <div class="analytics-updated" data-last-updated>
+                        لم يتم التحديث بعد
+                    </div>
+
+                </section>
+
+                <!-- رسائل النظام -->
+                <div class="analytics-alert"
+                     data-analytics-alert
+                     hidden
+                     role="status">
+                </div>
+
+                <div class="analytics-error"
+                     data-analytics-error
+                     hidden
+                     role="alert">
+                </div>
+
+                <!-- 01: ملخص الأداء -->
+                <section class="analytics-section">
+
+                    <div class="analytics-section-heading">
+                        <div>
+                            <span class="analytics-kicker">01 / OVERVIEW</span>
+                            <h2>ملخص الأداء</h2>
+                        </div>
+
+                        <span class="analytics-section-note">
+                            المؤشرات محسوبة من سجلات المتجر الفعلية
+                        </span>
+                    </div>
+
+                    <div class="analytics-kpi-grid">
+
+                        <article class="analytics-kpi-card analytics-kpi-featured">
+
+                            <div class="analytics-kpi-top">
+                                <span>المبيعات المحققة</span>
+                                <span class="analytics-kpi-icon">ر.س</span>
+                            </div>
+
+                            <strong data-kpi="sales">—</strong>
+
+                            <small data-kpi-meta="sales">
+                                الطلبات المسلّمة فقط
+                            </small>
+
+                            <div class="analytics-kpi-foot">
+                                <span data-kpi-change="sales">—</span>
+                                <span>مقارنة بالفترة السابقة</span>
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-kpi-card">
+
+                            <div class="analytics-kpi-top">
+                                <span>عدد الطلبات</span>
+                                <span class="analytics-kpi-icon">▤</span>
+                            </div>
+
+                            <strong data-kpi="orders">—</strong>
+
+                            <small data-kpi-meta="orders">
+                                جميع حالات الطلبات
+                            </small>
+
+                            <div class="analytics-kpi-foot">
+                                <span data-kpi-change="orders">—</span>
+                                <span>مقارنة بالفترة السابقة</span>
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-kpi-card">
+
+                            <div class="analytics-kpi-top">
+                                <span>العملاء أصحاب الطلبات</span>
+                                <span class="analytics-kpi-icon">♙</span>
+                            </div>
+
+                            <strong data-kpi="customers">—</strong>
+
+                            <small>
+                                حسب أرقام الهواتف المميزة
+                            </small>
+
+                            <div class="analytics-kpi-foot">
+                                <span data-kpi-change="customers">—</span>
+                                <span>مقارنة بالفترة السابقة</span>
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-kpi-card">
+
+                            <div class="analytics-kpi-top">
+                                <span>متوسط قيمة الطلب المسلّم</span>
+                                <span class="analytics-kpi-icon">◈</span>
+                            </div>
+
+                            <strong data-kpi="average">—</strong>
+
+                            <small>
+                                المبيعات المحققة ÷ الطلبات المسلّمة
+                            </small>
+
+                            <div class="analytics-kpi-foot">
+                                <span data-kpi-change="average">—</span>
+                                <span>مقارنة بالفترة السابقة</span>
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-kpi-card">
+
+                            <div class="analytics-kpi-top">
+                                <span>المنتجات النشطة</span>
+                                <span class="analytics-kpi-icon">▦</span>
+                            </div>
+
+                            <strong data-kpi="products">—</strong>
+
+                            <small>
+                                المنتجات المتاحة والنشطة
+                            </small>
+
+                            <div class="analytics-kpi-foot">
+                                <span data-kpi-meta="products">
+                                    من قاعدة المنتجات
+                                </span>
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-kpi-card">
+
+                            <div class="analytics-kpi-top">
+                                <span>الاستفسارات الواردة</span>
+                                <span class="analytics-kpi-icon">✉</span>
+                            </div>
+
+                            <strong data-kpi="inquiries">—</strong>
+
+                            <small>
+                                خلال الفترة المحددة
+                            </small>
+
+                            <div class="analytics-kpi-foot">
+                                <span data-kpi-meta="inquiries">—</span>
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-kpi-card">
+
+                            <div class="analytics-kpi-top">
+                                <span>متوسط التقييم</span>
+                                <span class="analytics-kpi-icon">★</span>
+                            </div>
+
+                            <strong data-kpi="rating">—</strong>
+
+                            <small data-kpi-meta="rating">
+                                التقييمات المعتمدة فقط
+                            </small>
+
+                            <div class="analytics-kpi-foot">
+                                <span data-kpi-meta="reviews-count">—</span>
+                            </div>
+
+                        </article>
+
+                        <!-- معدل التحويل: مصدره تحليلات سلوك الزوار -->
+                        <article class="analytics-kpi-card analytics-kpi-muted">
+
+                            <div class="analytics-kpi-top">
+                                <span>معدل التحويل</span>
+                                <span class="analytics-kpi-icon">↗</span>
+                            </div>
+
+                            <strong>تحليلات الزوار</strong>
+
+                            <small>
+                                راجع قسم تحليلات سلوك الزوار أدناه
+                            </small>
+
+                            <div class="analytics-kpi-foot">
+                                <span>
+                                    لا تُعرض نسبة تحويل تقديرية
+                                </span>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+                <!-- 02: المبيعات -->
+                <section class="analytics-section">
+
+                    <div class="analytics-section-heading">
+                        <div>
+                            <span class="analytics-kicker">02 / SALES</span>
+                            <h2>المبيعات واتجاه الأداء</h2>
+                        </div>
+
+                        <span class="analytics-section-note">
+                            الإيرادات من الطلبات المسلّمة فقط
+                        </span>
+                    </div>
+
+                    <div class="analytics-grid analytics-grid-sales">
+
+                        <article class="analytics-panel analytics-panel-large">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>المبيعات اليومية</h3>
+                                    <p>قيمة الطلبات التي تم تسليمها</p>
+                                </div>
+
+                                <span class="analytics-panel-mark">ر.س</span>
+                            </div>
+
+                            <div class="analytics-chart" data-sales-chart>
+                                <div class="analytics-empty">
+                                    بانتظار تحميل البيانات
+                                </div>
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-panel">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>حالة الطلبات</h3>
+                                    <p>توزيع الطلبات في الفترة المحددة</p>
+                                </div>
+                            </div>
+
+                            <div class="analytics-status-list" data-order-statuses>
+                                <div class="analytics-empty">
+                                    بانتظار البيانات
+                                </div>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                    <div class="analytics-insight-strip" data-sales-insight>
+                        سيظهر ملخص أداء المبيعات بعد تحميل البيانات.
+                    </div>
+
+                </section>
+
+                <!-- 03: المنتجات والتصنيفات -->
+                <section class="analytics-section">
+
+                    <div class="analytics-section-heading">
+                        <div>
+                            <span class="analytics-kicker">03 / PRODUCTS</span>
+                            <h2>أداء المنتجات والتصنيفات</h2>
+                        </div>
+
+                        <span class="analytics-section-note">
+                            الترتيب حسب كميات المنتجات في الطلبات المسلّمة
+                        </span>
+                    </div>
+
+                    <div class="analytics-grid analytics-grid-products">
+
+                        <article class="analytics-panel analytics-panel-large">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>المنتجات الأكثر مبيعًا</h3>
+                                    <p>الكمية وقيمة المبيعات المحققة</p>
+                                </div>
+                            </div>
+
+                            <div class="analytics-table-wrap">
+
+                                <table class="analytics-table">
+
+                                    <thead>
+                                        <tr>
+                                            <th>المنتج</th>
+                                            <th>الكمية</th>
+                                            <th>قيمة المبيعات</th>
+                                            <th>نسبة المساهمة</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody data-top-products>
+                                        <tr>
+                                            <td colspan="4" class="analytics-empty">
+                                                بانتظار البيانات
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-panel">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>أداء التصنيفات</h3>
+                                    <p>حسب مبيعات المنتجات</p>
+                                </div>
+                            </div>
+
+                            <div class="analytics-category-list"
+                                 data-category-performance>
+                                <div class="analytics-empty">
+                                    بانتظار البيانات
+                                </div>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                    <div class="analytics-panel analytics-panel-spaced">
+
+                        <div class="analytics-panel-heading">
+                            <div>
+                                <h3>منتجات لم تسجل مبيعات خلال الفترة</h3>
+                                <p>
+                                    منتجات نشطة لا تظهر لها وحدات مباعة في
+                                    الطلبات المسلّمة ضمن الفترة المحددة
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="analytics-stagnant-list"
+                             data-stagnant-products>
+                            <div class="analytics-empty">
+                                بانتظار البيانات
+                            </div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- 04: العملاء -->
+                <section class="analytics-section">
+
+                    <div class="analytics-section-heading">
+                        <div>
+                            <span class="analytics-kicker">04 / CUSTOMERS</span>
+                            <h2>العملاء والتوزيع الجغرافي</h2>
+                        </div>
+
+                        <span class="analytics-section-note">
+                            المدينة مأخوذة من عنوان الطلب المسجل
+                        </span>
+                    </div>
+
+                    <div class="analytics-grid">
+
+                        <article class="analytics-panel">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>المدن الأكثر طلبًا</h3>
+                                    <p>بحسب عدد الطلبات</p>
+                                </div>
+                            </div>
+
+                            <div class="analytics-city-list"
+                                 data-city-performance>
+                                <div class="analytics-empty">
+                                    بانتظار البيانات
+                                </div>
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-panel">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>العملاء المتكررون</h3>
+                                    <p>أكثر أرقام العملاء تكرارًا في الطلبات</p>
+                                </div>
+                            </div>
+
+                            <div class="analytics-customer-list"
+                                 data-repeat-customers>
+                                <div class="analytics-empty">
+                                    بانتظار البيانات
+                                </div>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+                <!-- 05: الاستفسارات -->
+                <section class="analytics-section">
+
+                    <div class="analytics-section-heading">
+                        <div>
+                            <span class="analytics-kicker">05 / INQUIRIES</span>
+                            <h2>الاستفسارات وخدمة العملاء</h2>
+                        </div>
+
+                        <span class="analytics-section-note">
+                            من جدول customer_messages
+                        </span>
+                    </div>
+
+                    <div class="analytics-grid analytics-grid-inquiries">
+
+                        <article class="analytics-panel">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>حالات الاستفسارات</h3>
+                                    <p>توزيع الحالات الحالية ضمن الفترة</p>
+                                </div>
+                            </div>
+
+                            <div class="analytics-status-list"
+                                 data-inquiry-statuses>
+                                <div class="analytics-empty">
+                                    بانتظار البيانات
+                                </div>
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-panel">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>أنواع الاستفسارات</h3>
+                                    <p>ما الذي يتواصل العملاء بشأنه؟</p>
+                                </div>
+                            </div>
+
+                            <div class="analytics-category-list"
+                                 data-inquiry-types>
+                                <div class="analytics-empty">
+                                    بانتظار البيانات
+                                </div>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+                <!-- 06: التقييمات -->
+                <section class="analytics-section">
+
+                    <div class="analytics-section-heading">
+                        <div>
+                            <span class="analytics-kicker">06 / REVIEWS</span>
+                            <h2>رضا العملاء والتقييمات</h2>
+                        </div>
+
+                        <span class="analytics-section-note">
+                            يعرض التقييمات المعتمدة فقط
+                        </span>
+                    </div>
+
+                    <div class="analytics-grid analytics-grid-reviews">
+
+                        <article class="analytics-panel">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>توزيع النجوم</h3>
+                                    <p>عدد التقييمات حسب الدرجة</p>
+                                </div>
+                            </div>
+
+                            <div class="analytics-rating-bars"
+                                 data-rating-distribution>
+                                <div class="analytics-empty">
+                                    بانتظار البيانات
+                                </div>
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-panel">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>أحدث التقييمات المعتمدة</h3>
+                                    <p>آخر آراء العملاء المنشورة</p>
+                                </div>
+                            </div>
+
+                            <div class="analytics-recent-reviews"
+                                 data-recent-reviews>
+                                <div class="analytics-empty">
+                                    بانتظار البيانات
+                                </div>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+                <!-- 07: أوقات النشاط -->
+                <section class="analytics-section">
+
+                    <div class="analytics-section-heading">
+                        <div>
+                            <span class="analytics-kicker">07 / ACTIVITY</span>
+                            <h2>أوقات نشاط الطلبات</h2>
+                        </div>
+
+                        <span class="analytics-section-note">
+                            يعكس توقيت إنشاء الطلبات، وليس أوقات النشر
+                            في الشبكات الاجتماعية
+                        </span>
+                    </div>
+
+                    <div class="analytics-grid">
+
+                        <article class="analytics-panel">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>الطلبات حسب أيام الأسبوع</h3>
+                                    <p>عدد الطلبات المنشأة</p>
+                                </div>
+                            </div>
+
+                            <div class="analytics-weekdays"
+                                 data-weekday-chart>
+                                <div class="analytics-empty">
+                                    بانتظار البيانات
+                                </div>
+                            </div>
+
+                        </article>
+
+                        <article class="analytics-panel">
+
+                            <div class="analytics-panel-heading">
+                                <div>
+                                    <h3>ساعات إنشاء الطلبات</h3>
+                                    <p>توزيع الطلبات حسب ساعة اليوم</p>
+                                </div>
+                            </div>
+
+                            <div class="analytics-hours"
+                                 data-hour-chart>
+                                <div class="analytics-empty">
+                                    بانتظار البيانات
+                                </div>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+                <!-- 08: الرؤى الذكية -->
+                <section class="analytics-section">
+
+                    <div class="analytics-section-heading">
+                        <div>
+                            <span class="analytics-kicker">08 / INSIGHTS</span>
+                            <h2>قراءة ذكية للبيانات</h2>
+                        </div>
+
+                        <span class="analytics-section-note">
+                            استنتاجات وصفية مبنية على الأرقام المتاحة
+                        </span>
+                    </div>
+
+                    <div class="analytics-insights-grid"
+                         data-smart-insights>
+
+                        <article class="analytics-insight-card">
+                            <span>تحليل الأداء</span>
+                            <p>
+                                سيتم توليد الملاحظات بعد تحميل البيانات.
+                            </p>
+                        </article>
+
+                    </div>
+
+                </section>
+
+                <!--
+                    09 / TRACKING
+
+                    قسم التتبع القديم أزيل.
+                    تحليلات سلوك الزوار يتم عرضها بواسطة
+                    assets/js/admin-analytics.js
+
+                    لا تضف هنا بيانات تجريبية أو مؤشرات ثابتة.
+                -->
+
+                <!-- تذييل التحليلات -->
+                <footer class="analytics-footer">
+
+                    <span>IBR20 · مركز التحليلات</span>
+
+                    <span data-data-health>
+                        مصادر البيانات: لم يتم التحميل
+                    </span>
+
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

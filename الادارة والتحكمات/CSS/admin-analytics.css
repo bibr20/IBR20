@@ -1,0 +1,1938 @@
+
+/* =========================================================
+   IBR20 ANALYTICS
+   Professional Analytics Dashboard
+   Version: 2.1.0
+   RTL | Responsive | Isolated Styles
+========================================================= */
+
+/* =========================================================
+   01. DESIGN TOKENS
+========================================================= */
+
+.admin-analytics-page {
+    --an-ink: #30271f;
+    --an-muted: #81766b;
+    --an-line: #e9e1d8;
+    --an-paper: #fbf9f6;
+    --an-card: #ffffff;
+
+    --an-wood: #76543a;
+    --an-wood-dark: #563b29;
+    --an-wood-light: #a88969;
+
+    --an-sand: #eee4d8;
+    --an-cream: #f5f1eb;
+
+    --an-green: #47745d;
+    --an-green-bg: #edf5ef;
+
+    --an-red: #a6534b;
+    --an-red-bg: #fbefed;
+
+    --an-blue: #58758b;
+    --an-blue-bg: #edf3f7;
+
+    color: var(--an-ink);
+    background: var(--an-cream);
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+.admin-analytics-page * {
+    box-sizing: border-box;
+}
+
+.admin-analytics-page [hidden] {
+    display: none !important;
+}
+
+.admin-analytics-page img,
+.admin-analytics-page svg,
+.admin-analytics-page canvas {
+    max-width: 100%;
+}
+
+.admin-analytics-page button,
+.admin-analytics-page input,
+.admin-analytics-page select,
+.admin-analytics-page textarea {
+    font-family: inherit;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.admin-analytics-page button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================================================
+   02. AUTH LOADING
+========================================================= */
+
+.analytics-auth-loading {
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 14px;
+    color: var(--an-muted);
+    font: 14px/1.7 inherit;
+}
+
+.analytics-spinner {
+    width: 34px;
+    height: 34px;
+    border: 3px solid #e6ddd3;
+    border-top-color: var(--an-wood);
+    border-radius: 50%;
+    animation: an-spin .8s linear infinite;
+}
+
+@keyframes an-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================================================
+   03. ADMIN LAYOUT
+========================================================= */
+
+.admin-analytics-page .admin-layout {
+    min-height: 100vh;
+    display: flex;
+    width: 100%;
+}
+
+.admin-analytics-page .admin-sidebar {
+    width: 252px;
+    flex: 0 0 252px;
+    min-height: 100vh;
+    padding: 24px 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #30271f;
+    color: #fff;
+
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    z-index: 20;
+}
+
+.admin-analytics-page .admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: #fff;
+    text-decoration: none;
+
+    padding: 4px 8px 26px;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.admin-analytics-page .admin-brand-mark {
+    width: 44px;
+    height: 44px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+    color: #38291e;
+    background: #d8c2a8;
+
+    font: 700 15px/1 Arial, sans-serif;
+    letter-spacing: 1px;
+}
+
+.admin-analytics-page .admin-brand strong,
+.admin-analytics-page .admin-brand small {
+    display: block;
+}
+
+.admin-analytics-page .admin-brand strong {
+    font-size: 14px;
+}
+
+.admin-analytics-page .admin-brand small {
+    margin-top: 4px;
+    color: #c4b5a6;
+    font-size: 11px;
+}
+
+.admin-analytics-page .admin-nav {
+    display: grid;
+    gap: 7px;
+    margin-top: 24px;
+}
+
+.admin-analytics-page .admin-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 13px;
+    border-radius: 10px;
+
+    color: #d8cec4;
+    text-decoration: none;
+    font-size: 13px;
+
+    transition: .2s ease;
+}
+
+.admin-analytics-page .admin-nav-link span {
+    width: 22px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.admin-analytics-page .admin-nav-link:hover,
+.admin-analytics-page .admin-nav-link.is-active {
+    background: rgba(220,196,168,.16);
+    color: #fff;
+}
+
+.admin-analytics-page .admin-nav-link.is-active {
+    box-shadow: inset -3px 0 #d8c2a8;
+}
+
+.admin-analytics-page .admin-sidebar-bottom {
+    margin-top: auto;
+    display: grid;
+    gap: 12px;
+}
+
+.admin-analytics-page .admin-sidebar-caption {
+    color: #9e8e7e;
+    font-size: 11px;
+    padding: 0 12px;
+}
+
+.admin-analytics-page .admin-logout-button {
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 9px;
+    background: transparent;
+    color: #e6d9cb;
+    padding: 11px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+}
+
+.admin-analytics-page .admin-logout-button:hover {
+    background: rgba(255,255,255,.08);
+}
+
+.admin-analytics-page .admin-main {
+    min-width: 0;
+    flex: 1;
+    width: 0;
+}
+
+.admin-analytics-page .admin-topbar {
+    min-height: 74px;
+    padding: 12px 34px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    background: rgba(255,255,255,.88);
+    border-bottom: 1px solid var(--an-line);
+}
+
+.admin-analytics-page .admin-menu-toggle {
+    display: none;
+
+    border: 1px solid var(--an-line);
+    background: white;
+    border-radius: 9px;
+
+    width: 38px;
+    height: 38px;
+
+    cursor: pointer;
+}
+
+.admin-analytics-page .admin-topbar-title {
+    display: grid;
+    gap: 3px;
+}
+
+.admin-analytics-page .admin-topbar-title strong {
+    font-size: 14px;
+}
+
+.admin-analytics-page .admin-eyebrow {
+    color: #9b8877;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    direction: ltr;
+}
+
+.admin-analytics-page .admin-topbar-user {
+    margin-inline-start: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--an-muted);
+    font-size: 12px;
+}
+
+.admin-analytics-page .admin-user-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #6e987e;
+}
+
+/* =========================================================
+   04. PAGE HEADER
+========================================================= */
+
+.analytics-page-content {
+    width: 100%;
+    max-width: 1600px;
+    min-width: 0;
+
+    margin: 0 auto;
+    padding: 30px 34px 42px;
+}
+
+.analytics-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 22px;
+    margin-bottom: 24px;
+}
+
+.analytics-kicker {
+    display: block;
+    color: #9a8069;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.25px;
+    direction: ltr;
+    text-align: right;
+}
+
+.analytics-heading h1 {
+    margin: 8px 0 7px;
+    font-size: clamp(25px,3vw,34px);
+    letter-spacing: -.7px;
+}
+
+.analytics-heading p {
+    margin: 0;
+    color: var(--an-muted);
+    font-size: 13px;
+}
+
+.analytics-heading-actions {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+/* =========================================================
+   05. BUTTONS
+========================================================= */
+
+.analytics-button {
+    border: 1px solid transparent;
+    border-radius: 9px;
+    padding: 11px 15px;
+
+    font: inherit;
+    font-size: 12px;
+
+    cursor: pointer;
+    transition: .2s;
+}
+
+.analytics-button-primary {
+    color: #fff;
+    background: var(--an-wood-dark);
+}
+
+.analytics-button-primary:hover {
+    background: #76543a;
+    transform: translateY(-1px);
+}
+
+.analytics-button-light {
+    background: #fff;
+    border-color: var(--an-line);
+    color: var(--an-ink);
+}
+
+.analytics-button-light:hover {
+    border-color: #cdb9a5;
+}
+
+.analytics-button-small {
+    padding: 8px 12px;
+    background: var(--an-wood);
+    color: white;
+}
+
+.analytics-button:focus-visible,
+.admin-analytics-page button:focus-visible,
+.admin-analytics-page input:focus-visible {
+    outline: 3px solid rgba(118,84,58,.25);
+    outline-offset: 2px;
+}
+
+/* =========================================================
+   06. DATE TOOLBAR
+========================================================= */
+
+.analytics-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+
+    padding: 13px 15px;
+
+    background: white;
+    border: 1px solid var(--an-line);
+    border-radius: 13px;
+
+    margin-bottom: 18px;
+}
+
+.analytics-period-tabs {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.analytics-period-tabs button {
+    border: 0;
+    background: transparent;
+    color: var(--an-muted);
+    border-radius: 7px;
+
+    padding: 8px 11px;
+
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+}
+
+.analytics-period-tabs button:hover {
+    background: #f7f2ec;
+}
+
+.analytics-period-tabs button.is-selected {
+    background: #eee4d8;
+    color: #5d402b;
+    font-weight: 700;
+}
+
+.analytics-custom-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-inline-start: auto;
+}
+
+.analytics-custom-range label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    color: var(--an-muted);
+    font-size: 10px;
+}
+
+.analytics-custom-range input {
+    width: 124px;
+    padding: 7px 8px;
+
+    border: 1px solid var(--an-line);
+    border-radius: 7px;
+
+    background: #fff;
+    color: var(--an-ink);
+
+    font: inherit;
+    font-size: 11px;
+}
+
+.analytics-updated {
+    color: #9a9086;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   07. SYSTEM MESSAGES
+========================================================= */
+
+.analytics-alert,
+.analytics-error {
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin: 12px 0;
+
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.analytics-alert {
+    color: #72552f;
+    background: #f8f0df;
+    border: 1px solid #eadbbd;
+}
+
+.analytics-error {
+    color: #8d3d38;
+    background: #fbefed;
+    border: 1px solid #efd3cf;
+}
+
+/* =========================================================
+   08. SECTION HEADINGS
+========================================================= */
+
+.analytics-section {
+    margin-top: 32px;
+    min-width: 0;
+}
+
+.analytics-section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.analytics-section-heading h2 {
+    margin: 5px 0 0;
+    font-size: 19px;
+}
+
+.analytics-section-note {
+    color: #9a9086;
+    font-size: 10px;
+}
+
+/* =========================================================
+   09. KPI CARDS
+========================================================= */
+
+.analytics-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 12px;
+}
+
+.analytics-kpi-card {
+    min-width: 0;
+    padding: 17px 18px 14px;
+
+    background: white;
+    border: 1px solid var(--an-line);
+    border-radius: 13px;
+
+    box-shadow: 0 3px 12px rgba(69,49,32,.025);
+}
+
+.analytics-kpi-featured {
+    background: #493526;
+    border-color: #493526;
+    color: white;
+}
+
+.analytics-kpi-muted {
+    background: #f3f0ec;
+    border-style: dashed;
+}
+
+.analytics-kpi-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    color: var(--an-muted);
+    font-size: 11px;
+}
+
+.analytics-kpi-featured .analytics-kpi-top {
+    color: #e1d4c7;
+}
+
+.analytics-kpi-icon {
+    display: grid;
+    place-items: center;
+
+    min-width: 27px;
+    height: 27px;
+    padding: 0 5px;
+
+    border-radius: 8px;
+    background: #f5f0e9;
+    color: #76543a;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.analytics-kpi-featured .analytics-kpi-icon {
+    background: rgba(255,255,255,.13);
+    color: #f1dfca;
+}
+
+.analytics-kpi-card > strong {
+    display: block;
+    margin: 14px 0 4px;
+
+    font-size: clamp(22px,2.2vw,29px);
+    font-weight: 700;
+    letter-spacing: -.7px;
+
+    overflow-wrap: anywhere;
+}
+
+.analytics-kpi-card > small {
+    display: block;
+    color: #9b9188;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.analytics-kpi-featured > small {
+    color: #d3c3b3;
+}
+
+.analytics-kpi-foot {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-top: 13px;
+    padding-top: 10px;
+
+    border-top: 1px solid #f0ebe5;
+    color: #a1988e;
+    font-size: 9px;
+}
+
+.analytics-kpi-featured .analytics-kpi-foot {
+    border-color: rgba(255,255,255,.14);
+    color: #d2c2b3;
+}
+
+.analytics-kpi-foot [data-kpi-change] {
+    font-weight: 700;
+    color: var(--an-green);
+}
+
+.analytics-kpi-featured .analytics-kpi-foot [data-kpi-change] {
+    color: #d7e7d8;
+}
+
+/* =========================================================
+   10. GRIDS AND PANELS
+========================================================= */
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 14px;
+}
+
+.analytics-grid-sales {
+    grid-template-columns: minmax(0,1.65fr) minmax(280px,.85fr);
+}
+
+.analytics-grid-products {
+    grid-template-columns: minmax(0,1.55fr) minmax(270px,.85fr);
+}
+
+.analytics-panel {
+    min-width: 0;
+    padding: 19px;
+
+    background: white;
+    border: 1px solid var(--an-line);
+    border-radius: 13px;
+}
+
+.analytics-panel-spaced {
+    margin-top: 14px;
+}
+
+.analytics-panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 17px;
+}
+
+.analytics-panel-heading h3 {
+    margin: 0;
+    font-size: 13px;
+}
+
+.analytics-panel-heading p {
+    margin: 5px 0 0;
+    color: #a1988e;
+    font-size: 10px;
+}
+
+.analytics-panel-mark {
+    display: grid;
+    place-items: center;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 8px;
+    color: #76543a;
+    background: #f3ece4;
+
+    font-size: 10px;
+}
+
+/* =========================================================
+   11. SALES CHART
+========================================================= */
+
+.analytics-chart {
+    min-height: 220px;
+
+    display: flex;
+    align-items: end;
+    gap: 7px;
+
+    padding: 16px 2px 2px;
+    border-bottom: 1px solid var(--an-line);
+
+    min-width: 0;
+    overflow-x: auto;
+}
+
+.analytics-chart-column {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+
+    height: 190px;
+    gap: 7px;
+}
+
+.analytics-chart-bar {
+    width: min(28px,70%);
+    min-height: 3px;
+
+    border-radius: 5px 5px 2px 2px;
+
+    background: linear-gradient(180deg,#b99b7b,#76543a);
+    position: relative;
+}
+
+.analytics-chart-bar:hover {
+    filter: brightness(1.1);
+}
+
+.analytics-chart-label {
+    color: #a1988e;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.analytics-chart-value {
+    color: #8d7967;
+    font-size: 9px;
+}
+
+/* =========================================================
+   12. STATUS AND CATEGORY LISTS
+========================================================= */
+
+.analytics-status-list,
+.analytics-category-list,
+.analytics-city-list,
+.analytics-customer-list {
+    display: grid;
+    gap: 13px;
+}
+
+.analytics-status-row,
+.analytics-category-row,
+.analytics-city-row {
+    display: grid;
+    gap: 6px;
+}
+
+.analytics-row-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+}
+
+.analytics-row-top span:last-child {
+    color: #8d8175;
+    font-variant-numeric: tabular-nums;
+}
+
+.analytics-progress {
+    height: 6px;
+    border-radius: 9px;
+    overflow: hidden;
+    background: #f1ece6;
+}
+
+.analytics-progress > span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #9b7959;
+}
+
+/* =========================================================
+   13. SALES INSIGHT
+========================================================= */
+
+.analytics-insight-strip {
+    margin-top: 13px;
+    padding: 13px 16px;
+
+    border-radius: 10px;
+    background: #eee7df;
+    color: #6b513c;
+
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* =========================================================
+   14. TABLES
+========================================================= */
+
+.analytics-table-wrap {
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.analytics-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.analytics-table th {
+    padding: 10px 9px;
+
+    color: #a0968c;
+    font-size: 10px;
+    font-weight: 600;
+
+    border-bottom: 1px solid var(--an-line);
+}
+
+.analytics-table td {
+    padding: 12px 9px;
+    font-size: 11px;
+    border-bottom: 1px solid #f3eee9;
+}
+
+.analytics-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.analytics-table td:first-child {
+    color: #493a2d;
+    font-weight: 600;
+}
+
+.analytics-table .analytics-empty {
+    text-align: center;
+    color: #a1988e;
+    font-weight: 400;
+    padding: 25px;
+}
+
+.analytics-product-share {
+    color: #8b725b;
+    font-size: 10px;
+}
+
+/* =========================================================
+   15. STAGNANT PRODUCTS
+========================================================= */
+
+.analytics-stagnant-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.analytics-stagnant-item {
+    padding: 7px 10px;
+
+    border: 1px solid #eee5dc;
+    border-radius: 8px;
+
+    color: #796b5d;
+    background: #fcfaf8;
+
+    font-size: 10px;
+}
+
+/* =========================================================
+   16. CUSTOMERS
+========================================================= */
+
+.analytics-customer-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1ece7;
+
+    font-size: 11px;
+}
+
+.analytics-customer-row:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.analytics-customer-row small {
+    display: block;
+    color: #a1988e;
+    margin-top: 4px;
+    font-size: 9px;
+}
+
+.analytics-customer-count {
+    color: #76543a;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   17. REVIEWS
+========================================================= */
+
+.analytics-rating-bars {
+    display: grid;
+    gap: 11px;
+}
+
+.analytics-rating-row {
+    display: grid;
+    grid-template-columns: 42px 1fr 30px;
+    align-items: center;
+    gap: 9px;
+    font-size: 10px;
+}
+
+.analytics-rating-stars {
+    color: #b58a4e;
+    direction: ltr;
+    white-space: nowrap;
+}
+
+.analytics-rating-row .analytics-progress > span {
+    background: #bd985f;
+}
+
+.analytics-recent-reviews {
+    display: grid;
+    gap: 12px;
+}
+
+.analytics-review {
+    padding-bottom: 11px;
+    border-bottom: 1px solid #f1ece7;
+}
+
+.analytics-review:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.analytics-review-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+}
+
+.analytics-review-head span:last-child {
+    color: #b58a4e;
+    direction: ltr;
+}
+
+.analytics-review p {
+    margin: 6px 0 0;
+    color: #8d8175;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* =========================================================
+   18. ACTIVITY CHARTS
+========================================================= */
+
+.analytics-weekdays {
+    display: grid;
+    gap: 10px;
+}
+
+.analytics-weekday-row {
+    display: grid;
+    grid-template-columns: 70px 1fr 28px;
+    align-items: center;
+    gap: 9px;
+    font-size: 10px;
+}
+
+.analytics-weekday-row > span:first-child {
+    color: #807469;
+}
+
+.analytics-weekday-row > span:last-child {
+    color: #8d8175;
+    text-align: left;
+}
+
+.analytics-weekday-row .analytics-progress > span {
+    background: #8a6b4e;
+}
+
+.analytics-hours {
+    display: grid;
+    grid-template-columns: repeat(12,minmax(0,1fr));
+    gap: 5px;
+    align-items: end;
+    min-height: 150px;
+}
+
+.analytics-hour {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    gap: 5px;
+    height: 145px;
+}
+
+.analytics-hour-bar {
+    width: 100%;
+    min-height: 3px;
+    border-radius: 4px 4px 1px 1px;
+    background: #a88969;
+}
+
+.analytics-hour small {
+    color: #9b9188;
+    font-size: 8px;
+}
+
+/* =========================================================
+   19. SMART INSIGHTS
+========================================================= */
+
+.analytics-insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 11px;
+}
+
+.analytics-insight-card {
+    padding: 16px;
+    border: 1px solid var(--an-line);
+    border-radius: 12px;
+    background: white;
+}
+
+.analytics-insight-card > span {
+    color: #9a8069;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.analytics-insight-card p {
+    margin: 8px 0 0;
+    color: #6f6256;
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* =========================================================
+   20. LIVE BEHAVIOR ANALYTICS
+   Dynamically created by admin-analytics.js
+========================================================= */
+
+#ibr-live-analytics {
+    width: 100%;
+    min-width: 0;
+    margin-top: 34px;
+    color: var(--an-ink);
+    direction: rtl;
+}
+
+.ibr-live-analytics {
+    display: block;
+    animation: ibr-live-appear .35s ease both;
+}
+
+@keyframes ibr-live-appear {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Live heading */
+
+.ibr-live-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 14px;
+
+    margin-bottom: 17px;
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid var(--an-line);
+}
+
+.ibr-live-eyebrow {
+    display: block;
+    margin-bottom: 6px;
+
+    color: #9a8069;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+
+    direction: ltr;
+    text-align: right;
+}
+
+.ibr-live-heading h2,
+.ibr-live-heading h3 {
+    margin: 0;
+    color: var(--an-ink);
+    font-size: 21px;
+    font-weight: 750;
+}
+
+.ibr-live-heading p {
+    margin: 6px 0 0;
+    color: var(--an-muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.ibr-live-version {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 7px 11px;
+    border: 1px solid #e7dfd5;
+    border-radius: 30px;
+
+    background: #fff;
+    color: #79644e;
+
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.ibr-live-version::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #6e987e;
+}
+
+/* Live notice */
+
+.ibr-live-notice {
+    margin: 0 0 16px;
+    padding: 11px 14px;
+
+    border: 1px solid #e5d9c9;
+    border-radius: 10px;
+
+    background: #f8f3ec;
+    color: #705a43;
+
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.ibr-live-notice:empty {
+    display: none;
+}
+
+/* Live KPI grid */
+
+.ibr-live-kpis {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+.ibr-live-kpi {
+    min-width: 0;
+    position: relative;
+
+    padding: 17px 17px 15px;
+
+    border: 1px solid var(--an-line);
+    border-radius: 13px;
+
+    background: #fff;
+
+    box-shadow: 0 3px 12px rgba(69,49,32,.025);
+
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.ibr-live-kpi:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(69,49,32,.07);
+}
+
+.ibr-live-kpi > span,
+.ibr-live-kpi > small {
+    display: block;
+}
+
+.ibr-live-kpi > span {
+    color: var(--an-muted);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.ibr-live-kpi strong {
+    display: block;
+    margin: 12px 0 5px;
+
+    color: var(--an-wood-dark);
+    font-size: clamp(23px,2.2vw,30px);
+    font-weight: 800;
+    line-height: 1.3;
+
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+.ibr-live-kpi small {
+    color: #a1988e;
+    font-size: 9px;
+    line-height: 1.7;
+}
+
+/* Live content grid */
+
+.ibr-live-grid {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 14px;
+
+    align-items: stretch;
+}
+
+.ibr-live-card {
+    min-width: 0;
+    padding: 19px;
+
+    border: 1px solid var(--an-line);
+    border-radius: 13px;
+
+    background: #fff;
+}
+
+.ibr-live-card-wide {
+    grid-column: 1 / -1;
+}
+
+.ibr-live-card-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+
+    margin-bottom: 16px;
+}
+
+.ibr-live-card-heading h3 {
+    margin: 0;
+    color: #493a2d;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.ibr-live-card-heading p {
+    margin: 5px 0 0;
+    color: #a1988e;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* Daily events */
+
+.ibr-live-daily {
+    display: grid;
+    gap: 13px;
+}
+
+.ibr-live-daily-row {
+    display: grid;
+    grid-template-columns: minmax(75px,100px) minmax(0,1fr) auto;
+    align-items: center;
+    gap: 11px;
+}
+
+.ibr-live-daily-row > span:first-child {
+    color: #81766b;
+    font-size: 10px;
+}
+
+.ibr-live-daily-row strong {
+    color: #5b4430;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+}
+
+.ibr-live-track {
+    display: block;
+    width: 100%;
+    height: 9px;
+
+    overflow: hidden;
+    border-radius: 20px;
+
+    background: #f1ece6;
+}
+
+.ibr-live-track > i {
+    display: block;
+    height: 100%;
+    min-width: 2px;
+
+    border-radius: inherit;
+
+    background: linear-gradient(90deg,#b99b7b,#76543a);
+}
+
+/* Funnel */
+
+.ibr-live-funnel {
+    display: grid;
+    gap: 10px;
+}
+
+.ibr-live-funnel-step {
+    min-width: 0;
+    padding: 13px 14px;
+
+    border: 1px solid #eee5dc;
+    border-radius: 10px;
+
+    background: #fcfaf8;
+}
+
+.ibr-live-funnel-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    font-size: 11px;
+}
+
+.ibr-live-funnel-top strong {
+    color: var(--an-wood-dark);
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+
+.ibr-live-funnel-step p {
+    margin: 6px 0 0;
+    color: #928579;
+    font-size: 9px;
+    line-height: 1.7;
+}
+
+/* Lists */
+
+.ibr-live-list {
+    display: grid;
+    gap: 0;
+}
+
+.ibr-live-list-row {
+    padding: 12px 0;
+    border-bottom: 1px solid #f1ece7;
+}
+
+.ibr-live-list-row:first-child {
+    padding-top: 0;
+}
+
+.ibr-live-list-row:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.ibr-live-list-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.ibr-live-list-top > span:first-child {
+    min-width: 0;
+    color: #574638;
+    overflow-wrap: anywhere;
+}
+
+.ibr-live-list-top strong {
+    flex: 0 0 auto;
+    color: var(--an-wood);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.ibr-live-list-row small {
+    display: block;
+    margin-top: 4px;
+
+    color: #a1988e;
+    font-size: 9px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+/* Footnotes and empty states */
+
+.ibr-live-footnote {
+    margin-top: 13px;
+    padding-top: 11px;
+
+    border-top: 1px solid #f0ebe5;
+
+    color: #9b9188;
+    font-size: 9px;
+    line-height: 1.9;
+}
+
+.ibr-live-empty {
+    padding: 23px 12px;
+
+    border: 1px dashed #e7ded4;
+    border-radius: 10px;
+
+    background: #fcfaf8;
+    color: #a1988e;
+
+    text-align: center;
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* =========================================================
+   21. EMPTY STATES
+========================================================= */
+
+.analytics-empty {
+    color: #a1988e;
+    font-size: 11px;
+    text-align: center;
+    padding: 24px 10px;
+}
+
+/* =========================================================
+   22. FOOTER
+========================================================= */
+
+.analytics-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding-top: 17px;
+    margin-top: 30px;
+
+    border-top: 1px solid var(--an-line);
+    color: #a1988e;
+    font-size: 9px;
+}
+
+/* =========================================================
+   23. LAPTOP
+========================================================= */
+
+@media (max-width: 1250px) {
+    .analytics-page-content {
+        padding-inline: 24px;
+    }
+
+    .analytics-kpi-grid,
+    .ibr-live-kpis {
+        grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+}
+
+@media (max-width: 1100px) {
+    .analytics-grid-sales,
+    .analytics-grid-products {
+        grid-template-columns: 1fr;
+    }
+
+    .analytics-insights-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+}
+
+/* =========================================================
+   24. TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+    .admin-analytics-page .admin-sidebar {
+        position: fixed;
+        right: 0;
+
+        transform: translateX(105%);
+        transition: transform .25s;
+
+        box-shadow: -12px 0 35px rgba(0,0,0,.12);
+    }
+
+    .admin-analytics-page .admin-sidebar.is-open {
+        transform: translateX(0);
+    }
+
+    .admin-analytics-page .admin-menu-toggle {
+        display: block;
+    }
+
+    .admin-analytics-page .admin-topbar {
+        padding-inline: 20px;
+    }
+
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ibr-live-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ibr-live-card-wide {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 760px) {
+    .analytics-page-content {
+        padding: 20px 16px 30px;
+    }
+
+    .analytics-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .analytics-heading-actions {
+        width: 100%;
+    }
+
+    .analytics-heading-actions .analytics-button {
+        flex: 1;
+    }
+
+    .analytics-toolbar {
+        align-items: flex-start;
+    }
+
+    .analytics-custom-range {
+        margin-inline-start: 0;
+        flex-wrap: wrap;
+    }
+
+    .analytics-kpi-grid,
+    .ibr-live-kpis {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 9px;
+    }
+
+    .analytics-insights-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analytics-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .analytics-panel {
+        padding: 16px;
+    }
+
+    .ibr-live-card {
+        padding: 16px;
+    }
+
+    .ibr-live-heading h2,
+    .ibr-live-heading h3 {
+        font-size: 19px;
+    }
+}
+
+/* =========================================================
+   25. MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+    .analytics-page-content {
+        padding: 19px 12px 28px;
+    }
+
+    .admin-analytics-page .admin-topbar {
+        min-height: 64px;
+        padding: 10px 13px;
+    }
+
+    .analytics-heading h1 {
+        font-size: 25px;
+    }
+
+    .analytics-heading p {
+        font-size: 11px;
+        line-height: 1.8;
+    }
+
+    .analytics-period-tabs {
+        width: 100%;
+        gap: 3px;
+    }
+
+    .analytics-period-tabs button {
+        padding: 7px 9px;
+        font-size: 10px;
+    }
+
+    .analytics-custom-range {
+        width: 100%;
+    }
+
+    .analytics-custom-range label {
+        flex: 1;
+        justify-content: space-between;
+    }
+
+    .analytics-custom-range input {
+        width: 120px;
+        max-width: 65%;
+    }
+
+    .analytics-updated {
+        width: 100%;
+    }
+
+    .analytics-kpi-card {
+        padding: 13px;
+        border-radius: 11px;
+    }
+
+    .analytics-kpi-card > strong {
+        font-size: 21px;
+    }
+
+    .analytics-kpi-top {
+        font-size: 10px;
+    }
+
+    .analytics-section {
+        margin-top: 26px;
+    }
+
+    .analytics-section-heading h2 {
+        font-size: 17px;
+    }
+
+    .analytics-section-note {
+        line-height: 1.7;
+    }
+
+    .analytics-chart {
+        min-height: 190px;
+        gap: 4px;
+    }
+
+    .analytics-chart-column {
+        height: 165px;
+    }
+
+    .analytics-chart-label {
+        font-size: 8px;
+    }
+
+    .analytics-table {
+        min-width: 530px;
+    }
+
+    .analytics-footer {
+        flex-direction: column;
+    }
+
+    /* Live analytics mobile */
+
+    #ibr-live-analytics {
+        margin-top: 27px;
+    }
+
+    .ibr-live-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .ibr-live-heading h2,
+    .ibr-live-heading h3 {
+        font-size: 18px;
+    }
+
+    .ibr-live-kpi {
+        padding: 13px;
+        border-radius: 11px;
+    }
+
+    .ibr-live-kpi > span {
+        font-size: 10px;
+    }
+
+    .ibr-live-kpi strong {
+        margin: 9px 0 4px;
+        font-size: 23px;
+    }
+
+    .ibr-live-kpi small {
+        font-size: 8px;
+    }
+
+    .ibr-live-card {
+        padding: 14px;
+        border-radius: 11px;
+    }
+
+    .ibr-live-card-heading h3 {
+        font-size: 12px;
+    }
+
+    .ibr-live-daily-row {
+        grid-template-columns: 68px minmax(0,1fr) auto;
+        gap: 7px;
+    }
+
+    .ibr-live-daily-row > span:first-child {
+        font-size: 9px;
+    }
+
+    .ibr-live-funnel-step {
+        padding: 11px;
+    }
+
+    .ibr-live-list-top {
+        font-size: 10px;
+    }
+
+    .analytics-status-pill {
+        max-width: 100%;
+    }
+}
+
+/* =========================================================
+   26. VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+    .analytics-page-content {
+        padding-inline: 9px;
+    }
+
+    .analytics-kpi-grid,
+    .ibr-live-kpis {
+        gap: 7px;
+    }
+
+    .analytics-kpi-card {
+        padding: 10px;
+    }
+
+    .analytics-kpi-card > strong {
+        font-size: 19px;
+    }
+
+    .analytics-kpi-foot {
+        flex-wrap: wrap;
+    }
+
+    .analytics-custom-range input {
+        width: 105px;
+    }
+
+    .ibr-live-kpi {
+        padding: 11px;
+    }
+
+    .ibr-live-kpi strong {
+        font-size: 20px;
+    }
+
+    .ibr-live-daily-row {
+        grid-template-columns: 58px minmax(0,1fr) auto;
+        gap: 6px;
+    }
+
+    .ibr-live-daily-row > span:first-child {
+        font-size: 8px;
+    }
+}
+
+/* =========================================================
+   27. ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-analytics-page *,
+    .admin-analytics-page *::before,
+    .admin-analytics-page *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+/* =========================================================
+   28. PRINT
+========================================================= */
+
+@media print {
+    .admin-analytics-page .admin-sidebar,
+    .admin-analytics-page .admin-topbar,
+    .analytics-heading-actions,
+    .analytics-toolbar {
+        display: none !important;
+    }
+
+    .admin-analytics-page .admin-layout {
+        display: block;
+    }
+
+    .analytics-page-content {
+        padding: 0;
+        max-width: none;
+    }
+
+    .analytics-panel,
+    .analytics-kpi-card,
+    .ibr-live-kpi,
+    .ibr-live-card {
+        break-inside: avoid;
+        box-shadow: none;
+    }
+
+    #ibr-live-analytics {
+        break-inside: auto;
+    }
+}
+
+
+
+#ibr-live-analytics {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 28px 0 0;
+    padding: 0;
+    box-sizing: border-box;
+    direction: rtl;
+}
+
+#ibr-live-analytics *,
+#ibr-live-analytics *::before,
+#ibr-live-analytics *::after {
+    box-sizing: border-box;
+}
+
+.ibr-live-analytics {
+    width: 100%;
+    min-width: 0;
+    direction: rtl;
+}
+
+.ibr-live-grid,
+.ibr-live-kpis {
+    width: 100%;
+    min-width: 0;
+}
+
+@media (max-width: 768px) {
+    #ibr-live-analytics {
+        margin-top: 20px;
+    }
+
+    .ibr-live-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ibr-live-kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .ibr-live-kpis {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

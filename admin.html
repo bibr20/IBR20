@@ -1,0 +1,3992 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#68452e">
+<meta name="description" content="إدارة متجر IBR للأثاث الخشبي.">
+<title>إدارة المتجر | IBR أثاث خشبي</title>
+<link rel="stylesheet" href="assets/css/style.css">
+
+<style>
+[hidden]{display:none!important}
+.admin-section{margin-top:22px}
+.admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.admin-toolbar input,.admin-toolbar select{flex:1;min-width:180px}
+.admin-products{display:grid;gap:12px}
+.admin-product{display:grid;grid-template-columns:90px 1fr auto;gap:14px;align-items:center;padding:14px;border:1px solid #e8ded4;border-radius:12px;margin-bottom:10px}
+.admin-product img{width:90px;height:85px;object-fit:contain;background:#f8f4ef;border-radius:8px}
+.admin-product h3{margin:0 0 6px}
+.admin-product p{margin:4px 0;color:#765d49}
+.admin-actions{display:flex;gap:7px;flex-wrap:wrap}
+.admin-actions button{font-size:13px}
+.admin-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.admin-form-grid .full{grid-column:1/-1}
+.admin-form-grid input,.admin-form-grid select,.admin-form-grid textarea{width:100%}
+.admin-image-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-top:14px}
+.admin-image-card{border:1px solid #e5d9ce;border-radius:10px;padding:9px;background:#fff}
+.admin-image-card img{width:100%;height:115px;object-fit:contain;background:#f8f4ef;border-radius:7px}
+.admin-image-card label{display:flex;gap:6px;align-items:center;font-size:13px;margin:8px 0}
+.admin-image-card button{width:100%;margin-top:5px}
+.admin-preview{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.admin-preview img{width:100px;height:100px;object-fit:contain;background:#f8f4ef;border-radius:8px}
+.admin-message-image{width:125px;height:110px;object-fit:contain;border:1px solid #e5d9ce;border-radius:8px;margin:6px}
+.admin-status{margin:12px 0;padding:10px;border-radius:8px;background:#f8f4ef}
+.admin-status.error{color:#a52222}
+.admin-status.success{color:#216b35}
+.admin-muted{color:#806b59;font-size:13px}
+.admin-badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#f1e8df;font-size:12px}
+
+/* إدارة صور البنر */
+.banner-admin-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+    gap:14px;
+    margin-top:18px;
+}
+.banner-admin-card{
+    border:1px solid #e5d9ce;
+    border-radius:12px;
+    padding:10px;
+    background:#fff;
+    min-width:0;
+}
+.banner-admin-card img{
+    width:100%;
+    height:135px;
+    object-fit:contain;
+    background:#f8f4ef;
+    border-radius:8px;
+}
+.banner-admin-card input,
+.banner-admin-card select{
+    width:100%;
+    margin-top:8px;
+}
+.banner-admin-card .admin-actions{margin-top:10px}
+.banner-admin-card .admin-actions button{flex:1}
+.banner-upload-area{
+    padding:16px;
+    margin-top:14px;
+    background:#f8f4ef;
+    border:1px dashed #cbb9a8;
+    border-radius:10px;
+}
+.banner-product-picker{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:12px;
+}
+.banner-product-picker select{width:100%}
+/* إدارة صورة قسم الصفحة الرئيسية */
+.home-feature-preview{
+    margin-top:15px;
+    padding:14px;
+    background:#f8f4ef;
+    border:1px solid #e5d9ce;
+    border-radius:12px;
+}
+
+.home-feature-preview img{
+    display:block;
+    width:100%;
+    max-width:360px;
+    height:230px;
+    object-fit:contain;
+    background:#fff;
+    border-radius:9px;
+    margin-top:10px;
+}
+
+.home-feature-controls{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:14px;
+}
+
+.home-feature-controls select,
+.home-feature-controls input{
+    width:100%;
+}
+
+/* ==========================================
+   الصفحة الرئيسية للوحة الإدارة
+========================================== */
+
+.admin-overview-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:14px;
+    margin-top:18px;
+}
+
+.admin-overview-card{
+    background:#f8f4ef;
+    border:1px solid #e8ded4;
+    border-radius:12px;
+    padding:17px;
+    min-width:0;
+}
+
+.admin-overview-card span{
+    display:block;
+    color:#806b59;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.admin-overview-card strong{
+    display:block;
+    color:#68452e;
+    font-size:25px;
+    font-weight:700;
+    overflow-wrap:anywhere;
+}
+
+.admin-overview-note{
+    color:#806b59;
+    font-size:12px;
+    margin-top:7px;
+}
+
+.admin-overview-columns{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:15px;
+    margin-top:20px;
+}
+
+.admin-overview-panel{
+    border:1px solid #e8ded4;
+    border-radius:12px;
+    padding:15px;
+    min-width:0;
+}
+
+.admin-overview-panel h3{
+    margin:0 0 13px;
+    color:#68452e;
+}
+
+.admin-overview-list{
+    display:grid;
+    gap:9px;
+}
+
+.admin-overview-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    padding:11px;
+    background:#f8f4ef;
+    border-radius:8px;
+    color:#68452e;
+    text-decoration:none;
+    min-width:0;
+}
+
+.admin-overview-item:hover{
+    background:#efe5da;
+}
+
+.admin-overview-item > span:first-child{
+    min-width:0;
+    overflow-wrap:anywhere;
+}
+
+.admin-overview-item small{
+    display:block;
+    color:#806b59;
+    margin-top:4px;
+}
+
+.admin-overview-count{
+    background:#eadfd5;
+    color:#68452e;
+    padding:4px 10px;
+    border-radius:20px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.admin-overview-empty{
+    color:#806b59;
+    padding:10px 0;
+    font-size:14px;
+}
+
+.admin-overview-quick-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin-top:18px;
+}
+
+.admin-overview-quick-links a{
+    display:inline-block;
+    padding:10px 14px;
+    border:1px solid #d9c8b7;
+    border-radius:8px;
+    color:#68452e;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.admin-overview-quick-links a:hover{
+    background:#f1e8df;
+}
+
+@media(max-width:850px){
+    .admin-overview-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:550px){
+    .admin-overview-columns{
+        grid-template-columns:1fr;
+    }
+
+    .admin-overview-card strong{
+        font-size:21px;
+    }
+}
+
+@media(max-width:650px){
+    .home-feature-controls{
+        grid-template-columns:1fr;
+    }
+}
+@media(max-width:650px){
+    .admin-product{grid-template-columns:70px 1fr}
+    .admin-product img{width:70px;height:70px}
+    .admin-product .admin-actions{grid-column:1/-1}
+    .admin-form-grid{grid-template-columns:1fr}
+    .admin-form-grid .full{grid-column:auto}
+    .banner-product-picker{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <a class="brand" href="index.html">
+        <span class="brand-mark">IBR</span>
+        <span>أثاث خشبي</span>
+    </a>
+    <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false">☰</button>
+    <nav class="nav">
+        <a href="index.html">الرئيسية</a>
+        <a href="products.html">المنتجات</a>
+        <a href="IBR20_about.html">من نحن</a>
+        <a href="contact.html">التواصل والاستفسارات</a>
+        <a href="track-order.html">تتبّع طلبك</a>
+        <a href="track-inquiry.html">متابعة الاستفسار</a>   
+        <a href="wishlist.html">القائمة المفضلة</a>
+        <a href="cart.html">السلة <span class="cart-count">0</span></a>
+    </nav>
+</header>
+
+<main>
+<section class="page-hero">
+    <div class="wrap">
+        <h1>إدارة المتجر</h1>
+        <p>إدارة منتجات ورسائل واستفسارات عملاء IBR.</p>
+    </div>
+</section>
+
+<section class="section wrap">
+
+<!-- تسجيل دخول المشرف -->
+<div class="content-card" id="admin-login-panel">
+    <h2>تسجيل دخول الإدارة</h2>
+    <p>يرجى تسجيل الدخول بحساب المشرف.</p>
+    <form id="admin-login-form">
+        <div class="field">
+            <label for="admin-email">البريد الإلكتروني</label>
+            <input id="admin-email" type="email" required autocomplete="username">
+        </div>
+        <div class="field" style="margin-top:12px">
+            <label for="admin-password">كلمة المرور</label>
+            <input id="admin-password" type="password" required autocomplete="current-password">
+        </div>
+        <div id="admin-login-feedback" role="status" class="admin-status" hidden></div>
+        <button class="btn btn-primary" id="admin-login-button" type="submit" style="margin-top:15px">
+            تسجيل الدخول
+        </button>
+    </form>
+</div>
+
+<!-- لوحة الإدارة -->
+<div id="admin-dashboard" hidden>
+
+    <div class="content-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div>
+                <h2>مرحباً بك في لوحة الإدارة</h2>
+                <p id="admin-account-label"></p>
+            </div>
+            <button class="btn btn-primary" id="admin-logout-button" type="button">تسجيل الخروج</button>
+        </div>
+    </div>
+
+<!-- الصفحة الرئيسية للوحة الإدارة -->
+<div class="content-card admin-section" id="admin-overview">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+            <h2>نظرة عامة على المتجر</h2>
+            <p class="admin-muted">ملخص مباشر لأهم بيانات متجر IBR.</p>
+        </div>
+
+        <button
+            class="btn btn-outline"
+            id="dashboard-refresh"
+            type="button"
+        >
+            تحديث الإحصائيات
+        </button>
+    </div>
+
+    <div
+        id="dashboard-overview-feedback"
+        class="admin-status"
+        role="status"
+        hidden
+    ></div>
+
+    <!-- الإحصائيات -->
+    <div class="admin-overview-grid">
+
+        <div class="admin-overview-card">
+            <span>إجمالي المنتجات</span>
+            <strong id="dashboard-products-total">—</strong>
+            <div class="admin-overview-note">جميع المنتجات المسجلة</div>
+        </div>
+
+        <div class="admin-overview-card">
+            <span>إجمالي الطلبات</span>
+            <strong id="dashboard-orders-total">—</strong>
+            <div class="admin-overview-note">جميع الطلبات المسجلة</div>
+        </div>
+
+        <div class="admin-overview-card">
+            <span>إجمالي المبيعات</span>
+            <strong id="dashboard-sales-total">—</strong>
+            <div class="admin-overview-note">باستثناء الطلبات الملغاة</div>
+        </div>
+
+        <div class="admin-overview-card">
+            <span>رسائل واستفسارات العملاء</span>
+            <strong id="dashboard-messages-total">—</strong>
+            <div class="admin-overview-note">جميع الرسائل المسجلة</div>
+        </div>
+
+    </div>
+
+    <!-- التنبيهات -->
+    <div class="admin-overview-panel" style="margin-top:20px">
+
+        <h3>التنبيهات المهمة</h3>
+
+        <div class="admin-overview-list">
+
+            <a href="#orders-management" class="admin-overview-item">
+                <span>طلبات جديدة تحتاج إلى متابعة</span>
+                <span class="admin-overview-count" id="dashboard-new-orders">—</span>
+            </a>
+
+            <a href="#messages-management" class="admin-overview-item">
+                <span>استفسارات لم تتم الإجابة عنها</span>
+                <span class="admin-overview-count" id="dashboard-pending-messages">—</span>
+            </a>
+
+            <a href="#products-management" class="admin-overview-item">
+                <span>منتجات مخزونها منخفض (1 إلى 3)</span>
+                <span class="admin-overview-count" id="dashboard-low-stock">—</span>
+            </a>
+
+            <a href="#products-management" class="admin-overview-item">
+                <span>منتجات مخفية عن المتجر</span>
+                <span class="admin-overview-count" id="dashboard-hidden-products">—</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- أحدث النشاطات -->
+    <div class="admin-overview-columns">
+
+        <div class="admin-overview-panel">
+            <h3>أحدث الطلبات</h3>
+            <div id="dashboard-latest-orders" class="admin-overview-list">
+                <p class="admin-overview-empty">جارٍ تحميل الطلبات...</p>
+            </div>
+        </div>
+
+        <div class="admin-overview-panel">
+            <h3>أحدث استفسارات العملاء</h3>
+            <div id="dashboard-latest-messages" class="admin-overview-list">
+                <p class="admin-overview-empty">جارٍ تحميل الاستفسارات...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- روابط سريعة -->
+    <div class="admin-overview-panel" style="margin-top:15px">
+        <h3>الوصول السريع</h3>
+
+        <div class="admin-overview-quick-links">
+            <a href="#products-management">إدارة المنتجات</a>
+            <a href="#orders-management">إدارة الطلبات</a>
+            <a href="#messages-management">رسائل العملاء</a>
+            <a href="#banner-management">إدارة البنر</a>
+            <a href="#home-feature-image-management">صورة الرئيسية</a>
+        </div>
+    </div>
+
+</div>
+
+    <!-- إدارة صور البنر الرئيسي -->
+    <div class="content-card admin-section" id="banner-management">
+        <h2>إدارة صور البنر الرئيسي</h2>
+        <p class="admin-muted">
+            اختر صوراً محددة من منتجات المتجر أو ارفع صوراً مستقلة للبنر.
+            لن تُضاف صور المنتجات تلقائياً.
+        </p>
+
+        <div id="banner-feedback" class="admin-status" role="status" hidden></div>
+
+        <div class="banner-upload-area">
+            <h3>رفع صور مستقلة للبنر</h3>
+            <p class="admin-muted">
+                اختر صورة أو أكثر من جهازك. الصيغ المسموحة JPG وPNG وWEBP،
+                والحد الأقصى 5MB لكل صورة.
+            </p>
+
+            <input
+                id="banner-upload-files"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+            >
+
+            <div id="banner-upload-preview" class="admin-preview"></div>
+
+            <button
+                class="btn btn-primary"
+                id="banner-upload-button"
+                type="button"
+                style="margin-top:12px"
+            >
+                رفع الصور وإضافتها إلى البنر
+            </button>
+        </div>
+
+        <div class="banner-upload-area">
+            <h3>إضافة صورة من منتجات المتجر</h3>
+            <p class="admin-muted">
+                اختر المنتج ثم اختر الصورة التي تريد عرضها في البنر.
+            </p>
+
+            <div class="banner-product-picker">
+                <select id="banner-product-select">
+                    <option value="">اختر المنتج</option>
+                </select>
+
+                <select id="banner-product-image-select" disabled>
+                    <option value="">اختر صورة المنتج</option>
+                </select>
+            </div>
+
+            <div id="banner-product-image-preview" class="admin-preview"></div>
+
+            <button
+                class="btn btn-primary"
+                id="banner-add-product-image"
+                type="button"
+                style="margin-top:12px"
+                disabled
+            >
+                إضافة الصورة المختارة إلى البنر
+            </button>
+        </div>
+
+        <hr style="margin:22px 0;border:0;border-top:1px solid #eadfd5">
+
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div>
+                <h3>الصور الحالية في البنر</h3>
+                <p class="admin-muted">
+                    يمكنك تغيير الترتيب أو إيقاف صورة أو حذفها.
+                </p>
+            </div>
+
+            <button class="btn btn-outline" id="banner-refresh-button" type="button">
+                تحديث صور البنر
+            </button>
+        </div>
+
+        <p id="banner-images-count" class="admin-muted"></p>
+
+        <div id="banner-images-list" class="banner-admin-grid">
+            <p>جارٍ تحميل صور البنر...</p>
+        </div>
+    </div>
+        <!-- إدارة صورة قسم الصفحة الرئيسية -->
+    <div class="content-card admin-section" id="home-feature-image-management">
+
+        <h2>إدارة صورة قسم الصفحة الرئيسية</h2>
+
+        <p class="admin-muted">
+            هذه الصورة تظهر بجانب عنوان «أثاث نصنعه ليفهم احتياجاتك»
+            في الصفحة الرئيسية، وهي مستقلة عن البنر العلوي.
+        </p>
+
+        <div id="home-feature-feedback"
+             class="admin-status"
+             role="status"
+             hidden></div>
+
+        <div class="home-feature-preview">
+            <strong>الصورة الحالية</strong>
+
+            <div id="home-feature-current">
+                <p class="admin-muted">جارٍ تحميل الصورة...</p>
+            </div>
+        </div>
+
+        <hr style="margin:22px 0;border:0;border-top:1px solid #eadfd5">
+
+        <h3>اختيار صورة من منتجات المتجر</h3>
+
+        <div class="home-feature-controls">
+            <select id="home-feature-product-select">
+                <option value="">اختر المنتج</option>
+            </select>
+
+            <select id="home-feature-product-image-select" disabled>
+                <option value="">اختر صورة المنتج</option>
+            </select>
+        </div>
+
+        <div id="home-feature-product-preview" class="admin-preview"></div>
+
+        <button
+            class="btn btn-primary"
+            id="home-feature-save-product"
+            type="button"
+            disabled
+            style="margin-top:12px"
+        >
+            اعتماد صورة المنتج للصفحة الرئيسية
+        </button>
+
+        <hr style="margin:22px 0;border:0;border-top:1px solid #eadfd5">
+
+        <h3>أو رفع صورة جديدة من جهازك</h3>
+
+        <p class="admin-muted">
+            الصيغ المسموحة JPG وPNG وWEBP، والحد الأقصى 5MB.
+        </p>
+
+        <input
+            id="home-feature-upload"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+        >
+
+        <div id="home-feature-upload-preview" class="admin-preview"></div>
+
+        <button
+            class="btn btn-primary"
+            id="home-feature-upload-button"
+            type="button"
+            style="margin-top:12px"
+        >
+            رفع واعتماد الصورة
+        </button>
+
+    </div>
+    
+    <!-- إدارة المنتجات -->
+    <div class="content-card admin-section" id="products-management">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div>
+                <h2>إدارة المنتجات</h2>
+                <p>المنتجات الفعلية المحفوظة في قاعدة بيانات Supabase.</p>
+            </div>
+            <button class="btn btn-primary" id="new-product-button" type="button">إضافة منتج جديد</button>
+        </div>
+
+        <div id="products-feedback" class="admin-status" role="status" hidden></div>
+
+        <div class="admin-toolbar">
+            <input id="product-search" type="search" placeholder="ابحث باسم المنتج أو SKU">
+            <select id="product-category-filter">
+                <option value="">كل التصنيفات</option>
+            </select>
+            <select id="product-state-filter">
+                <option value="active">المنتجات المنشورة</option>
+                <option value="hidden">المنتجات المخفية</option>
+                <option value="archived">المنتجات المؤرشفة</option>
+                <option value="all">كل المنتجات</option>
+            </select>
+            <button class="btn btn-outline" id="refresh-products" type="button">تحديث</button>
+        </div>
+
+        <p id="products-count" class="admin-muted"></p>
+        <div id="admin-products-list">
+            <p>جارٍ تحميل المنتجات...</p>
+        </div>
+    </div>
+
+    <!-- نموذج إضافة وتعديل المنتج -->
+    <div class="content-card admin-section" id="product-editor" hidden>
+        <h2 id="product-editor-title">إضافة منتج جديد</h2>
+        <p class="admin-muted">تحفظ التغييرات مباشرة في Supabase بعد الضغط على حفظ.</p>
+
+        <form id="product-form">
+            <input type="hidden" id="edit-product-id">
+
+            <div class="admin-form-grid">
+                <div class="field">
+                    <label for="edit-product-name">اسم المنتج</label>
+                    <input id="edit-product-name" required maxlength="180">
+                </div>
+
+                <div class="field">
+                    <label for="edit-product-sku">رقم SKU</label>
+                    <input id="edit-product-sku" required maxlength="60">
+                </div>
+
+                <div class="field">
+                    <label for="edit-product-price">السعر بالريال</label>
+                    <input id="edit-product-price" type="number" min="0" step="0.01" required>
+                </div>
+
+                <div class="field">
+                    <label for="edit-product-category">التصنيف</label>
+                    <select id="edit-product-category" required>
+                        <option value="">اختر التصنيف</option>
+                    </select>
+                </div>
+
+                <div class="field full">
+                    <label for="edit-product-description">وصف المنتج</label>
+                    <textarea id="edit-product-description" rows="4"></textarea>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:15px">
+                <label><input type="checkbox" id="edit-product-active" checked> المنتج منشور ونشط</label>
+                <label><input type="checkbox" id="edit-product-available" checked> المنتج متاح للشراء</label>
+            </div>
+
+            <hr style="margin:22px 0;border:0;border-top:1px solid #eadfd5">
+
+            <h3>صور المنتج</h3>
+            <p class="admin-muted">
+                يمكنك إضافة صورة أساسية وما يصل إلى 3 صور إضافية. اختر الصورة الأساسية من الصور الموجودة أو الجديدة.
+            </p>
+
+            <div id="existing-images" class="admin-image-grid"></div>
+
+            <div class="field" style="margin-top:18px">
+                <label for="new-product-images">إضافة صور جديدة</label>
+                <input id="new-product-images" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+                <small class="admin-muted">الصيغ المسموحة JPG وPNG وWEBP، بحد أقصى 5MB للصورة.</small>
+            </div>
+
+            <div id="new-images-preview" class="admin-preview"></div>
+
+            <div class="field" style="margin-top:15px">
+                <label for="replace-image-target">استبدال صورة موجودة</label>
+                <select id="replace-image-target">
+                    <option value="">عدم استبدال صورة</option>
+                </select>
+                <input id="replacement-image" type="file" accept="image/jpeg,image/png,image/webp" style="margin-top:8px">
+                <small class="admin-muted">اختر الصورة التي تريد استبدالها ثم اختر ملف الصورة الجديدة.</small>
+                <div id="replacement-preview" class="admin-preview"></div>
+            </div>
+
+            <div id="product-form-feedback" class="admin-status" role="status" hidden></div>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+                <button class="btn btn-primary" id="save-product-button" type="submit">حفظ المنتج</button>
+                <button class="btn btn-outline" id="cancel-product-edit" type="button">إلغاء</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- إدارة الطلبات -->
+    <div class="content-card admin-section" id="orders-management">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div>
+                <h2>إدارة الطلبات</h2>
+                <p>متابعة الطلبات وتحديث مراحل التصنيع والشحن والتسليم.</p>
+            </div>
+            <button class="btn btn-primary" id="refresh-orders" type="button">
+                تحديث الطلبات
+            </button>
+        </div>
+
+        <div id="orders-feedback" class="admin-status" role="status" hidden></div>
+
+        <div id="orders-statistics" class="admin-toolbar">
+            <div class="admin-badge">كل الطلبات: <strong id="orders-total">0</strong></div>
+            <div class="admin-badge">جديدة: <strong id="orders-new">0</strong></div>
+            <div class="admin-badge">قيد التصنيع: <strong id="orders-preparing">0</strong></div>
+            <div class="admin-badge">تم التسليم: <strong id="orders-delivered">0</strong></div>
+        </div>
+
+        <div class="admin-toolbar">
+            <input id="order-search" type="search" placeholder="ابحث برقم الطلب أو اسم العميل أو الجوال">
+
+            <select id="order-status-filter">
+                <option value="all">جميع الطلبات</option>
+                <option value="new">طلبات جديدة</option>
+                <option value="contacting">جارٍ التواصل</option>
+                <option value="confirmed">تم التأكيد</option>
+                <option value="preparing">قيد التصنيع والتجهيز</option>
+                <option value="shipped">في الطريق إليك</option>
+                <option value="delivered">تم التسليم</option>
+                <option value="cancelled">ملغاة</option>
+            </select>
+        </div>
+
+        <p id="orders-count" class="admin-muted"></p>
+
+        <div id="orders-list">
+            <p>جارٍ تحميل الطلبات...</p>
+        </div>
+    </div>
+
+    <!-- رسائل العملاء -->
+    <div class="content-card admin-section" id="messages-management">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <h2>رسائل واستفسارات العملاء</h2>
+            <button class="btn btn-primary" id="refresh-messages" type="button">تحديث الرسائل</button>
+        </div>
+        <div id="messages-feedback" class="admin-status" role="status" aria-live="polite" hidden></div>
+        <div id="messages-list" style="margin-top:18px">
+            <p>جارٍ تحميل الرسائل...</p>
+        </div>
+    </div>
+
+</div>
+</section>
+</main>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div>
+            <h3>IBR · أثاث خشبي</h3>
+            <p>أثاث نصنعه ليفهم احتياجاتك. ورشة للأثاث الخشبي في مكة المكرمة، مع اهتمام بالتفاصيل والتصميم العملي.</p>
+        </div>
+        <div>
+            <h3>روابط المتجر</h3>
+            <div class="footer-links">
+                <a href="products.html">المنتجات</a>
+                <a href="IBR20_about.html">من نحن</a>
+                <a href="contact.html">التواصل والاستفسارات</a>
+                <a href="track-order.html">تتبّع طلبك</a>
+                <a href="track-inquiry.html">متابعة الاستفسار</a>
+                <a href="cart.html">سلة المشتريات</a>
+            </div>
+        </div>
+        <div>
+            <h3>تواصل معنا</h3>
+            <p>مكة المكرمة</p>
+            <a href="https://wa.me/966595811980" target="_blank" rel="noopener">واتساب: +966595811980</a>
+        </div>
+    </div>
+    <div class="copyright">© IBR20 — جميع الحقوق محفوظة</div>
+</footer>
+
+<!-- 1. مكتبة Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 2. ملف المتجر -->
+<script src="assets/js/store.js"></script>
+
+<!-- 3. نظام تسجيل الدخول -->
+<script src="assets/js/auth.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+"use strict";
+
+const client = window.supabaseClient;
+const PRODUCT_BUCKET = "ibr20-product-images";
+const ATTACHMENT_BUCKET = "ibr20-contact-attachments";
+const BANNER_BUCKET = "ibr20-site-media";
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const MAX_PRODUCT_IMAGES = 4;
+
+const $ = id => document.getElementById(id);
+
+const loginPanel = $("admin-login-panel");
+const dashboard = $("admin-dashboard");
+const loginForm = $("admin-login-form");
+const loginFeedback = $("admin-login-feedback");
+const loginButton = $("admin-login-button");
+
+const productsList = $("admin-products-list");
+const productsFeedback = $("products-feedback");
+const messagesList = $("messages-list");
+const messagesFeedback = $("messages-feedback");
+
+let categories = [];
+let products = [];
+let currentImages = [];
+let newImageFiles = [];
+let selectedPrimary = "";
+let editorMode = "new";
+let savingProduct = false;
+let bannerImages = [];
+let homeFeatureRecord = null;
+/* أدوات عامة */
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[char]);
+}
+
+function showFeedback(element, message, type = "error") {
+    element.hidden = !message;
+    element.textContent = message || "";
+    element.className = "admin-status" + (type ? " " + type : "");
+}
+
+function showLoginFeedback(message, success = false) {
+    showFeedback(loginFeedback, message, success ? "success" : "error");
+}
+
+function showDashboard(email) {
+    loginPanel.hidden = true;
+    dashboard.hidden = false;
+
+    $("admin-account-label").textContent =
+        "تم تسجيل الدخول: " + (email || "حساب المشرف");
+
+    loadDashboardOverview();
+    loadCategoriesAndProducts();
+    loadBannerImages();
+    loadHomeFeatureImage();
+    loadMessages();
+    loadOrders();
+}
+
+function showLogin() {
+    dashboard.hidden = true;
+    loginPanel.hidden = false;
+}
+
+/* ==========================================
+   الصفحة الرئيسية للوحة الإدارة والإحصائيات
+========================================== */
+
+/* جلب عدد السجلات الفعلي من قاعدة البيانات */
+async function getDashboardCount(table, modifyQuery = null) {
+
+    let query = client
+        .from(table)
+        .select("id", {
+            count: "exact",
+            head: true
+        });
+
+    if (modifyQuery) {
+        query = modifyQuery(query);
+    }
+
+    const { count, error } = await query;
+
+    if (error) throw error;
+
+    return Number(count || 0);
+}
+
+/* حساب إجمالي الطلبات غير الملغاة */
+async function getDashboardSalesTotal() {
+
+    let offset = 0;
+    let total = 0;
+    const pageSize = 1000;
+
+    while (true) {
+
+        const { data, error } = await client
+            .from("orders")
+            .select("total_amount")
+            .neq("status", "cancelled")
+            .order("created_at", { ascending: false })
+            .range(offset, offset + pageSize - 1);
+
+        if (error) throw error;
+
+        const rows = data || [];
+
+        rows.forEach(order => {
+            total += Number(order.total_amount || 0);
+        });
+
+        if (rows.length < pageSize) break;
+
+        offset += pageSize;
+    }
+
+    return total;
+}
+
+/* تحميل الصفحة الرئيسية */
+async function loadDashboardOverview() {
+
+    const feedback = $("dashboard-overview-feedback");
+
+    showFeedback(feedback, "");
+
+    $("dashboard-products-total").textContent = "…";
+    $("dashboard-orders-total").textContent = "…";
+    $("dashboard-sales-total").textContent = "…";
+    $("dashboard-messages-total").textContent = "…";
+
+    try {
+
+        const [
+            productsCount,
+            ordersCount,
+            salesTotal,
+            messagesCount,
+            newOrdersCount,
+            pendingMessagesCount,
+            lowStockCount,
+            hiddenProductsCount,
+            latestOrdersResult,
+            latestMessagesResult
+        ] = await Promise.all([
+
+            /* إجمالي المنتجات */
+            getDashboardCount("products"),
+
+            /* إجمالي الطلبات */
+            getDashboardCount("orders"),
+
+            /* إجمالي المبيعات */
+            getDashboardSalesTotal(),
+
+            /* إجمالي الاستفسارات */
+            getDashboardCount("customer_messages"),
+
+            /* الطلبات الجديدة */
+            getDashboardCount(
+                "orders",
+                query => query.eq("status", "new")
+            ),
+
+            /* الاستفسارات التي لم تتم الإجابة عنها */
+            getDashboardCount(
+                "customer_messages",
+                query => query.in("status", ["new", "in_review"])
+            ),
+
+            /* المخزون المنخفض: من 1 إلى 3 */
+            getDashboardCount(
+                "products",
+                query => query
+                    .gt("inventory_quantity", 0)
+                    .lte("inventory_quantity", 3)
+            ),
+
+            /* المنتجات المنشورة التي تم إخفاؤها */
+            getDashboardCount(
+                "products",
+                query => query
+                    .eq("is_active", true)
+                    .eq("is_available", false)
+            ),
+
+            /* أحدث خمسة طلبات */
+            client
+                .from("orders")
+                .select(`
+                    id,
+                    order_number,
+                    customer_name,
+                    total_amount,
+                    status,
+                    created_at
+                `)
+                .order("created_at", { ascending: false })
+                .limit(5),
+
+            /* أحدث خمسة استفسارات */
+            client
+                .from("customer_messages")
+                .select(`
+                    id,
+                    inquiry_number,
+                    customer_name,
+                    subject,
+                    status,
+                    created_at
+                `)
+                .order("created_at", { ascending: false })
+                .limit(5)
+        ]);
+
+        if (latestOrdersResult.error) {
+            throw latestOrdersResult.error;
+        }
+
+        if (latestMessagesResult.error) {
+            throw latestMessagesResult.error;
+        }
+
+        /* عرض الإحصائيات */
+        $("dashboard-products-total").textContent =
+            productsCount.toLocaleString("ar-SA");
+
+        $("dashboard-orders-total").textContent =
+            ordersCount.toLocaleString("ar-SA");
+
+        $("dashboard-sales-total").textContent =
+            formatMoney(salesTotal);
+
+        $("dashboard-messages-total").textContent =
+            messagesCount.toLocaleString("ar-SA");
+
+        /* عرض التنبيهات */
+        $("dashboard-new-orders").textContent =
+            newOrdersCount.toLocaleString("ar-SA");
+
+        $("dashboard-pending-messages").textContent =
+            pendingMessagesCount.toLocaleString("ar-SA");
+
+        $("dashboard-low-stock").textContent =
+            lowStockCount.toLocaleString("ar-SA");
+
+        $("dashboard-hidden-products").textContent =
+            hiddenProductsCount.toLocaleString("ar-SA");
+
+        /* عرض أحدث الطلبات */
+        const latestOrders = latestOrdersResult.data || [];
+
+        if (!latestOrders.length) {
+
+            $("dashboard-latest-orders").innerHTML =
+                '<p class="admin-overview-empty">لا توجد طلبات حتى الآن.</p>';
+
+        } else {
+
+            $("dashboard-latest-orders").innerHTML =
+                latestOrders.map(order => `
+                    <a href="#orders-management" class="admin-overview-item">
+
+                        <span>
+                            <strong>${escapeHTML(order.order_number || "طلب جديد")}</strong>
+
+                            <small>
+                                ${escapeHTML(order.customer_name || "عميل")}
+                                · ${escapeHTML(orderStatusLabel(order.status))}
+                            </small>
+
+                            <small>
+                                ${escapeHTML(formatOrderDate(order.created_at))}
+                            </small>
+                        </span>
+
+                        <span class="admin-overview-count">
+                            ${escapeHTML(formatMoney(order.total_amount))}
+                        </span>
+
+                    </a>
+                `).join("");
+        }
+
+        /* عرض أحدث الاستفسارات */
+        const latestMessages = latestMessagesResult.data || [];
+
+        if (!latestMessages.length) {
+
+            $("dashboard-latest-messages").innerHTML =
+                '<p class="admin-overview-empty">لا توجد استفسارات حتى الآن.</p>';
+
+        } else {
+
+            $("dashboard-latest-messages").innerHTML =
+                latestMessages.map(message => `
+                    <a href="#messages-management" class="admin-overview-item">
+
+                        <span>
+                            <strong>${escapeHTML(message.inquiry_number || "استفسار")}</strong>
+
+                            <small>
+                                ${escapeHTML(message.customer_name || "عميل")}
+                            </small>
+
+                            <small>
+                                ${escapeHTML(message.subject || "بدون موضوع")}
+                            </small>
+
+                            <small>
+                                ${escapeHTML(formatDate(message.created_at))}
+                            </small>
+                        </span>
+
+                        <span class="admin-overview-count">
+                            ${escapeHTML(statusLabel(message.status))}
+                        </span>
+
+                    </a>
+                `).join("");
+        }
+
+    } catch (error) {
+
+        console.error("Dashboard overview error:", error);
+
+        showFeedback(
+            feedback,
+            "تعذر تحميل بعض إحصائيات لوحة الإدارة: " +
+            (error.message || "تحقق من الاتصال وصلاحيات قاعدة البيانات.")
+        );
+    }
+}
+
+/* زر تحديث الإحصائيات */
+$("dashboard-refresh").addEventListener(
+    "click",
+    loadDashboardOverview
+);
+
+async function verifyAdmin() {
+    if (!client) {
+        throw new Error("تعذر تحميل مكتبة Supabase. تحقق من store.js.");
+    }
+
+    const { data: sessionData, error: sessionError } =
+        await client.auth.getSession();
+
+    if (sessionError) throw sessionError;
+
+    const session = sessionData.session;
+
+    if (!session) {
+        showLogin();
+        return false;
+    }
+
+    const { data, error } = await client.rpc("is_admin");
+
+    if (error) throw error;
+
+    if (data !== true) {
+        await client.auth.signOut();
+        showLogin();
+        showLoginFeedback("هذا الحساب لا يملك صلاحية المشرف.");
+        return false;
+    }
+
+    showDashboard(session.user.email);
+    return true;
+}
+
+/* تسجيل الدخول */
+loginForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (!client) {
+        showLoginFeedback("تعذر تحميل Supabase. تحقق من اتصال الصفحة.");
+        return;
+    }
+
+    loginButton.disabled = true;
+    loginButton.textContent = "جارٍ التحقق...";
+
+    try {
+        const email = $("admin-email").value.trim();
+        const password = $("admin-password").value;
+
+        const { error } = await client.auth.signInWithPassword({
+            email,
+            password
+        });
+
+        if (error) throw error;
+
+        const allowed = await verifyAdmin();
+
+        if (allowed) loginForm.reset();
+
+    } catch (error) {
+        console.error("Admin login error:", error);
+        showLoginFeedback("تعذر تسجيل الدخول أو التحقق من صلاحية المشرف.");
+    } finally {
+        loginButton.disabled = false;
+        loginButton.textContent = "تسجيل الدخول";
+    }
+});
+
+$("admin-logout-button").addEventListener("click", async () => {
+    if (!client) return;
+
+    const { error } = await client.auth.signOut();
+
+    if (error) {
+        alert("تعذر تسجيل الخروج. حاول مرة أخرى.");
+        return;
+    }
+
+    showLogin();
+});
+
+/* أدوات التصنيفات والمنتجات */
+function categoryName(product) {
+    const category = Array.isArray(product.categories)
+        ? product.categories[0]
+        : product.categories;
+
+    return category?.name || "بدون تصنيف";
+}
+
+function categorySlug(product) {
+    const category = Array.isArray(product.categories)
+        ? product.categories[0]
+        : product.categories;
+
+    return category?.slug || "";
+}
+
+function imageList(product) {
+    return Array.isArray(product.product_images)
+        ? [...product.product_images].sort((a, b) => {
+            if (a.is_primary && !b.is_primary) return -1;
+            if (!a.is_primary && b.is_primary) return 1;
+            return (a.sort_order || 0) - (b.sort_order || 0);
+        })
+        : [];
+}
+
+function primaryImage(product) {
+    const images = imageList(product);
+
+    return images.find(image => image.is_primary)?.image_url ||
+        images[0]?.image_url || "";
+}
+
+/* ==========================================
+   إدارة صورة قسم الصفحة الرئيسية
+========================================== */
+
+function homeFeatureFeedback(message, type = "error") {
+    showFeedback($("home-feature-feedback"), message, type);
+}
+
+/* عرض الصورة الحالية */
+function renderHomeFeatureImage() {
+    const container = $("home-feature-current");
+
+    if (!homeFeatureRecord) {
+        container.innerHTML = `
+            <p class="admin-muted">
+                لم يتم اختيار صورة لهذا القسم حتى الآن.
+            </p>
+        `;
+        return;
+    }
+
+    container.innerHTML = `
+        <img
+            src="${escapeHTML(homeFeatureRecord.image_url)}"
+            alt="صورة قسم الصفحة الرئيسية"
+        >
+        <p class="admin-muted">
+            مصدر الصورة:
+            ${homeFeatureRecord.source_type === "product"
+                ? "صورة من منتجات المتجر"
+                : "صورة مرفوعة من الجهاز"}
+        </p>
+    `;
+}
+
+/* تحميل الصورة المحفوظة */
+async function loadHomeFeatureImage() {
+    $("home-feature-current").innerHTML =
+        '<p class="admin-muted">جارٍ تحميل الصورة...</p>';
+
+    homeFeatureFeedback("");
+
+    try {
+        const { data, error } = await client
+            .from("home_feature_image")
+            .select("id,image_url,storage_path,source_type,updated_at")
+            .eq("id", 1)
+            .maybeSingle();
+
+        if (error) throw error;
+
+        homeFeatureRecord = data || null;
+
+        renderHomeFeatureImage();
+
+    } catch (error) {
+        console.error("Load home feature image error:", error);
+
+        $("home-feature-current").innerHTML =
+            '<p class="admin-muted">تعذر تحميل الصورة الحالية.</p>';
+
+        homeFeatureFeedback(
+            "تعذر تحميل صورة الصفحة الرئيسية: " +
+            (error.message || "")
+        );
+    }
+}
+
+/* تعبئة قائمة المنتجات */
+function loadHomeFeatureProductPicker() {
+    const select = $("home-feature-product-select");
+
+    select.innerHTML = '<option value="">اختر المنتج</option>';
+
+    products.forEach(product => {
+        const images = imageList(product);
+
+        if (!images.length) return;
+
+        const option = document.createElement("option");
+
+        option.value = product.id;
+        option.textContent = product.name + " — " + product.sku;
+
+        select.appendChild(option);
+    });
+
+    $("home-feature-product-image-select").innerHTML =
+        '<option value="">اختر صورة المنتج</option>';
+
+    $("home-feature-product-image-select").disabled = true;
+    $("home-feature-save-product").disabled = true;
+    $("home-feature-product-preview").innerHTML = "";
+}
+
+/* اختيار المنتج */
+$("home-feature-product-select").addEventListener("change", () => {
+    const productId = $("home-feature-product-select").value;
+
+    const imageSelect = $("home-feature-product-image-select");
+    const preview = $("home-feature-product-preview");
+
+    imageSelect.innerHTML =
+        '<option value="">اختر صورة المنتج</option>';
+
+    preview.innerHTML = "";
+    $("home-feature-save-product").disabled = true;
+
+    if (!productId) {
+        imageSelect.disabled = true;
+        return;
+    }
+
+    const product = products.find(item => item.id === productId);
+
+    if (!product) {
+        imageSelect.disabled = true;
+        return;
+    }
+
+    const images = imageList(product);
+
+    images.forEach((image, index) => {
+        const option = document.createElement("option");
+
+        option.value = image.image_url;
+
+        option.textContent =
+            "الصورة " + (index + 1) +
+            (image.is_primary ? " — الصورة الأساسية" : "");
+
+        imageSelect.appendChild(option);
+    });
+
+    imageSelect.disabled = images.length === 0;
+});
+
+/* معاينة صورة المنتج */
+$("home-feature-product-image-select").addEventListener("change", () => {
+    const imageUrl = $("home-feature-product-image-select").value;
+    const preview = $("home-feature-product-preview");
+
+    preview.innerHTML = "";
+
+    $("home-feature-save-product").disabled = !imageUrl;
+
+    if (!imageUrl) return;
+
+    const img = document.createElement("img");
+
+    img.src = imageUrl;
+    img.alt = "معاينة صورة الصفحة الرئيسية";
+
+    preview.appendChild(img);
+});
+
+/* حفظ صورة مختارة من المنتجات */
+$("home-feature-save-product").addEventListener("click", async () => {
+    const productId = $("home-feature-product-select").value;
+    const imageUrl = $("home-feature-product-image-select").value;
+
+    if (!productId || !imageUrl) {
+        homeFeatureFeedback("اختر المنتج والصورة أولاً.");
+        return;
+    }
+
+    const product = products.find(item => item.id === productId);
+
+    if (!product) {
+        homeFeatureFeedback("لم يتم العثور على المنتج.");
+        return;
+    }
+
+    const button = $("home-feature-save-product");
+
+    button.disabled = true;
+    button.textContent = "جارٍ الحفظ...";
+
+    try {
+        const { error } = await client
+            .from("home_feature_image")
+            .upsert({
+                id: 1,
+                image_url: imageUrl,
+                storage_path: "product-image:" + product.id + ":" + imageUrl,
+                source_type: "product",
+                updated_at: new Date().toISOString(),
+                updated_by: (await client.auth.getUser()).data.user?.id || null
+            }, {
+                onConflict: "id"
+            });
+
+        if (error) throw error;
+
+        homeFeatureFeedback(
+            "تم اعتماد صورة المنتج للصفحة الرئيسية بنجاح.",
+            "success"
+        );
+
+        await loadHomeFeatureImage();
+
+        $("home-feature-product-select").value = "";
+        $("home-feature-product-image-select").innerHTML =
+            '<option value="">اختر صورة المنتج</option>';
+
+        $("home-feature-product-image-select").disabled = true;
+        $("home-feature-product-preview").innerHTML = "";
+
+    } catch (error) {
+        console.error("Save home feature product image error:", error);
+
+        homeFeatureFeedback(
+            "تعذر حفظ الصورة: " + (error.message || "")
+        );
+
+    } finally {
+        button.disabled = false;
+        button.textContent = "اعتماد صورة المنتج للصفحة الرئيسية";
+    }
+});
+
+/* التحقق من الصورة الجديدة ومعاينتها */
+$("home-feature-upload").addEventListener("change", () => {
+    const file = $("home-feature-upload").files[0];
+    const preview = $("home-feature-upload-preview");
+
+    preview.innerHTML = "";
+
+    if (!file) return;
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+    if (!allowedTypes.includes(file.type) || file.size > MAX_FILE_SIZE) {
+        homeFeatureFeedback(
+            "اختر صورة JPG أو PNG أو WEBP لا يتجاوز حجمها 5MB."
+        );
+
+        $("home-feature-upload").value = "";
+        return;
+    }
+
+    const img = document.createElement("img");
+
+    img.src = URL.createObjectURL(file);
+    img.alt = "معاينة الصورة الجديدة";
+
+    preview.appendChild(img);
+
+    homeFeatureFeedback("تم اختيار الصورة بنجاح.", "success");
+});
+
+/* رفع صورة مستقلة واعتمادها */
+$("home-feature-upload-button").addEventListener("click", async () => {
+    const file = $("home-feature-upload").files[0];
+
+    if (!file) {
+        homeFeatureFeedback("اختر صورة من جهازك أولاً.");
+        return;
+    }
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+    if (!allowedTypes.includes(file.type) || file.size > MAX_FILE_SIZE) {
+        homeFeatureFeedback(
+            "صيغة الصورة غير مدعومة أو حجمها يتجاوز 5MB."
+        );
+        return;
+    }
+
+    const button = $("home-feature-upload-button");
+
+    button.disabled = true;
+    button.textContent = "جارٍ رفع الصورة...";
+
+    let uploadedPath = "";
+
+    try {
+        const extension = safeFileExtension(file);
+
+        const path =
+            "home-feature/" +
+            Date.now() + "-" +
+            Math.random().toString(36).slice(2, 10) +
+            "." + extension;
+
+        const { error: uploadError } = await client.storage
+            .from(BANNER_BUCKET)
+            .upload(path, file, {
+                cacheControl: "3600",
+                upsert: false,
+                contentType: file.type
+            });
+
+        if (uploadError) throw uploadError;
+
+        uploadedPath = path;
+
+        const { data: publicData } = client.storage
+            .from(BANNER_BUCKET)
+            .getPublicUrl(path);
+
+        const imageUrl = publicData?.publicUrl;
+
+        if (!imageUrl) {
+            throw new Error("تعذر الحصول على رابط الصورة.");
+        }
+
+        const { data: userData } = await client.auth.getUser();
+
+        const { error: saveError } = await client
+            .from("home_feature_image")
+            .upsert({
+                id: 1,
+                image_url: imageUrl,
+                storage_path: path,
+                source_type: "upload",
+                updated_at: new Date().toISOString(),
+                updated_by: userData.user?.id || null
+            }, {
+                onConflict: "id"
+            });
+
+        if (saveError) throw saveError;
+
+        /* حذف ملف الصورة القديمة إذا كانت مرفوعة من الجهاز */
+        const oldRecord = homeFeatureRecord;
+
+        if (
+            oldRecord?.source_type === "upload" &&
+            oldRecord.storage_path
+        ) {
+            const { error: removeError } = await client.storage
+                .from(BANNER_BUCKET)
+                .remove([oldRecord.storage_path]);
+
+            if (removeError) {
+                console.error(
+                    "Old home feature image cleanup error:",
+                    removeError
+                );
+            }
+        }
+
+        homeFeatureFeedback(
+            "تم رفع الصورة واعتمادها للصفحة الرئيسية بنجاح.",
+            "success"
+        );
+
+        $("home-feature-upload").value = "";
+        $("home-feature-upload-preview").innerHTML = "";
+
+        await loadHomeFeatureImage();
+
+    } catch (error) {
+        console.error("Upload home feature image error:", error);
+
+        /* تنظيف الملف الجديد إذا فشل حفظ بياناته */
+        if (uploadedPath) {
+            const { error: cleanupError } = await client.storage
+                .from(BANNER_BUCKET)
+                .remove([uploadedPath]);
+
+            if (cleanupError) {
+                console.error("Upload cleanup error:", cleanupError);
+            }
+        }
+
+        homeFeatureFeedback(
+            "تعذر رفع الصورة أو حفظها: " + (error.message || "")
+        );
+
+    } finally {
+        button.disabled = false;
+        button.textContent = "رفع واعتماد الصورة";
+    }
+});
+
+/* ==========================================
+   إدارة صور البنر الرئيسي
+========================================== */
+
+function bannerFeedback(message, type = "error") {
+    showFeedback($("banner-feedback"), message, type);
+}
+
+function safeBannerExtension(file) {
+    const types = {
+        "image/jpeg": "jpg",
+        "image/png": "png",
+        "image/webp": "webp"
+    };
+
+    return types[file.type] || "";
+}
+
+/* تحميل صور البنر */
+async function loadBannerImages() {
+    const container = $("banner-images-list");
+
+    container.innerHTML = "<p>جارٍ تحميل صور البنر...</p>";
+    bannerFeedback("");
+
+    try {
+        const { data, error } = await client
+            .from("banner_images")
+            .select(`
+                id,
+                image_url,
+                storage_path,
+                alt_text,
+                sort_order,
+                is_active,
+                created_at
+            `)
+            .order("sort_order", { ascending: true })
+            .order("created_at", { ascending: true });
+
+        if (error) throw error;
+
+        bannerImages = data || [];
+        renderBannerImages();
+
+    } catch (error) {
+        console.error("Load banner images error:", error);
+
+        container.innerHTML = "<p>تعذر تحميل صور البنر.</p>";
+
+        bannerFeedback(
+            "تعذر تحميل صور البنر: " + (error.message || "")
+        );
+    }
+}
+
+/* عرض صور البنر */
+function renderBannerImages() {
+    const container = $("banner-images-list");
+
+    $("banner-images-count").textContent =
+        "عدد الصور المسجلة: " + bannerImages.length;
+
+    if (!bannerImages.length) {
+        container.innerHTML = `
+            <p class="admin-muted">
+                لا توجد صور في البنر حالياً. أضف صوراً من المنتجات أو ارفع صوراً مستقلة.
+            </p>
+        `;
+        return;
+    }
+
+    container.innerHTML = bannerImages.map(image => `
+        <article class="banner-admin-card">
+
+            <img
+                src="${escapeHTML(image.image_url)}"
+                alt="${escapeHTML(image.alt_text || "صورة البنر")}"
+                loading="lazy"
+            >
+
+            <label>وصف الصورة</label>
+
+            <input
+                type="text"
+                value="${escapeHTML(image.alt_text || "")}"
+                data-banner-alt="${escapeHTML(image.id)}"
+                maxlength="180"
+                placeholder="وصف الصورة"
+            >
+
+            <label>ترتيب العرض</label>
+
+            <input
+                type="number"
+                min="0"
+                step="1"
+                value="${Number(image.sort_order || 0)}"
+                data-banner-order="${escapeHTML(image.id)}"
+            >
+
+            <label style="display:flex;align-items:center;gap:8px">
+                <input
+                    type="checkbox"
+                    data-banner-active="${escapeHTML(image.id)}"
+                    ${image.is_active ? "checked" : ""}
+                >
+                عرض الصورة في البنر
+            </label>
+
+            <div class="admin-actions">
+                <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-save-banner="${escapeHTML(image.id)}"
+                >
+                    حفظ
+                </button>
+
+                <button
+                    class="btn btn-outline"
+                    type="button"
+                    data-delete-banner="${escapeHTML(image.id)}"
+                >
+                    حذف
+                </button>
+            </div>
+
+        </article>
+    `).join("");
+}
+
+/* تعبئة قائمة المنتجات في أداة البنر */
+function loadBannerProductPicker() {
+    const select = $("banner-product-select");
+
+    select.innerHTML = '<option value="">اختر المنتج</option>';
+
+    products.forEach(product => {
+        const images = imageList(product);
+
+        if (!images.length) return;
+
+        const option = document.createElement("option");
+
+        option.value = product.id;
+        option.textContent = product.name + " — " + product.sku;
+
+        select.appendChild(option);
+    });
+
+    $("banner-product-image-select").innerHTML =
+        '<option value="">اختر صورة المنتج</option>';
+
+    $("banner-product-image-select").disabled = true;
+    $("banner-add-product-image").disabled = true;
+    $("banner-product-image-preview").innerHTML = "";
+}
+
+/* اختيار المنتج */
+$("banner-product-select").addEventListener("change", () => {
+    const productId = $("banner-product-select").value;
+    const imageSelect = $("banner-product-image-select");
+    const preview = $("banner-product-image-preview");
+
+    imageSelect.innerHTML = '<option value="">اختر صورة المنتج</option>';
+    preview.innerHTML = "";
+    $("banner-add-product-image").disabled = true;
+
+    if (!productId) {
+        imageSelect.disabled = true;
+        return;
+    }
+
+    const product = products.find(item => item.id === productId);
+
+    if (!product) {
+        imageSelect.disabled = true;
+        return;
+    }
+
+    const images = imageList(product);
+
+    images.forEach((image, index) => {
+        const option = document.createElement("option");
+
+        option.value = image.image_url;
+        option.textContent =
+            "الصورة " + (index + 1) +
+            (image.is_primary ? " — الصورة الأساسية" : "");
+
+        imageSelect.appendChild(option);
+    });
+
+    imageSelect.disabled = images.length === 0;
+
+    if (!images.length) {
+        bannerFeedback("هذا المنتج لا يحتوي على صور.");
+    }
+});
+
+/* معاينة الصورة المختارة من المنتج */
+$("banner-product-image-select").addEventListener("change", () => {
+    const imageUrl = $("banner-product-image-select").value;
+    const preview = $("banner-product-image-preview");
+
+    preview.innerHTML = "";
+    $("banner-add-product-image").disabled = !imageUrl;
+
+    if (!imageUrl) return;
+
+    const img = document.createElement("img");
+
+    img.src = imageUrl;
+    img.alt = "معاينة صورة البنر";
+
+    preview.appendChild(img);
+});
+
+/* إضافة صورة منتج إلى البنر */
+async function addProductImageToBanner() {
+    const productId = $("banner-product-select").value;
+    const imageUrl = $("banner-product-image-select").value;
+
+    if (!productId || !imageUrl) {
+        bannerFeedback("اختر المنتج والصورة أولاً.");
+        return;
+    }
+
+    const product = products.find(item => item.id === productId);
+
+    if (!product) {
+        bannerFeedback("لم يتم العثور على المنتج.");
+        return;
+    }
+
+    const button = $("banner-add-product-image");
+
+    button.disabled = true;
+    button.textContent = "جارٍ الإضافة...";
+
+    try {
+        const exists = bannerImages.some(
+            item => item.image_url === imageUrl
+        );
+
+        if (exists) {
+            throw new Error("هذه الصورة موجودة بالفعل في البنر.");
+        }
+
+        const nextOrder = bannerImages.length
+            ? Math.max(...bannerImages.map(item => Number(item.sort_order) || 0)) + 1
+            : 0;
+
+        const { error } = await client
+            .from("banner_images")
+            .insert({
+                image_url: imageUrl,
+                storage_path: "product-image:" + product.id + ":" + imageUrl,
+                alt_text: product.name,
+                sort_order: nextOrder,
+                is_active: true
+            });
+
+        if (error) throw error;
+
+        bannerFeedback(
+            "تمت إضافة صورة المنتج إلى البنر بنجاح.",
+            "success"
+        );
+
+        await loadBannerImages();
+
+        $("banner-product-image-select").value = "";
+        $("banner-product-image-preview").innerHTML = "";
+
+    } catch (error) {
+        console.error("Add product banner image error:", error);
+
+        bannerFeedback(
+            "تعذرت إضافة الصورة: " + (error.message || "")
+        );
+
+    } finally {
+        button.disabled = false;
+        button.textContent = "إضافة الصورة المختارة إلى البنر";
+    }
+}
+
+$("banner-add-product-image").addEventListener(
+    "click",
+    addProductImageToBanner
+);
+
+/* معاينة الصور المستقلة */
+$("banner-upload-files").addEventListener("change", () => {
+    const files = Array.from($("banner-upload-files").files || []);
+    const preview = $("banner-upload-preview");
+
+    preview.innerHTML = "";
+
+    for (const file of files) {
+        if (!safeBannerExtension(file) || file.size > MAX_FILE_SIZE) {
+            bannerFeedback(
+                "تأكد أن الصور بصيغة JPG أو PNG أو WEBP وألا يتجاوز حجم كل صورة 5MB."
+            );
+
+            $("banner-upload-files").value = "";
+            return;
+        }
+    }
+
+    files.forEach(file => {
+        const img = document.createElement("img");
+
+        img.src = URL.createObjectURL(file);
+        img.alt = file.name;
+
+        preview.appendChild(img);
+    });
+
+    bannerFeedback(
+        files.length ? "تم اختيار " + files.length + " صورة." : "",
+        "success"
+    );
+});
+
+/* رفع صور البنر المستقلة */
+async function uploadBannerImages() {
+    const files = Array.from($("banner-upload-files").files || []);
+
+    if (!files.length) {
+        bannerFeedback("اختر صورة واحدة على الأقل.");
+        return;
+    }
+
+    for (const file of files) {
+        if (!safeBannerExtension(file) || file.size > MAX_FILE_SIZE) {
+            bannerFeedback(
+                "هناك صورة بصيغة غير مدعومة أو يتجاوز حجمها 5MB."
+            );
+            return;
+        }
+    }
+
+    const button = $("banner-upload-button");
+
+    button.disabled = true;
+    button.textContent = "جارٍ رفع الصور...";
+
+    let successCount = 0;
+    const errors = [];
+
+    try {
+        let nextOrder = bannerImages.length
+            ? Math.max(...bannerImages.map(item => Number(item.sort_order) || 0)) + 1
+            : 0;
+
+        for (const file of files) {
+            let uploadedPath = "";
+
+            try {
+                const extension = safeBannerExtension(file);
+
+                const path =
+                    "banner/" +
+                    Date.now() + "-" +
+                    Math.random().toString(36).slice(2, 10) +
+                    "." + extension;
+
+                const { error: uploadError } = await client.storage
+                    .from(BANNER_BUCKET)
+                    .upload(path, file, {
+                        cacheControl: "3600",
+                        upsert: false,
+                        contentType: file.type
+                    });
+
+                if (uploadError) throw uploadError;
+
+                uploadedPath = path;
+
+                const { data: publicData } = client.storage
+                    .from(BANNER_BUCKET)
+                    .getPublicUrl(path);
+
+                const imageUrl = publicData?.publicUrl;
+
+                if (!imageUrl) {
+                    throw new Error("تعذر الحصول على رابط الصورة.");
+                }
+
+                const { error: insertError } = await client
+                    .from("banner_images")
+                    .insert({
+                        image_url: imageUrl,
+                        storage_path: path,
+                        alt_text: file.name,
+                        sort_order: nextOrder,
+                        is_active: true
+                    });
+
+                if (insertError) throw insertError;
+
+                successCount++;
+                nextOrder++;
+
+            } catch (error) {
+                console.error("Banner upload error:", error);
+
+                errors.push(
+                    file.name + ": " + (error.message || "فشل الرفع")
+                );
+
+                if (uploadedPath) {
+                    const { error: cleanupError } = await client.storage
+                        .from(BANNER_BUCKET)
+                        .remove([uploadedPath]);
+
+                    if (cleanupError) {
+                        console.error("Banner cleanup error:", cleanupError);
+                    }
+                }
+            }
+        }
+
+        $("banner-upload-files").value = "";
+        $("banner-upload-preview").innerHTML = "";
+
+        await loadBannerImages();
+
+        if (errors.length) {
+            bannerFeedback(
+                "تم رفع " + successCount +
+                " صورة، وتعذر رفع " + errors.length +
+                " صورة. " + errors.join(" | "),
+                successCount ? "success" : "error"
+            );
+        } else {
+            bannerFeedback(
+                "تم رفع وإضافة " + successCount +
+                " صورة إلى البنر بنجاح.",
+                "success"
+            );
+        }
+
+    } finally {
+        button.disabled = false;
+        button.textContent = "رفع الصور وإضافتها إلى البنر";
+    }
+}
+
+$("banner-upload-button").addEventListener(
+    "click",
+    uploadBannerImages
+);
+
+/* حفظ وحذف صور البنر */
+$("banner-images-list").addEventListener("click", async event => {
+    const saveButton = event.target.closest("[data-save-banner]");
+    const deleteButton = event.target.closest("[data-delete-banner]");
+
+    if (saveButton) {
+        const id = saveButton.dataset.saveBanner;
+
+        const altInput = $("banner-images-list").querySelector(
+            `[data-banner-alt="${id}"]`
+        );
+
+        const orderInput = $("banner-images-list").querySelector(
+            `[data-banner-order="${id}"]`
+        );
+
+        const activeInput = $("banner-images-list").querySelector(
+            `[data-banner-active="${id}"]`
+        );
+
+        if (!altInput || !orderInput || !activeInput) return;
+
+        const sortOrder = Number(orderInput.value);
+
+        if (!Number.isInteger(sortOrder) || sortOrder < 0) {
+            bannerFeedback("أدخل ترتيباً صحيحاً يبدأ من صفر أو أكثر.");
+            return;
+        }
+
+        saveButton.disabled = true;
+        saveButton.textContent = "جارٍ الحفظ...";
+
+        try {
+            const { error } = await client
+                .from("banner_images")
+                .update({
+                    alt_text: altInput.value.trim() || "أثاث IBR الخشبي",
+                    sort_order: sortOrder,
+                    is_active: activeInput.checked,
+                    updated_at: new Date().toISOString()
+                })
+                .eq("id", id);
+
+            if (error) throw error;
+
+            bannerFeedback("تم حفظ تعديلات الصورة.", "success");
+            await loadBannerImages();
+
+        } catch (error) {
+            console.error(error);
+
+            bannerFeedback(
+                "تعذر حفظ الصورة: " + (error.message || "")
+            );
+
+            saveButton.disabled = false;
+            saveButton.textContent = "حفظ";
+        }
+
+        return;
+    }
+
+    if (deleteButton) {
+        const id = deleteButton.dataset.deleteBanner;
+        const banner = bannerImages.find(item => item.id === id);
+
+        if (!banner) return;
+
+        if (!confirm("هل تريد حذف هذه الصورة من البنر؟")) return;
+
+        deleteButton.disabled = true;
+        deleteButton.textContent = "جارٍ الحذف...";
+
+        try {
+            /*
+             * نحذف سجل البنر فقط أولاً.
+             * لا نحذف صورة المنتج الأصلية.
+             */
+            const { error } = await client
+                .from("banner_images")
+                .delete()
+                .eq("id", id);
+
+            if (error) throw error;
+
+            const storagePath = String(banner.storage_path || "");
+
+            /*
+             * الصور المستقلة فقط تُحذف من bucket البنر.
+             * صور المنتجات لا تُحذف من مخزن المنتجات.
+             */
+            if (
+                storagePath &&
+                !storagePath.startsWith("product-image:")
+            ) {
+                const { error: storageError } = await client.storage
+                    .from(BANNER_BUCKET)
+                    .remove([storagePath]);
+
+                if (storageError) {
+                    console.error(
+                        "Banner storage cleanup error:",
+                        storageError
+                    );
+
+                    bannerFeedback(
+                        "تم حذف الصورة من البنر، لكن تعذر حذف ملفها من التخزين: " +
+                        storageError.message,
+                        "success"
+                    );
+
+                    await loadBannerImages();
+                    return;
+                }
+            }
+
+            bannerFeedback("تم حذف الصورة من البنر بنجاح.", "success");
+            await loadBannerImages();
+
+        } catch (error) {
+            console.error(error);
+
+            bannerFeedback(
+                "تعذر حذف الصورة: " + (error.message || "")
+            );
+
+            deleteButton.disabled = false;
+            deleteButton.textContent = "حذف";
+        }
+    }
+});
+
+$("banner-refresh-button").addEventListener(
+    "click",
+    loadBannerImages
+);
+
+/* تحميل التصنيفات والمنتجات */
+async function loadCategoriesAndProducts() {
+    productsList.innerHTML = "<p>جارٍ تحميل المنتجات...</p>";
+    showFeedback(productsFeedback, "");
+
+    try {
+        const { data: categoryData, error: categoryError } = await client
+            .from("categories")
+            .select("id,name,slug,is_active,sort_order")
+            .order("sort_order", { ascending: true });
+
+        if (categoryError) throw categoryError;
+
+        categories = categoryData || [];
+
+        fillCategorySelects();
+
+        const { data, error } = await client
+            .from("products")
+            .select(`
+                id,name,sku,slug,price,description,category_id,
+                is_active,is_available,inventory_quantity,
+                categories(name,slug),
+                product_images(id,image_url,is_primary,sort_order)
+            `)
+            .order("sku", { ascending: true });
+
+        if (error) throw error;
+
+        products = data || [];
+
+        renderProducts();
+
+        /* تحديث المنتجات المتاحة للاختيار في البنر */
+        loadBannerProductPicker();
+        /* تحديث المنتجات المتاحة لاختيار صورة الصفحة الرئيسية */
+        loadHomeFeatureProductPicker();
+    } catch (error) {
+        console.error("Load products error:", error);
+
+        productsList.innerHTML =
+            "<p>تعذر تحميل المنتجات. تحقق من صلاحيات Supabase وسياسات RLS.</p>";
+
+        showFeedback(
+            productsFeedback,
+            error.message || "حدث خطأ أثناء تحميل المنتجات."
+        );
+    }
+}
+
+function fillCategorySelects() {
+    const options = categories.map(category =>
+        `<option value="${escapeHTML(category.id)}">${escapeHTML(category.name)}</option>`
+    ).join("");
+
+    $("edit-product-category").innerHTML =
+        '<option value="">اختر التصنيف</option>' + options;
+
+    $("product-category-filter").innerHTML =
+        '<option value="">كل التصنيفات</option>' + options;
+}
+
+function renderProducts() {
+    const search = $("product-search").value.trim().toLowerCase();
+    const categoryFilter = $("product-category-filter").value;
+    const stateFilter = $("product-state-filter").value;
+
+    const filtered = products.filter(product => {
+        const matchesSearch =
+            String(product.name || "").toLowerCase().includes(search) ||
+            String(product.sku || "").toLowerCase().includes(search);
+
+        const matchesCategory =
+            !categoryFilter || product.category_id === categoryFilter;
+
+        let matchesState = true;
+
+        if (stateFilter === "active") {
+            matchesState = product.is_active && product.is_available;
+        }
+
+        if (stateFilter === "hidden") {
+            matchesState = product.is_active && !product.is_available;
+        }
+
+        if (stateFilter === "archived") {
+            matchesState = !product.is_active;
+        }
+
+        return matchesSearch && matchesCategory && matchesState;
+    });
+
+    $("products-count").textContent = "عدد النتائج: " + filtered.length;
+
+    if (!filtered.length) {
+        productsList.innerHTML = "<p>لا توجد منتجات مطابقة.</p>";
+        return;
+    }
+
+    productsList.innerHTML = filtered.map(product => {
+        const image = primaryImage(product);
+
+        const state = !product.is_active
+            ? "مؤرشف"
+            : product.is_available ? "منشور ومتاح" : "مخفي";
+
+        return `
+        <article class="admin-product">
+            ${image
+                ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(product.name)}">`
+                : `<div class="admin-muted">بدون صورة</div>`}
+
+            <div>
+                <h3>${escapeHTML(product.name)}</h3>
+                <p>SKU: ${escapeHTML(product.sku)}</p>
+                <p>${escapeHTML(categoryName(product))} · ${Number(product.price || 0).toFixed(2)} ريال</p>
+                <span class="admin-badge">${state}</span>
+            </div>
+
+            <div class="admin-actions">
+                <button class="btn btn-outline" type="button" data-edit-product="${escapeHTML(product.id)}">تعديل</button>
+
+                ${product.is_active
+                    ? `<button class="btn btn-outline" type="button" data-toggle-availability="${escapeHTML(product.id)}">${product.is_available ? "إخفاء" : "إعادة النشر"}</button>
+                       <button class="btn btn-outline" type="button" data-archive-product="${escapeHTML(product.id)}">أرشفة</button>`
+                    : `<button class="btn btn-outline" type="button" data-restore-product="${escapeHTML(product.id)}">استعادة</button>`}
+            </div>
+        </article>`;
+    }).join("");
+}
+
+$("product-search").addEventListener("input", renderProducts);
+$("product-category-filter").addEventListener("change", renderProducts);
+$("product-state-filter").addEventListener("change", renderProducts);
+$("refresh-products").addEventListener("click", loadCategoriesAndProducts);
+
+/* إنشاء SKU جديد */
+function makeNextSku() {
+    let highest = 0;
+
+    products.forEach(product => {
+        const match = String(product.sku || "").match(/^IBR-(\d+)$/i);
+
+        if (match) highest = Math.max(highest, Number(match[1]));
+    });
+
+    return "IBR-" + String(highest + 1).padStart(3, "0");
+}
+
+function resetEditor() {
+    $("product-form").reset();
+
+    $("edit-product-id").value = "";
+    $("edit-product-sku").readOnly = false;
+
+    $("edit-product-active").checked = true;
+    $("edit-product-available").checked = true;
+
+    $("existing-images").innerHTML = "";
+    $("new-images-preview").innerHTML = "";
+
+    $("replace-image-target").innerHTML =
+        '<option value="">عدم استبدال صورة</option>';
+
+    $("replacement-preview").innerHTML = "";
+    $("new-product-images").value = "";
+    $("replacement-image").value = "";
+
+    currentImages = [];
+    newImageFiles = [];
+    selectedPrimary = "";
+
+    showFeedback($("product-form-feedback"), "");
+}
+
+function openNewProduct() {
+    resetEditor();
+
+    editorMode = "new";
+
+    $("product-editor-title").textContent = "إضافة منتج جديد";
+    $("edit-product-sku").value = makeNextSku();
+
+    $("product-editor").hidden = false;
+
+    $("product-editor").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+function openEditProduct(id) {
+    const product = products.find(item => item.id === id);
+
+    if (!product) return;
+
+    resetEditor();
+
+    editorMode = "edit";
+
+    $("product-editor-title").textContent = "تعديل المنتج";
+    $("edit-product-id").value = product.id;
+    $("edit-product-name").value = product.name || "";
+    $("edit-product-sku").value = product.sku || "";
+    $("edit-product-sku").readOnly = true;
+    $("edit-product-price").value = product.price ?? 0;
+    $("edit-product-description").value = product.description || "";
+    $("edit-product-category").value = product.category_id || "";
+    $("edit-product-active").checked = !!product.is_active;
+    $("edit-product-available").checked = !!product.is_available;
+
+    currentImages = imageList(product).map(image => ({ ...image }));
+
+    selectedPrimary =
+        currentImages.find(image => image.is_primary)?.id ||
+        currentImages[0]?.id || "";
+
+    renderExistingImages();
+
+    $("product-editor").hidden = false;
+
+    $("product-editor").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+$("new-product-button").addEventListener("click", openNewProduct);
+
+$("cancel-product-edit").addEventListener("click", () => {
+    $("product-editor").hidden = true;
+    resetEditor();
+});
+
+function renderExistingImages() {
+    const container = $("existing-images");
+    const target = $("replace-image-target");
+
+    if (!currentImages.length) {
+        container.innerHTML =
+            '<p class="admin-muted">لا توجد صور مسجلة لهذا المنتج بعد.</p>';
+
+        target.innerHTML =
+            '<option value="">لا توجد صورة للاستبدال</option>';
+
+        return;
+    }
+
+    container.innerHTML = currentImages.map(image => `
+        <div class="admin-image-card">
+            <img src="${escapeHTML(image.image_url)}" alt="صورة المنتج">
+
+            <label>
+                <input
+                    type="radio"
+                    name="primary-image"
+                    value="${escapeHTML(image.id)}"
+                    ${selectedPrimary === image.id ? "checked" : ""}
+                >
+                الصورة الأساسية
+            </label>
+
+            <button
+                type="button"
+                class="btn btn-outline"
+                data-remove-image="${escapeHTML(image.id)}"
+            >
+                حذف الصورة
+            </button>
+        </div>
+    `).join("");
+
+    target.innerHTML =
+        '<option value="">عدم استبدال صورة</option>' +
+        currentImages.map((image, index) =>
+            `<option value="${escapeHTML(image.id)}">الصورة ${index + 1}${image.is_primary ? " (أساسية)" : ""}</option>`
+        ).join("");
+}
+
+$("existing-images").addEventListener("change", event => {
+    if (event.target.matches('input[name="primary-image"]')) {
+        selectedPrimary = event.target.value;
+    }
+});
+
+$("existing-images").addEventListener("click", async event => {
+    const button = event.target.closest("[data-remove-image]");
+
+    if (!button) return;
+
+    const id = button.dataset.removeImage;
+    const image = currentImages.find(item => item.id === id);
+
+    if (!image) return;
+
+    if (!confirm("هل تريد حذف سجل هذه الصورة من المنتج؟")) return;
+
+    button.disabled = true;
+
+    try {
+        const { error } = await client
+            .from("product_images")
+            .delete()
+            .eq("id", id);
+
+        if (error) throw error;
+
+        currentImages = currentImages.filter(item => item.id !== id);
+
+        if (selectedPrimary === id) {
+            selectedPrimary = currentImages[0]?.id || "";
+        }
+
+        if (selectedPrimary) {
+            const { error: primaryError } = await client
+                .from("product_images")
+                .update({ is_primary: false })
+                .eq("product_id", $("edit-product-id").value);
+
+            if (primaryError) throw primaryError;
+
+            const { error: setError } = await client
+                .from("product_images")
+                .update({ is_primary: true })
+                .eq("id", selectedPrimary);
+
+            if (setError) throw setError;
+        }
+
+        renderExistingImages();
+
+        showFeedback(
+            $("product-form-feedback"),
+            "تم حذف ارتباط الصورة بالمنتج.",
+            "success"
+        );
+
+    } catch (error) {
+        console.error(error);
+
+        showFeedback(
+            $("product-form-feedback"),
+            "تعذر حذف الصورة: " + (error.message || "")
+        );
+    }
+});
+
+/* معاينة الصور الجديدة */
+$("new-product-images").addEventListener("change", () => {
+    const files = Array.from($("new-product-images").files || []);
+    const remaining = MAX_PRODUCT_IMAGES - currentImages.length;
+
+    if (files.length > remaining) {
+        showFeedback(
+            $("product-form-feedback"),
+            "عدد الصور يتجاوز الحد المسموح. الحد الأقصى 4 صور إجمالاً."
+        );
+
+        $("new-product-images").value = "";
+        newImageFiles = [];
+        $("new-images-preview").innerHTML = "";
+
+        return;
+    }
+
+    for (const file of files) {
+        if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+            showFeedback(
+                $("product-form-feedback"),
+                "صيغة صورة غير مدعومة. استخدم JPG أو PNG أو WEBP."
+            );
+
+            $("new-product-images").value = "";
+            newImageFiles = [];
+            $("new-images-preview").innerHTML = "";
+
+            return;
+        }
+
+        if (file.size > MAX_FILE_SIZE) {
+            showFeedback(
+                $("product-form-feedback"),
+                "حجم الصورة أكبر من 5MB."
+            );
+
+            $("new-product-images").value = "";
+            newImageFiles = [];
+            $("new-images-preview").innerHTML = "";
+
+            return;
+        }
+    }
+
+    newImageFiles = files;
+    renderNewImagePreviews();
+});
+
+function renderNewImagePreviews() {
+    const container = $("new-images-preview");
+
+    if (!newImageFiles.length) {
+        container.innerHTML = "";
+        return;
+    }
+
+    container.innerHTML = newImageFiles.map((file, index) => {
+        const url = URL.createObjectURL(file);
+
+        return `
+            <div>
+                <img src="${url}" alt="معاينة الصورة ${index + 1}">
+
+                <label style="display:block;font-size:13px">
+                    <input
+                        type="radio"
+                        name="primary-image"
+                        value="new-${index}"
+                        ${selectedPrimary === "new-" + index ? "checked" : ""}
+                    >
+                    جعلها أساسية
+                </label>
+
+                <small class="admin-muted">${escapeHTML(file.name)}</small>
+            </div>`;
+    }).join("");
+
+    container.querySelectorAll('input[name="primary-image"]').forEach(radio => {
+        radio.addEventListener("change", () => {
+            selectedPrimary = radio.value;
+        });
+    });
+}
+
+$("replacement-image").addEventListener("change", () => {
+    const file = $("replacement-image").files[0];
+    const preview = $("replacement-preview");
+
+    preview.innerHTML = "";
+
+    if (!file) return;
+
+    if (
+        !["image/jpeg", "image/png", "image/webp"].includes(file.type) ||
+        file.size > MAX_FILE_SIZE
+    ) {
+        showFeedback(
+            $("product-form-feedback"),
+            "اختر صورة JPG أو PNG أو WEBP لا يتجاوز حجمها 5MB."
+        );
+
+        $("replacement-image").value = "";
+        return;
+    }
+
+    preview.innerHTML =
+        `<img src="${URL.createObjectURL(file)}" alt="معاينة الصورة البديلة">`;
+});
+
+/* رفع صورة إلى Storage وإرجاع رابطها */
+function safeFileExtension(file) {
+    const types = {
+        "image/jpeg": "jpg",
+        "image/png": "png",
+        "image/webp": "webp"
+    };
+
+    return types[file.type];
+}
+
+async function uploadProductImage(file, sku) {
+    const extension = safeFileExtension(file);
+
+    if (!extension) throw new Error("صيغة صورة غير مدعومة.");
+
+    const cleanSku = String(sku).replace(/[^a-zA-Z0-9_-]/g, "-");
+
+    const path = cleanSku + "/" + Date.now() + "-" +
+        Math.random().toString(36).slice(2, 9) + "." + extension;
+
+    const { error } = await client.storage
+        .from(PRODUCT_BUCKET)
+        .upload(path, file, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: file.type
+        });
+
+    if (error) throw error;
+
+    const { data } = client.storage
+        .from(PRODUCT_BUCKET)
+        .getPublicUrl(path);
+
+    return data.publicUrl;
+}
+
+async function setPrimaryImage(productId, imageId) {
+    if (!imageId || String(imageId).startsWith("new-")) return;
+
+    const { error: clearError } = await client
+        .from("product_images")
+        .update({ is_primary: false })
+        .eq("product_id", productId);
+
+    if (clearError) throw clearError;
+
+    const { error: setError } = await client
+        .from("product_images")
+        .update({ is_primary: true })
+        .eq("id", imageId)
+        .eq("product_id", productId);
+
+    if (setError) throw setError;
+}
+
+/* حفظ المنتج والصور */
+$("product-form").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (savingProduct) return;
+
+    const name = $("edit-product-name").value.trim();
+    const sku = $("edit-product-sku").value.trim();
+    const price = Number($("edit-product-price").value);
+    const categoryId = $("edit-product-category").value;
+    const description = $("edit-product-description").value.trim();
+    const productId = $("edit-product-id").value;
+
+    if (!name || !sku || !categoryId || !Number.isFinite(price) || price < 0) {
+        showFeedback(
+            $("product-form-feedback"),
+            "أكمل الاسم ورقم SKU والسعر والتصنيف بشكل صحيح."
+        );
+        return;
+    }
+
+    const replacementTarget = $("replace-image-target").value;
+    const replacementFile = $("replacement-image").files[0];
+
+    if (replacementFile && !replacementTarget) {
+        showFeedback(
+            $("product-form-feedback"),
+            "اختر الصورة التي تريد استبدالها."
+        );
+        return;
+    }
+
+    if (!productId && newImageFiles.length === 0) {
+        showFeedback(
+            $("product-form-feedback"),
+            "أضف صورة واحدة على الأقل للمنتج الجديد."
+        );
+        return;
+    }
+
+    if (currentImages.length + newImageFiles.length > MAX_PRODUCT_IMAGES) {
+        showFeedback(
+            $("product-form-feedback"),
+            "الحد الأقصى هو 4 صور للمنتج."
+        );
+        return;
+    }
+
+    savingProduct = true;
+
+    const saveButton = $("save-product-button");
+
+    saveButton.disabled = true;
+    saveButton.textContent = "جارٍ الحفظ...";
+
+    try {
+        const productValues = {
+            name,
+            price,
+            description: description || null,
+            category_id: categoryId,
+            is_active: $("edit-product-active").checked,
+            is_available: $("edit-product-available").checked
+        };
+
+        let savedProductId = productId;
+
+        if (editorMode === "new") {
+            const slug = "ibr-" +
+                sku.toLowerCase().replace(/[^a-z0-9-]/g, "-");
+
+            const { data, error } = await client
+                .from("products")
+                .insert({
+                    ...productValues,
+                    sku,
+                    slug,
+                    inventory_quantity: 0
+                })
+                .select("id")
+                .single();
+
+            if (error) throw error;
+
+            savedProductId = data.id;
+
+        } else {
+            const { error } = await client
+                .from("products")
+                .update(productValues)
+                .eq("id", savedProductId);
+
+            if (error) throw error;
+        }
+
+        /* استبدال صورة موجودة */
+        if (replacementFile && replacementTarget) {
+            const replacementUrl =
+                await uploadProductImage(replacementFile, sku);
+
+            const { error } = await client
+                .from("product_images")
+                .update({ image_url: replacementUrl })
+                .eq("id", replacementTarget)
+                .eq("product_id", savedProductId);
+
+            if (error) throw error;
+        }
+
+        /* رفع الصور الجديدة وإضافة سجلاتها */
+        const uploadedIds = [];
+
+        for (let index = 0; index < newImageFiles.length; index++) {
+            const file = newImageFiles[index];
+
+            const imageUrl = await uploadProductImage(file, sku);
+
+            const { data, error } = await client
+                .from("product_images")
+                .insert({
+                    product_id: savedProductId,
+                    image_url: imageUrl,
+                    is_primary: false,
+                    sort_order: currentImages.length + index
+                })
+                .select("id")
+                .single();
+
+            if (error) throw error;
+
+            uploadedIds.push(data.id);
+        }
+
+        /* اختيار الصورة الأساسية */
+        let primaryId = selectedPrimary;
+
+        if (primaryId.startsWith("new-")) {
+            const newIndex = Number(primaryId.split("-")[1]);
+            primaryId = uploadedIds[newIndex] || "";
+        }
+
+        if (!primaryId) {
+            primaryId = currentImages[0]?.id || uploadedIds[0] || "";
+        }
+
+        if (primaryId) {
+            await setPrimaryImage(savedProductId, primaryId);
+        }
+
+        showFeedback(
+            $("product-form-feedback"),
+            "تم حفظ المنتج وصوره بنجاح.",
+            "success"
+        );
+
+        resetEditor();
+        $("product-editor").hidden = true;
+
+        await loadCategoriesAndProducts();
+        await loadDashboardOverview();
+    } catch (error) {
+        console.error("Save product error:", error);
+
+        showFeedback(
+            $("product-form-feedback"),
+            "تعذر حفظ المنتج بالكامل: " +
+            (error.message || "خطأ غير معروف") +
+            ". راجع الاتصال وصلاحيات التخزين والجداول."
+        );
+
+    } finally {
+        savingProduct = false;
+        saveButton.disabled = false;
+        saveButton.textContent = "حفظ المنتج";
+    }
+});
+
+/* أزرار المنتج: تعديل، إخفاء، نشر، أرشفة، استعادة */
+productsList.addEventListener("click", async event => {
+    const editButton = event.target.closest("[data-edit-product]");
+
+    if (editButton) {
+        openEditProduct(editButton.dataset.editProduct);
+        return;
+    }
+
+    const hideButton = event.target.closest("[data-toggle-availability]");
+    const archiveButton = event.target.closest("[data-archive-product]");
+    const restoreButton = event.target.closest("[data-restore-product]");
+
+    try {
+        if (hideButton) {
+            const product = products.find(
+                item => item.id === hideButton.dataset.toggleAvailability
+            );
+
+            if (!product) return;
+
+            const { error } = await client
+                .from("products")
+                .update({ is_available: !product.is_available })
+                .eq("id", product.id);
+
+            if (error) throw error;
+
+            await loadCategoriesAndProducts();
+        }
+
+        if (archiveButton) {
+            if (!confirm("سيتم أرشفة المنتج وإخفاؤه من المتجر دون حذفه. هل تريد المتابعة؟")) {
+                return;
+            }
+
+            const { error } = await client
+                .from("products")
+                .update({ is_active: false })
+                .eq("id", archiveButton.dataset.archiveProduct);
+
+            if (error) throw error;
+
+            await loadCategoriesAndProducts();
+        }
+
+               if (restoreButton) {
+            const { error } = await client
+                .from("products")
+                .update({
+                    is_active: true,
+                    is_available: true
+                })
+                .eq("id", restoreButton.dataset.restoreProduct);
+
+            if (error) throw error;
+
+            await loadCategoriesAndProducts();
+        }
+
+        // تحديث إحصائيات لوحة الإدارة بعد تعديل حالة المنتج
+        if (hideButton || archiveButton || restoreButton) {
+            await loadDashboardOverview();
+        }
+
+    } catch (error) {
+        console.error(error);
+
+        showFeedback(
+            productsFeedback,
+            "تعذر تحديث المنتج: " + (error.message || "")
+        );
+    }
+});
+
+/* ==========================================
+   إدارة الطلبات - Supabase
+========================================== */
+
+let orders = [];
+let orderItems = [];
+
+function orderStatusLabel(status) {
+    return ({
+        new: "طلب جديد",
+        contacting: "جارٍ التواصل",
+        confirmed: "تم التأكيد",
+        preparing: "قيد التصنيع والتجهيز",
+        shipped: "في الطريق إليك",
+        delivered: "تم التسليم",
+        cancelled: "ملغي"
+    })[status] || status;
+}
+
+function formatMoney(value) {
+    return Number(value || 0).toLocaleString("ar-SA", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }) + " ريال";
+}
+
+function formatOrderDate(value) {
+    if (!value) return "غير محدد";
+
+    return new Date(value).toLocaleString("ar-SA", {
+        dateStyle: "medium",
+        timeStyle: "short"
+    });
+}
+
+function orderWhatsAppLink(order) {
+    const phone = normalizeSaudiPhone(order.customer_phone);
+
+    if (!phone) return "#";
+
+    const message = [
+        "مرحباً " + order.customer_name,
+        "معك إدارة متجر IBR للأثاث الخشبي.",
+        "بخصوص طلبك رقم: " + order.order_number,
+        "حالة الطلب: " + orderStatusLabel(order.status)
+    ].join("\n");
+
+    return "https://wa.me/" + phone + "?text=" +
+        encodeURIComponent(message);
+}
+
+function updateOrderStatistics() {
+    $("orders-total").textContent = orders.length;
+
+    $("orders-new").textContent =
+        orders.filter(item => item.status === "new").length;
+
+    $("orders-preparing").textContent =
+        orders.filter(item => item.status === "preparing").length;
+
+    $("orders-delivered").textContent =
+        orders.filter(item => item.status === "delivered").length;
+}
+
+async function loadOrders() {
+    const container = $("orders-list");
+
+    container.innerHTML = "<p>جارٍ تحميل الطلبات...</p>";
+    showFeedback($("orders-feedback"), "");
+
+    try {
+        const { data, error } = await client
+            .from("orders")
+            .select(`
+                id,
+                order_number,
+                customer_name,
+                customer_phone,
+                city,
+                neighborhood,
+                address,
+                customer_note,
+                subtotal,
+                shipping_fee,
+                total_amount,
+                payment_method,
+                status,
+                created_at,
+                updated_at,
+                expected_delivery_date,
+                delivered_at,
+                admin_note
+            `)
+            .order("created_at", { ascending: false })
+            .limit(200);
+
+        if (error) throw error;
+
+        orders = data || [];
+        orderItems = [];
+
+        if (orders.length) {
+            const ids = orders.map(order => order.id);
+
+            const { data: items, error: itemsError } = await client
+                .from("order_items")
+                .select(`
+                    id,
+                    order_id,
+                    product_id,
+                    product_name,
+                    product_sku,
+                    product_image_url,
+                    unit_price,
+                    quantity,
+                    line_total,
+                    product_snapshot
+                `)
+                .in("order_id", ids);
+
+            if (itemsError) throw itemsError;
+
+            orderItems = items || [];
+        }
+
+        updateOrderStatistics();
+        renderOrders();
+
+    } catch (error) {
+        console.error("Load orders error:", error);
+
+        container.innerHTML =
+            "<p>تعذر تحميل الطلبات. تحقق من صلاحيات المشرف وسياسات RLS.</p>";
+
+        showFeedback(
+            $("orders-feedback"),
+            "خطأ تحميل الطلبات: " + (error.message || "")
+        );
+    }
+}
+
+function renderOrders() {
+    const search = $("order-search").value.trim().toLowerCase();
+    const statusFilter = $("order-status-filter").value;
+
+    const filtered = orders.filter(order => {
+        const matchesSearch =
+            String(order.order_number || "").toLowerCase().includes(search) ||
+            String(order.customer_name || "").toLowerCase().includes(search) ||
+            String(order.customer_phone || "").toLowerCase().includes(search);
+
+        const matchesStatus =
+            statusFilter === "all" || order.status === statusFilter;
+
+        return matchesSearch && matchesStatus;
+    });
+
+    $("orders-count").textContent =
+        "عدد الطلبات المعروضة: " + filtered.length;
+
+    if (!filtered.length) {
+        $("orders-list").innerHTML =
+            "<p>لا توجد طلبات مطابقة للبحث.</p>";
+        return;
+    }
+
+    $("orders-list").innerHTML = filtered.map(order => {
+        const items = orderItems.filter(
+            item => item.order_id === order.id
+        );
+
+        const itemsHTML = items.map(item => `
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:12px;
+                padding:10px 0;
+                border-bottom:1px solid #eadfd5;
+            ">
+                ${item.product_image_url
+                    ? `<img
+                        src="${escapeHTML(item.product_image_url)}"
+                        alt="${escapeHTML(item.product_name)}"
+                        style="width:65px;height:65px;object-fit:contain;background:#f8f4ef;border-radius:8px"
+                    >`
+                    : `<div class="admin-muted">بدون صورة</div>`
+                }
+
+                <div style="flex:1">
+                    <strong>${escapeHTML(item.product_name)}</strong>
+                    <p class="admin-muted">
+                        SKU: ${escapeHTML(item.product_sku || "غير محدد")}
+                    </p>
+                    <p class="admin-muted">
+                        الكمية: ${Number(item.quantity)}
+                        · سعر الوحدة: ${formatMoney(item.unit_price)}
+                    </p>
+                </div>
+
+                <strong>${formatMoney(item.line_total)}</strong>
+            </div>
+        `).join("");
+
+        const deliveryDate = order.expected_delivery_date || "";
+
+        return `
+        <article class="content-card" style="margin-bottom:18px">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:12px;
+                flex-wrap:wrap;
+            ">
+                <div>
+                    <h3>${escapeHTML(order.order_number)}</h3>
+                    <span class="admin-badge">
+                        ${escapeHTML(orderStatusLabel(order.status))}
+                    </span>
+                </div>
+
+                <span class="admin-muted">
+                    تاريخ الطلب: ${escapeHTML(formatOrderDate(order.created_at))}
+                    <br>آخر تحديث: ${escapeHTML(formatOrderDate(order.updated_at))}
+                </span>
+            </div>
+
+            <hr style="margin:14px 0;border:0;border-top:1px solid #eadfd5">
+
+            <h3>بيانات العميل</h3>
+
+            <p><strong>الاسم:</strong>
+                ${escapeHTML(order.customer_name)}
+            </p>
+
+            <p><strong>الجوال:</strong>
+                ${escapeHTML(order.customer_phone)}
+            </p>
+
+            <p><strong>المدينة:</strong>
+                ${escapeHTML(order.city)}
+            </p>
+
+            <p><strong>الحي:</strong>
+                ${escapeHTML(order.neighborhood || "غير محدد")}
+            </p>
+
+            <p><strong>العنوان:</strong>
+                ${escapeHTML(order.address || "غير محدد")}
+            </p>
+
+            ${order.customer_note ? `
+                <p><strong>ملاحظات العميل:</strong>
+                    ${escapeHTML(order.customer_note)}
+                </p>
+            ` : ""}
+
+            <hr style="margin:14px 0;border:0;border-top:1px solid #eadfd5">
+
+            <h3>المنتجات المطلوبة</h3>
+
+            ${itemsHTML || "<p>لا توجد تفاصيل منتجات مسجلة.</p>"}
+
+            <div style="
+                background:#f8f4ef;
+                padding:14px;
+                border-radius:9px;
+                margin-top:14px;
+            ">
+                <p>مجموع المنتجات: <strong>${formatMoney(order.subtotal)}</strong></p>
+                <p>رسوم الشحن: <strong>${formatMoney(order.shipping_fee)}</strong></p>
+                <p style="font-size:18px">
+                    الإجمالي: <strong>${formatMoney(order.total_amount)}</strong>
+                </p>
+                <p>طريقة الدفع: الدفع عند الاستلام</p>
+            </div>
+
+            <hr style="margin:18px 0;border:0;border-top:1px solid #eadfd5">
+
+            <div class="admin-form-grid">
+
+                <div class="field">
+                    <label>حالة الطلب</label>
+                    <select data-order-status="${escapeHTML(order.id)}">
+                        <option value="new" ${order.status === "new" ? "selected" : ""}>طلب جديد</option>
+                        <option value="contacting" ${order.status === "contacting" ? "selected" : ""}>جارٍ التواصل</option>
+                        <option value="confirmed" ${order.status === "confirmed" ? "selected" : ""}>تم التأكيد</option>
+                        <option value="preparing" ${order.status === "preparing" ? "selected" : ""}>قيد التصنيع والتجهيز</option>
+                        <option value="shipped" ${order.status === "shipped" ? "selected" : ""}>في الطريق إليك</option>
+                        <option value="delivered" ${order.status === "delivered" ? "selected" : ""}>تم التسليم</option>
+                        <option value="cancelled" ${order.status === "cancelled" ? "selected" : ""}>ملغي</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>موعد التسليم المتوقع</label>
+                    <input
+                        type="date"
+                        value="${escapeHTML(deliveryDate)}"
+                        data-order-delivery="${escapeHTML(order.id)}"
+                    >
+                </div>
+
+                <div class="field full">
+                    <label>ملاحظات الإدارة الداخلية</label>
+                    <textarea
+                        rows="3"
+                        data-order-note="${escapeHTML(order.id)}"
+                    >${escapeHTML(order.admin_note || "")}</textarea>
+                </div>
+
+            </div>
+
+            ${order.delivered_at ? `
+                <p class="admin-muted">
+                    تاريخ التسليم الفعلي:
+                    ${escapeHTML(formatOrderDate(order.delivered_at))}
+                </p>
+            ` : ""}
+
+            <div class="admin-actions" style="margin-top:15px">
+                <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-save-order="${escapeHTML(order.id)}"
+                >
+                    حفظ تحديث الطلب
+                </button>
+
+                <a
+                    class="btn btn-outline"
+                    href="${escapeHTML(orderWhatsAppLink(order))}"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    التواصل عبر واتساب
+                </a>
+            </div>
+
+        </article>
+        `;
+    }).join("");
+}
+
+/* حفظ حالة الطلب وموعد التسليم وملاحظات الإدارة */
+$("orders-list").addEventListener("click", async event => {
+    const button = event.target.closest("[data-save-order]");
+
+    if (!button) return;
+
+    const id = button.dataset.saveOrder;
+
+    const statusInput =
+        $("orders-list").querySelector(`[data-order-status="${id}"]`);
+
+    const deliveryInput =
+        $("orders-list").querySelector(`[data-order-delivery="${id}"]`);
+
+    const noteInput =
+        $("orders-list").querySelector(`[data-order-note="${id}"]`);
+
+    if (!statusInput || !deliveryInput || !noteInput) return;
+
+    const newStatus = statusInput.value;
+
+    if (!confirm("هل تريد حفظ تحديثات هذا الطلب؟")) return;
+
+    button.disabled = true;
+    button.textContent = "جارٍ الحفظ...";
+
+    try {
+        const existingOrder = orders.find(item => item.id === id);
+
+        const updateValues = {
+            status: newStatus,
+            expected_delivery_date: deliveryInput.value || null,
+            admin_note: noteInput.value.trim() || null
+        };
+
+        if (
+            newStatus === "delivered" &&
+            existingOrder.status !== "delivered"
+        ) {
+            updateValues.delivered_at = new Date().toISOString();
+        }
+
+        if (
+            newStatus !== "delivered" &&
+            existingOrder.status === "delivered"
+        ) {
+            updateValues.delivered_at = null;
+        }
+
+        const { error } = await client
+            .from("orders")
+            .update(updateValues)
+            .eq("id", id);
+
+        if (error) throw error;
+
+        showFeedback(
+            $("orders-feedback"),
+            "تم حفظ تحديثات الطلب بنجاح.",
+            "success"
+        );
+
+        await loadOrders();
+        await loadDashboardOverview();
+    } catch (error) {
+        console.error("Update order error:", error);
+
+        showFeedback(
+            $("orders-feedback"),
+            "تعذر تحديث الطلب: " + (error.message || "")
+        );
+
+        button.disabled = false;
+        button.textContent = "حفظ تحديث الطلب";
+    }
+});
+
+$("order-search").addEventListener("input", renderOrders);
+$("order-status-filter").addEventListener("change", renderOrders);
+$("refresh-orders").addEventListener("click", loadOrders);
+
+/* الرسائل والمرفقات */
+function normalizeSaudiPhone(phone) {
+    let number = String(phone || "").replace(/\D/g, "");
+
+    if (number.startsWith("00")) {
+        number = number.slice(2);
+    }
+
+    if (number.startsWith("0")) {
+        number = "966" + number.slice(1);
+    } else if (number.startsWith("5")) {
+        number = "966" + number;
+    }
+
+    return number;
+}
+
+function whatsappLink(message) {
+    const phone = normalizeSaudiPhone(message.customer_phone);
+
+    const text = encodeURIComponent(
+        "مرحباً " + message.customer_name +
+        "، معك إدارة متجر IBR بخصوص استفسارك: " +
+        (message.subject || "استفسار من الموقع")
+    );
+
+    return phone ? "https://wa.me/" + phone + "?text=" + text : "#";
+}
+
+function statusLabel(status) {
+    return ({
+        new: "جديدة",
+        in_review: "قيد المراجعة",
+        answered: "تم الرد",
+        closed: "مغلقة"
+    })[status] || status;
+}
+
+function formatDate(date) {
+    return date ? new Date(date).toLocaleString("ar-SA", {
+        dateStyle: "medium",
+        timeStyle: "short"
+    }) : "";
+}
+
+function parseAttachmentPaths(value) {
+    if (!value) return [];
+
+    if (Array.isArray(value)) return value;
+
+    try {
+        const parsed = JSON.parse(value);
+
+        if (Array.isArray(parsed)) return parsed;
+        if (typeof parsed === "string") return [parsed];
+
+    } catch (_) {}
+
+    return [String(value)];
+}
+
+async function getAttachmentLinks(attachmentValue) {
+    const paths = parseAttachmentPaths(attachmentValue);
+    const links = [];
+
+    for (const path of paths.slice(0, 3)) {
+        if (!path || typeof path !== "string") continue;
+
+        const { data, error } = await client.storage
+            .from(ATTACHMENT_BUCKET)
+            .createSignedUrl(path, 300);
+
+        if (!error && data?.signedUrl) {
+            links.push(data.signedUrl);
+        }
+    }
+
+    return links;
+}
+
+
+async function loadMessages() {
+    messagesList.innerHTML = "<p>جارٍ تحميل الرسائل...</p>";
+    showFeedback(messagesFeedback, "");
+
+    try {
+        const { data, error } = await client
+            .from("customer_messages")
+            .select(`
+                id,
+                inquiry_number,
+                customer_name,
+                customer_phone,
+                customer_email,
+                message_type,
+                subject,
+                message,
+                attachment_path,
+                status,
+                admin_note,
+                customer_reply,
+                created_at,
+                product_id,
+                product_name,
+                product_sku,
+                product_image_url
+            `)
+            .order("created_at", { ascending: false })
+            .limit(100);
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            messagesList.innerHTML =
+                "<p>لا توجد رسائل واردة حالياً.</p>";
+            return;
+        }
+
+        const cards = await Promise.all(data.map(async message => {
+
+            const links = await getAttachmentLinks(
+                message.attachment_path
+            );
+
+            const attachments = links.length
+                ? `<div style="margin-top:12px">
+                    <strong>مرفقات العميل:</strong><br>
+                    ${links.map((url, index) =>
+                        `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">
+                            <img
+                                class="admin-message-image"
+                                src="${escapeHTML(url)}"
+                                alt="مرفق ${index + 1}"
+                            >
+                        </a>`
+                    ).join("")}
+                   </div>`
+                : "";
+
+            // رقم الاستفسار وزر النسخ
+            const inquiryNumber = message.inquiry_number
+                ? `
+                    <div style="
+                        margin:12px 0;
+                        padding:12px;
+                        background:#f8f4ef;
+                        border:1px solid #e5d9ce;
+                        border-radius:9px;
+                        display:flex;
+                        align-items:center;
+                        justify-content:space-between;
+                        gap:10px;
+                        flex-wrap:wrap;
+                    ">
+                        <div>
+                            <strong>رقم الاستفسار:</strong>
+                            <span style="
+                                direction:ltr;
+                                display:inline-block;
+                                font-weight:bold;
+                                margin-right:6px;
+                            ">${escapeHTML(message.inquiry_number)}</span>
+                        </div>
+
+                        <button
+                            class="btn btn-outline"
+                            type="button"
+                            data-copy-inquiry="${escapeHTML(message.inquiry_number)}"
+                        >
+                            نسخ الرقم
+                        </button>
+                    </div>
+                `
+                : `
+                    <p style="color:#a65b35;margin:12px 0">
+                        لم يُسجل رقم لهذا الاستفسار.
+                    </p>
+                `;
+
+            // بيانات المنتج المرتبط بالاستفسار
+            const isProductQuestion =
+                message.message_type === "product_question" ||
+                !!message.product_id;
+
+            let productDetails = "";
+
+            if (isProductQuestion) {
+
+                const productImage = message.product_image_url
+                    ? `<img
+                        src="${escapeHTML(message.product_image_url)}"
+                        alt="${escapeHTML(message.product_name || "صورة المنتج")}"
+                        style="
+                            width:120px;
+                            height:110px;
+                            object-fit:contain;
+                            background:#fff;
+                            border:1px solid #e5d9ce;
+                            border-radius:9px;
+                        "
+                    >`
+                    : "";
+
+                const productName = message.product_name
+                    ? `<p style="margin:5px 0">
+                        <strong>اسم المنتج:</strong>
+                        ${escapeHTML(message.product_name)}
+                    </p>`
+                    : "";
+
+                const productSku = message.product_sku
+                    ? `<p style="margin:5px 0">
+                        <strong>رقم SKU:</strong>
+                        ${escapeHTML(message.product_sku)}
+                    </p>`
+                    : "";
+
+                const productLink = message.product_id
+                    ? `<a
+                        href="product.html?id=${encodeURIComponent(String(message.product_id))}"
+                        target="_blank"
+                        rel="noopener"
+                        class="btn btn-outline"
+                        style="display:inline-block;margin-top:9px"
+                    >
+                        عرض المنتج في المتجر
+                    </a>`
+                    : "";
+
+                productDetails = `
+                    <div style="
+                        margin-top:14px;
+                        padding:14px;
+                        background:#f8f4ef;
+                        border:1px solid #e5d9ce;
+                        border-radius:10px;
+                    ">
+                        <h4 style="margin:0 0 10px">
+                            استفسار مرتبط بمنتج
+                        </h4>
+
+                        <div style="
+                            display:flex;
+                            align-items:center;
+                            gap:14px;
+                            flex-wrap:wrap;
+                        ">
+                            ${productImage}
+
+                            <div style="flex:1;min-width:150px">
+                                ${productName}
+                                ${productSku}
+                                ${productLink}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return `
+            <div class="content-card" style="margin-bottom:16px">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    gap:12px;
+                    flex-wrap:wrap
+                ">
+                    <h3>${escapeHTML(message.customer_name)}</h3>
+
+                    <span class="admin-badge">
+                        ${escapeHTML(statusLabel(message.status))}
+                    </span>
+                </div>
+
+                ${inquiryNumber}
+
+                <p>
+                    <strong>رقم الجوال:</strong>
+                    ${escapeHTML(message.customer_phone)}
+                </p>
+
+                ${message.customer_email
+                    ? `<p>
+                        <strong>البريد:</strong>
+                        ${escapeHTML(message.customer_email)}
+                    </p>`
+                    : ""}
+
+                <p>
+                    <strong>الموضوع:</strong>
+                    ${escapeHTML(message.subject || "بدون موضوع")}
+                </p>
+
+                <p>
+                    <strong>تاريخ الإرسال:</strong>
+                    ${escapeHTML(formatDate(message.created_at))}
+                </p>
+
+                ${productDetails}
+
+                <div style="
+                    margin-top:12px;
+                    padding:12px;
+                    background:#f8f4ef;
+                    border-radius:8px
+                ">
+                    <strong>تفاصيل الاستفسار:</strong>
+
+                    <p style="
+                        white-space:pre-wrap;
+                        margin-top:8px
+                    ">${escapeHTML(message.message)}</p>
+                </div>
+
+                ${attachments}
+
+                <div style="margin-top:15px">
+                    <label>حالة الرسالة</label>
+
+                    <select data-status="${escapeHTML(message.id)}">
+                        <option value="new" ${message.status === "new" ? "selected" : ""}>جديدة</option>
+                        <option value="in_review" ${message.status === "in_review" ? "selected" : ""}>قيد المراجعة</option>
+                        <option value="answered" ${message.status === "answered" ? "selected" : ""}>تم الرد</option>
+                        <option value="closed" ${message.status === "closed" ? "selected" : ""}>مغلقة</option>
+                    </select>
+                </div>
+
+                <div style="margin-top:12px">
+    <label>ملاحظة الإدارة الداخلية (سرية)</label>
+
+    <textarea
+        data-note="${escapeHTML(message.id)}"
+        rows="3"
+        placeholder="ملاحظات لا تظهر للعميل..."
+        style="width:100%"
+    >${escapeHTML(message.admin_note || "")}</textarea>
+       </div>
+
+        <div style="
+                margin-top:14px;
+              padding:14px;
+             background:#f5f0e9;
+                 border:1px solid #d9c8b7;
+                 border-radius:10px;
+                 ">
+               <label style="
+                  display:block;
+                  margin-bottom:8px;
+                  font-weight:bold;
+                  color:#68452e;
+                  ">
+                  الرد على العميل
+                </label>
+
+                <textarea
+                   data-reply="${escapeHTML(message.id)}"
+                    rows="4"
+                    placeholder="اكتب الرد الذي سيظهر للعميل في صفحة تتبع الاستفسار..."
+                    style="
+                    width:100%;
+                   box-sizing:border-box;
+                   padding:12px;
+                  border:1px solid #d9c8b7;
+                   border-radius:8px;
+                   resize:vertical;
+                  "
+                >${escapeHTML(message.customer_reply || "")}</textarea>
+
+                  <small style="display:block;margin-top:7px;color:#806d5c">
+                 سيظهر هذا الرد للعميل عندما تصبح حالة الاستفسار «تم الرد».
+             </small>
+            </div>
+
+                <div style="
+                    display:flex;
+                    gap:10px;
+                    flex-wrap:wrap;
+                    margin-top:15px
+                ">
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        data-save-message="${escapeHTML(message.id)}"
+                    >
+                        حفظ التعديلات
+                    </button>
+
+                    <a
+                        class="btn btn-primary"
+                        href="${escapeHTML(whatsappLink(message))}"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        التواصل عبر واتساب
+                    </a>
+                </div>
+
+            </div>`;
+        }));
+
+        messagesList.innerHTML = cards.join("");
+
+        // تفعيل أزرار نسخ أرقام الاستفسارات
+        messagesList.querySelectorAll("[data-copy-inquiry]").forEach(button => {
+            button.addEventListener("click", async () => {
+                const number = button.getAttribute("data-copy-inquiry");
+
+                try {
+                    await navigator.clipboard.writeText(number);
+
+                    const originalText = button.textContent;
+                    button.textContent = "تم النسخ";
+
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                    }, 1800);
+
+                } catch (error) {
+                    console.error("Copy inquiry number error:", error);
+                    showFeedback(
+                        messagesFeedback,
+                        "تعذر نسخ الرقم. يمكنك تحديده ونسخه يدوياً."
+                    );
+                }
+            });
+        });
+
+    } catch (error) {
+        console.error("Load messages error:", error);
+
+        messagesList.innerHTML =
+            "<p>تعذر تحميل الرسائل. تحقق من صلاحيات المشرف وسياسات قاعدة البيانات.</p>";
+
+        showFeedback(
+            messagesFeedback,
+            "تعذر تحميل الرسائل: " + (error.message || "")
+        );
+    }
+}
+
+messagesList.addEventListener("click", async event => {
+    const button = event.target.closest("[data-save-message]");
+
+    if (!button) return;
+
+    const id = button.dataset.saveMessage;
+
+    const statusInput =
+        messagesList.querySelector(`[data-status="${id}"]`);
+
+    const noteInput =
+        messagesList.querySelector(`[data-note="${id}"]`);
+
+    const replyInput =
+        messagesList.querySelector(`[data-reply="${id}"]`);
+
+    if (!statusInput || !noteInput || !replyInput) {
+        showFeedback(
+            messagesFeedback,
+            "تعذر العثور على حقول الرسالة."
+        );
+        return;
+    }
+
+    const reply = replyInput.value.trim();
+
+    if (statusInput.value === "answered" && !reply) {
+        showFeedback(
+            messagesFeedback,
+            "اكتب رد الإدارة قبل تغيير الحالة إلى تم الرد."
+        );
+
+        replyInput.focus();
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "جارٍ الحفظ...";
+
+    try {
+        const { error } = await client
+            .from("customer_messages")
+            .update({
+                status: statusInput.value,
+                admin_note: noteInput.value.trim() || null,
+                customer_reply: reply || null
+            })
+            .eq("id", id);
+
+        if (error) throw error;
+
+        showFeedback(
+            messagesFeedback,
+            "تم حفظ الحالة والملاحظات والرد بنجاح.",
+            "success"
+        );
+
+        await loadMessages();
+        await loadDashboardOverview();
+    } catch (error) {
+        console.error("Save message error:", error);
+
+        showFeedback(
+            messagesFeedback,
+            "تعذر حفظ التعديلات: " + (error.message || "")
+        );
+
+        button.disabled = false;
+        button.textContent = "حفظ التعديلات";
+    }
+});
+
+$("refresh-messages").addEventListener("click", loadMessages);
+
+/* بدء التحقق من جلسة المشرف */
+verifyAdmin().catch(error => {
+    console.error("Admin verification error:", error);
+
+    showLogin();
+
+    showLoginFeedback(
+        "تعذر التحقق من صلاحية المشرف. تحقق من اتصال Supabase."
+    );
+});
+
+});
+</script>
+
+</body>
+</html>

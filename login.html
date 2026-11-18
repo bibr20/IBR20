@@ -1,0 +1,1684 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f0e8">
+
+    <title>حسابي | IBR للأثاث الخشبي</title>
+
+    <meta name="description" content="تسجيل الدخول أو إنشاء حسابك في متجر IBR للأثاث الخشبي.">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           IBR AUTHENTICATION PAGE
+        ========================================= */
+
+        :root {
+            --auth-ink: #30251d;
+            --auth-brown: #68452e;
+            --auth-brown-light: #8b6548;
+            --auth-cream: #fffaf4;
+            --auth-sand: #f4eee5;
+            --auth-border: #e4d8ca;
+            --auth-muted: #88796b;
+            --auth-success: #276749;
+            --auth-danger: #b42318;
+        }
+
+        .auth-page {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(139, 101, 72, .09),
+                    transparent 35%
+                ),
+                var(--auth-sand);
+
+            font-family: 'Almarai', sans-serif;
+            color: var(--auth-ink);
+            padding: 35px 18px 55px;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .auth-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .auth-logo {
+            color: var(--auth-brown);
+            text-decoration: none;
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .auth-home-link {
+            color: var(--auth-brown);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .auth-home-link:hover {
+            color: var(--auth-brown-light);
+        }
+
+        .auth-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--auth-cream);
+            border: 1px solid var(--auth-border);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 18px 55px rgba(48, 37, 29, .08);
+            min-height: 620px;
+        }
+
+        .auth-visual {
+            position: relative;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(48, 37, 29, .94),
+                    rgba(104, 69, 46, .91)
+                );
+
+            color: white;
+            padding: 65px 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .auth-visual::before,
+        .auth-visual::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .auth-visual::before {
+            width: 380px;
+            height: 380px;
+            top: -150px;
+            right: -140px;
+        }
+
+        .auth-visual::after {
+            width: 260px;
+            height: 260px;
+            bottom: -120px;
+            left: -100px;
+        }
+
+        .auth-visual-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-visual-mark {
+            width: 65px;
+            height: 65px;
+            border: 1px solid rgba(255,255,255,.35);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 35px;
+            color: #ead6c0;
+        }
+
+        .auth-visual h1 {
+            font-size: 32px;
+            line-height: 1.8;
+            margin: 0 0 18px;
+            font-weight: 800;
+        }
+
+        .auth-visual p {
+            color: rgba(255,255,255,.77);
+            font-size: 14px;
+            line-height: 2.2;
+            margin: 0;
+        }
+
+        .auth-benefits {
+            display: grid;
+            gap: 18px;
+            margin-top: 40px;
+        }
+
+        .auth-benefit {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: rgba(255,255,255,.9);
+            font-size: 13px;
+        }
+
+        .auth-benefit-icon {
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,.25);
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ead6c0;
+        }
+
+        .auth-form-area {
+            padding: 55px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-heading {
+            margin-bottom: 28px;
+        }
+
+        .auth-heading h2 {
+            font-size: 25px;
+            margin: 0 0 10px;
+            font-weight: 800;
+            color: var(--auth-ink);
+        }
+
+        .auth-heading p {
+            color: var(--auth-muted);
+            font-size: 13px;
+            line-height: 1.9;
+            margin: 0;
+        }
+
+        .auth-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--auth-sand);
+            padding: 5px;
+            border-radius: 12px;
+            gap: 5px;
+            margin-bottom: 28px;
+        }
+
+        .auth-tab {
+            border: 0;
+            border-radius: 9px;
+            padding: 12px 8px;
+            background: transparent;
+            color: var(--auth-muted);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .auth-tab.active {
+            background: var(--auth-cream);
+            color: var(--auth-brown);
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+            animation: authFade .25s ease;
+        }
+
+        @keyframes authFade {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-field {
+            margin-bottom: 19px;
+        }
+
+        .auth-field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 9px;
+            color: var(--auth-ink);
+        }
+
+        .auth-field input {
+            width: 100%;
+            height: 49px;
+            border: 1px solid var(--auth-border);
+            border-radius: 11px;
+            background: #fff;
+            padding: 0 15px;
+            font-family: inherit;
+            font-size: 13px;
+            color: var(--auth-ink);
+            outline: none;
+            transition: .2s;
+            box-sizing: border-box;
+        }
+
+        .auth-field input:focus {
+            border-color: var(--auth-brown-light);
+            box-shadow: 0 0 0 3px rgba(139,101,72,.1);
+        }
+
+        .auth-field input::placeholder {
+            color: #b5a99e;
+        }
+
+        .auth-password-wrap {
+            position: relative;
+        }
+
+        .auth-password-wrap input {
+            padding-left: 55px;
+        }
+
+        .auth-password-toggle {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 0;
+            background: transparent;
+            color: var(--auth-muted);
+            font-family: inherit;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .auth-form-options {
+            display: flex;
+            justify-content: flex-start;
+            margin: -3px 0 20px;
+        }
+
+        .auth-text-button {
+            border: 0;
+            background: transparent;
+            padding: 0;
+            color: var(--auth-brown);
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .auth-text-button:hover {
+            text-decoration: underline;
+        }
+
+        .auth-submit {
+            width: 100%;
+            height: 51px;
+            border: 0;
+            border-radius: 11px;
+            background: var(--auth-brown);
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .auth-submit:hover {
+            background: var(--auth-brown-light);
+            transform: translateY(-1px);
+        }
+
+        .auth-submit:disabled {
+            opacity: .65;
+            cursor: wait;
+            transform: none;
+        }
+
+        .auth-message {
+            display: none;
+            padding: 13px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 1.9;
+            margin-bottom: 18px;
+        }
+
+        .auth-message.show {
+            display: block;
+        }
+
+        .auth-message.success {
+            background: #eaf5ee;
+            color: var(--auth-success);
+            border: 1px solid #cce7d5;
+        }
+
+        .auth-message.error {
+            background: #fff0ef;
+            color: var(--auth-danger);
+            border: 1px solid #f5ceca;
+        }
+
+        .auth-message.info {
+            background: #f1f0ec;
+            color: var(--auth-brown);
+            border: 1px solid var(--auth-border);
+        }
+
+        .auth-footer-note {
+            text-align: center;
+            color: var(--auth-muted);
+            font-size: 11px;
+            line-height: 2;
+            margin-top: 25px;
+        }
+
+        .auth-footer-note a {
+            color: var(--auth-brown);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .auth-back-button {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .auth-back-button.show {
+            display: inline-block;
+        }
+
+        .auth-terms {
+            font-size: 11px;
+            color: var(--auth-muted);
+            line-height: 1.9;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 760px) {
+
+            .auth-page {
+                padding: 22px 13px 35px;
+            }
+
+            .auth-topbar {
+                margin-bottom: 22px;
+            }
+
+            .auth-layout {
+                grid-template-columns: 1fr;
+                min-height: auto;
+                border-radius: 19px;
+            }
+
+            .auth-visual {
+                padding: 28px 25px;
+                min-height: 190px;
+            }
+
+            .auth-visual-mark {
+                width: 48px;
+                height: 48px;
+                font-size: 21px;
+                margin-bottom: 15px;
+            }
+
+            .auth-visual h1 {
+                font-size: 21px;
+                margin-bottom: 8px;
+            }
+
+            .auth-visual p {
+                font-size: 12px;
+            }
+
+            .auth-benefits {
+                display: none;
+            }
+
+            .auth-form-area {
+                padding: 32px 23px;
+            }
+
+            .auth-heading h2 {
+                font-size: 22px;
+            }
+
+        }
+
+        @media (max-width: 380px) {
+
+            .auth-form-area {
+                padding: 27px 17px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="auth-page">
+
+    <div class="auth-container">
+
+        <!-- رأس الصفحة -->
+
+        <header class="auth-topbar">
+
+            <a href="index.html" class="auth-logo">
+                IBR
+            </a>
+
+            <a href="index.html" class="auth-home-link">
+                العودة إلى المتجر ←
+            </a>
+
+        </header>
+
+
+        <!-- المحتوى الرئيسي -->
+
+        <section class="auth-layout">
+
+            <!-- الجانب التعريفي -->
+
+            <div class="auth-visual">
+
+                <div class="auth-visual-content">
+
+                    <div class="auth-visual-mark">
+                        I
+                    </div>
+
+                    <h1>
+                        أهلاً بك في عالم IBR
+                    </h1>
+
+                    <p>
+                        مساحة خاصة بك تجمع طلباتك ومعلومات حسابك
+                        وتجعل تجربتك مع الأثاث الخشبي أكثر سهولة.
+                    </p>
+
+                    <div class="auth-benefits">
+
+                        <div class="auth-benefit">
+
+                            <span class="auth-benefit-icon">✓</span>
+
+                            <span>
+                                متابعة طلباتك وتفاصيلها
+                            </span>
+
+                        </div>
+
+                        <div class="auth-benefit">
+
+                            <span class="auth-benefit-icon">♡</span>
+
+                            <span>
+                                الاحتفاظ بمنتجاتك المفضلة
+                            </span>
+
+                        </div>
+
+                        <div class="auth-benefit">
+
+                            <span class="auth-benefit-icon">⌂</span>
+
+                            <span>
+                                إدارة معلومات حسابك بسهولة
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- منطقة النماذج -->
+
+            <div class="auth-form-area">
+
+                <div class="auth-heading">
+
+                    <h2 id="authTitle">
+                        مرحباً بعودتك
+                    </h2>
+
+                    <p id="authSubtitle">
+                        سجل دخولك للوصول إلى حسابك في IBR.
+                    </p>
+
+                </div>
+
+
+                <!-- الرسائل -->
+
+                <div
+                    id="authMessage"
+                    class="auth-message"
+                    role="status"
+                    aria-live="polite">
+                </div>
+
+
+                <!-- زر العودة للنماذج -->
+
+                <button
+                    type="button"
+                    class="auth-text-button auth-back-button"
+                    id="authBackButton">
+
+                    ← العودة إلى تسجيل الدخول
+
+                </button>
+
+
+                <!-- التبويبات -->
+
+                <div class="auth-tabs" id="authTabs">
+
+                    <button
+                        type="button"
+                        class="auth-tab active"
+                        data-auth-tab="login">
+
+                        تسجيل الدخول
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="auth-tab"
+                        data-auth-tab="signup">
+
+                        إنشاء حساب
+
+                    </button>
+
+                </div>
+
+
+                <!-- تسجيل الدخول -->
+
+                <form
+                    id="loginForm"
+                    class="auth-form active"
+                    autocomplete="on">
+
+                    <div class="auth-field">
+
+                        <label for="loginEmail">
+                            البريد الإلكتروني
+                        </label>
+
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            name="email"
+                            placeholder="example@email.com"
+                            autocomplete="email"
+                            required>
+
+                    </div>
+
+
+                    <div class="auth-field">
+
+                        <label for="loginPassword">
+                            كلمة المرور
+                        </label>
+
+                        <div class="auth-password-wrap">
+
+                            <input
+                                type="password"
+                                id="loginPassword"
+                                name="password"
+                                placeholder="أدخل كلمة المرور"
+                                autocomplete="current-password"
+                                required>
+
+                            <button
+                                type="button"
+                                class="auth-password-toggle"
+                                data-toggle-password="loginPassword">
+
+                                إظهار
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="auth-form-options">
+
+                        <button
+                            type="button"
+                            class="auth-text-button"
+                            id="forgotPasswordButton">
+
+                            نسيت كلمة المرور؟
+
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                        id="loginSubmit">
+
+                        تسجيل الدخول
+
+                    </button>
+
+                </form>
+
+
+                <!-- إنشاء حساب -->
+
+                <form
+                    id="signupForm"
+                    class="auth-form"
+                    autocomplete="on">
+
+                    <div class="auth-field">
+
+                        <label for="signupName">
+                            الاسم الكامل
+                        </label>
+
+                        <input
+                            type="text"
+                            id="signupName"
+                            name="name"
+                            placeholder="أدخل اسمك الكامل"
+                            autocomplete="name"
+                            minlength="2"
+                            required>
+
+                    </div>
+
+
+                    <div class="auth-field">
+
+                        <label for="signupEmail">
+                            البريد الإلكتروني
+                        </label>
+
+                        <input
+                            type="email"
+                            id="signupEmail"
+                            name="email"
+                            placeholder="example@email.com"
+                            autocomplete="email"
+                            required>
+
+                    </div>
+
+
+                    <div class="auth-field">
+
+                        <label for="signupPassword">
+                            كلمة المرور
+                        </label>
+
+                        <div class="auth-password-wrap">
+
+                            <input
+                                type="password"
+                                id="signupPassword"
+                                name="password"
+                                placeholder="8 أحرف على الأقل"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required>
+
+                            <button
+                                type="button"
+                                class="auth-password-toggle"
+                                data-toggle-password="signupPassword">
+
+                                إظهار
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="auth-field">
+
+                        <label for="signupPasswordConfirm">
+                            تأكيد كلمة المرور
+                        </label>
+
+                        <input
+                            type="password"
+                            id="signupPasswordConfirm"
+                            name="passwordConfirm"
+                            placeholder="أعد كتابة كلمة المرور"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required>
+
+                    </div>
+
+
+                    <p class="auth-terms">
+                        بإنشاء حسابك، فإنك توافق على استخدام بياناتك
+                        لتقديم خدمات المتجر وإدارة طلباتك.
+                    </p>
+
+
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                        id="signupSubmit">
+
+                        إنشاء حساب جديد
+
+                    </button>
+
+                </form>
+
+
+                <!-- استعادة كلمة المرور -->
+
+                <form
+                    id="resetForm"
+                    class="auth-form">
+
+                    <div class="auth-field">
+
+                        <label for="resetEmail">
+                            البريد الإلكتروني
+                        </label>
+
+                        <input
+                            type="email"
+                            id="resetEmail"
+                            placeholder="example@email.com"
+                            autocomplete="email"
+                            required>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                        id="resetSubmit">
+
+                        إرسال رابط استعادة كلمة المرور
+
+                    </button>
+
+                </form>
+
+
+                <!-- تحديث كلمة المرور بعد فتح رابط الاستعادة -->
+
+                <form
+                    id="newPasswordForm"
+                    class="auth-form">
+
+                    <div class="auth-field">
+
+                        <label for="newPassword">
+                            كلمة المرور الجديدة
+                        </label>
+
+                        <input
+                            type="password"
+                            id="newPassword"
+                            placeholder="8 أحرف على الأقل"
+                            minlength="8"
+                            autocomplete="new-password"
+                            required>
+
+                    </div>
+
+
+                    <div class="auth-field">
+
+                        <label for="newPasswordConfirm">
+                            تأكيد كلمة المرور الجديدة
+                        </label>
+
+                        <input
+                            type="password"
+                            id="newPasswordConfirm"
+                            placeholder="أعد كتابة كلمة المرور"
+                            minlength="8"
+                            autocomplete="new-password"
+                            required>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="auth-submit">
+
+                        حفظ كلمة المرور الجديدة
+
+                    </button>
+
+                </form>
+
+
+                <div class="auth-footer-note">
+
+                    بالتسجيل في IBR، أنت تنضم إلى تجربة
+                    تجمع بين جودة الخشب وأناقة التصميم.
+
+                    <br>
+
+                    <a href="index.html">
+                        متابعة تصفح المتجر
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+<!-- 1. تحميل مكتبة Supabase أولاً -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 2. تحميل ملف المتجر وإنشاء اتصال Supabase -->
+<script src="assets/js/store.js"></script>
+
+<!-- 3. تحميل نظام تسجيل الدخول بعد إنشاء الاتصال -->
+<script src="assets/js/auth.js"></script>
+
+<script>
+(function () {
+
+    "use strict";
+
+
+    /* =========================================
+       عناصر الصفحة
+    ========================================= */
+
+    const $ = id => document.getElementById(id);
+
+    const messageBox = $("authMessage");
+
+    const title = $("authTitle");
+
+    const subtitle = $("authSubtitle");
+
+    const tabs = $("authTabs");
+
+    const backButton = $("authBackButton");
+
+
+    let authMode = "login";
+
+
+    /* =========================================
+       عرض الرسائل
+    ========================================= */
+
+    function showMessage(message, type = "info") {
+
+        messageBox.textContent = message;
+
+        messageBox.className =
+            "auth-message show " + type;
+
+    }
+
+
+    function clearMessage() {
+
+        messageBox.textContent = "";
+
+        messageBox.className =
+            "auth-message";
+
+    }
+
+
+    /* =========================================
+       حالة الأزرار
+    ========================================= */
+
+    function setLoading(button, loading, text) {
+
+        if (!button) return;
+
+        if (loading) {
+
+            button.dataset.originalText =
+                button.textContent;
+
+            button.disabled = true;
+
+            button.textContent =
+                text || "يرجى الانتظار...";
+
+        } else {
+
+            button.disabled = false;
+
+            button.textContent =
+                button.dataset.originalText ||
+                button.textContent;
+
+        }
+
+    }
+
+
+    /* =========================================
+       تبديل النماذج
+    ========================================= */
+
+    function showForm(mode) {
+
+        authMode = mode;
+
+        clearMessage();
+
+        document.querySelectorAll(".auth-form")
+            .forEach(form => {
+                form.classList.remove("active");
+            });
+
+        document.querySelectorAll(".auth-tab")
+            .forEach(tab => {
+                tab.classList.remove("active");
+            });
+
+        tabs.style.display = "grid";
+
+        backButton.classList.remove("show");
+
+        if (mode === "login") {
+
+            $("loginForm").classList.add("active");
+
+            document.querySelector(
+                '[data-auth-tab="login"]'
+            ).classList.add("active");
+
+            title.textContent =
+                "مرحباً بعودتك";
+
+            subtitle.textContent =
+                "سجل دخولك للوصول إلى حسابك في IBR.";
+
+        }
+
+        if (mode === "signup") {
+
+            $("signupForm").classList.add("active");
+
+            document.querySelector(
+                '[data-auth-tab="signup"]'
+            ).classList.add("active");
+
+            title.textContent =
+                "أنشئ حسابك";
+
+            subtitle.textContent =
+                "ابدأ تجربتك الخاصة مع متجر IBR.";
+
+        }
+
+        if (mode === "reset") {
+
+            $("resetForm").classList.add("active");
+
+            tabs.style.display = "none";
+
+            backButton.classList.add("show");
+
+            title.textContent =
+                "استعادة كلمة المرور";
+
+            subtitle.textContent =
+                "أدخل بريدك الإلكتروني لإرسال رابط الاستعادة.";
+
+        }
+
+        if (mode === "newPassword") {
+
+            $("newPasswordForm").classList.add("active");
+
+            tabs.style.display = "none";
+
+            backButton.classList.add("show");
+
+            title.textContent =
+                "تعيين كلمة مرور جديدة";
+
+            subtitle.textContent =
+                "اختر كلمة مرور جديدة لحسابك.";
+
+        }
+
+    }
+
+
+    /* =========================================
+       استخراج وجهة العودة
+    ========================================= */
+
+    function getRedirectPage() {
+
+        const params = new URLSearchParams(
+            window.location.search
+        );
+
+        const redirect = params.get("redirect");
+
+        if (!redirect) {
+            return "account.html";
+        }
+
+        try {
+
+            const url = new URL(
+                redirect,
+                window.location.origin
+            );
+
+            if (url.origin !== window.location.origin) {
+                return "account.html";
+            }
+
+            return url.pathname +
+                url.search +
+                url.hash;
+
+        } catch (error) {
+
+            return "account.html";
+
+        }
+
+    }
+
+
+    /* =========================================
+       الانتقال بعد الدخول
+    ========================================= */
+
+    function goAfterLogin() {
+
+        window.location.replace(
+            getRedirectPage()
+        );
+
+    }
+
+
+    /* =========================================
+       تبديل كلمة المرور وإظهارها
+    ========================================= */
+
+    document.querySelectorAll(
+        "[data-toggle-password]"
+    ).forEach(button => {
+
+        button.addEventListener("click", function () {
+
+            const input = $(
+                this.dataset.togglePassword
+            );
+
+            if (!input) return;
+
+            const hidden =
+                input.type === "password";
+
+            input.type =
+                hidden ? "text" : "password";
+
+            this.textContent =
+                hidden ? "إخفاء" : "إظهار";
+
+        });
+
+    });
+
+
+    /* =========================================
+       التبويبات
+    ========================================= */
+
+    document.querySelectorAll(
+        "[data-auth-tab]"
+    ).forEach(button => {
+
+        button.addEventListener("click", function () {
+
+            showForm(
+                this.dataset.authTab
+            );
+
+        });
+
+    });
+
+
+    backButton.addEventListener(
+        "click",
+        function () {
+            showForm("login");
+        }
+    );
+
+
+    $("forgotPasswordButton").addEventListener(
+        "click",
+        function () {
+
+            $("resetEmail").value =
+                $("loginEmail").value;
+
+            showForm("reset");
+
+        }
+    );
+
+
+    /* =========================================
+       تسجيل الدخول
+    ========================================= */
+
+    $("loginForm").addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            clearMessage();
+
+            const button = $("loginSubmit");
+
+            const email =
+                $("loginEmail").value.trim();
+
+            const password =
+                $("loginPassword").value;
+
+            try {
+
+                setLoading(
+                    button,
+                    true,
+                    "جارٍ تسجيل الدخول..."
+                );
+
+                await window.IBRAuth.signIn({
+                    email,
+                    password
+                });
+
+                showMessage(
+                    "تم تسجيل الدخول بنجاح. جارٍ فتح حسابك...",
+                    "success"
+                );
+
+                setTimeout(goAfterLogin, 700);
+
+            } catch (error) {
+
+                showMessage(
+                    window.IBRAuth?.getSafeError(error) ||
+                    error.message,
+                    "error"
+                );
+
+            } finally {
+
+                setLoading(button, false);
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       إنشاء حساب
+    ========================================= */
+
+    $("signupForm").addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            clearMessage();
+
+            const button = $("signupSubmit");
+
+            const fullName =
+                $("signupName").value.trim();
+
+            const email =
+                $("signupEmail").value.trim();
+
+            const password =
+                $("signupPassword").value;
+
+            const confirmation =
+                $("signupPasswordConfirm").value;
+
+            if (password !== confirmation) {
+
+                showMessage(
+                    "كلمتا المرور غير متطابقتين.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            try {
+
+                setLoading(
+                    button,
+                    true,
+                    "جارٍ إنشاء حسابك..."
+                );
+
+                const result =
+                    await window.IBRAuth.signUp({
+
+                        fullName,
+                        email,
+                        password
+
+                    });
+
+                if (result.needsEmailConfirmation) {
+
+                    showMessage(
+                        "تم إنشاء حسابك. تحقق من بريدك الإلكتروني واضغط رابط التأكيد لتفعيل الحساب، ثم سجل الدخول.",
+                        "success"
+                    );
+
+                    $("signupForm").reset();
+
+                } else {
+
+                    showMessage(
+                        "تم إنشاء حسابك بنجاح.",
+                        "success"
+                    );
+
+                    setTimeout(goAfterLogin, 900);
+
+                }
+
+            } catch (error) {
+
+                showMessage(
+                    window.IBRAuth?.getSafeError(error) ||
+                    error.message,
+                    "error"
+                );
+
+            } finally {
+
+                setLoading(button, false);
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       استعادة كلمة المرور
+    ========================================= */
+
+    $("resetForm").addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            clearMessage();
+
+            const button = $("resetSubmit");
+
+            const email =
+                $("resetEmail").value.trim();
+
+            try {
+
+                setLoading(
+                    button,
+                    true,
+                    "جارٍ إرسال الرابط..."
+                );
+
+                await window.IBRAuth.resetPassword(
+                    email
+                );
+
+                showMessage(
+                    "إذا كان البريد مسجلاً، فستصلك رسالة تحتوي على رابط استعادة كلمة المرور. تحقق من صندوق الوارد والبريد غير الهام.",
+                    "success"
+                );
+
+            } catch (error) {
+
+                showMessage(
+                    window.IBRAuth?.getSafeError(error) ||
+                    error.message,
+                    "error"
+                );
+
+            } finally {
+
+                setLoading(button, false);
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       تحديث كلمة المرور
+    ========================================= */
+
+    $("newPasswordForm").addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            clearMessage();
+
+            const password =
+                $("newPassword").value;
+
+            const confirmation =
+                $("newPasswordConfirm").value;
+
+            const button =
+                $("newPasswordForm").querySelector(
+                    'button[type="submit"]'
+                );
+
+            if (password !== confirmation) {
+
+                showMessage(
+                    "كلمتا المرور غير متطابقتين.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            try {
+
+                setLoading(
+                    button,
+                    true,
+                    "جارٍ حفظ كلمة المرور..."
+                );
+
+                await window.IBRAuth.updatePassword(
+                    password
+                );
+
+                showMessage(
+                    "تم تحديث كلمة المرور بنجاح. يمكنك الآن استخدام كلمة المرور الجديدة.",
+                    "success"
+                );
+
+                $("newPasswordForm").reset();
+
+                setTimeout(
+                    () => showForm("login"),
+                    1800
+                );
+
+            } catch (error) {
+
+                showMessage(
+                    window.IBRAuth?.getSafeError(error) ||
+                    error.message,
+                    "error"
+                );
+
+            } finally {
+
+                setLoading(button, false);
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       التعامل مع رابط استعادة كلمة المرور
+    ========================================= */
+
+    async function detectRecoverySession() {
+
+        const params = new URLSearchParams(
+            window.location.search
+        );
+
+        const hash = window.location.hash;
+
+        const recovery =
+            params.get("type") === "recovery" ||
+            hash.includes("type=recovery");
+
+        if (!recovery) {
+            return;
+        }
+
+        try {
+
+            if (!window.IBRAuth.isLoggedIn()) {
+
+                await new Promise(resolve => {
+
+                let unsubscribe = null;
+                let completed = false;
+
+                function finish() {
+
+                 if (completed) return;
+
+                 completed = true;
+
+                    if (unsubscribe) {
+                     unsubscribe();
+                    }
+
+                 resolve();
+
+                }
+
+                unsubscribe = window.IBRAuth.subscribe(state => {
+
+                if (state.initialized) {
+                 finish();
+                }
+
+                });
+
+                if (completed && unsubscribe) {
+                 unsubscribe();
+                }
+
+            });
+
+            }
+
+            if (window.IBRAuth.isLoggedIn()) {
+
+                showForm("newPassword");
+
+            } else {
+
+                showMessage(
+                    "تعذر التحقق من رابط الاستعادة. أعد طلب رابط جديد.",
+                    "error"
+                );
+
+            }
+
+        } catch (error) {
+
+            showMessage(
+                "تعذر التحقق من رابط الاستعادة. حاول مرة أخرى.",
+                "error"
+            );
+
+        }
+
+    }
+
+
+    /* =========================================
+       فحص الجلسة الحالية
+    ========================================= */
+ 
+ 
+async function initializePage() {
+
+    if (!window.IBRAuth) {
+
+        showMessage(
+            "نظام الحسابات لم يتم تحميله. تحقق من ترتيب ملفات JavaScript.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    try {
+
+        const state = await window.IBRAuth.init();
+
+        await detectRecoverySession();
+
+        const params = new URLSearchParams(
+            window.location.search
+        );
+
+        const isRecovery =
+         params.get("type") === "recovery" ||
+         window.location.hash.includes("type=recovery");
+        if (isRecovery) {
+            showForm("newPassword");
+            return;
+        }
+
+        if (state?.isAuthenticated) {
+
+            window.location.replace(
+                getRedirectPage()
+            );
+
+            return;
+
+        }
+
+        const requestedMode = params.get("mode");
+
+        if (
+            requestedMode === "signup" ||
+            requestedMode === "login"
+        ) {
+
+            showForm(requestedMode);
+
+        } else {
+
+            showForm("login");
+
+        }
+
+    } catch (error) {
+
+        showMessage(
+            "تعذر التحقق من حالة الحساب. أعد تحميل الصفحة.",
+            "error"
+        );
+
+    }
+
+}
+
+     /* =========================================
+       تشغيل تهيئة صفحة الحساب
+    ========================================= */
+
+    initializePage();
+
+})();
+</script>
+
+</body>
+</html>

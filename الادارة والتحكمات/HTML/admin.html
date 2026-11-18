@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f0e8">
+
+    <title>لوحة إدارة IBR | مركز التحكم</title>
+
+    <meta name="description" content="لوحة التحكم الرئيسية لإدارة متجر IBR للأثاث الخشبي.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../CSS/admin-common.css">
+    <link rel="stylesheet" href="../CSS/admin-dashboard.css">
+
+    <style>
+        :root {
+            --dash-bg: #f7f4ee;
+            --dash-card: #fff;
+            --dash-brown: #60452f;
+            --dash-brown-dark: #46301f;
+            --dash-muted: #8a8176;
+            --dash-border: #eae2d7;
+            --dash-green: #34765a;
+            --dash-shadow: 0 8px 28px rgba(65, 45, 25, .055);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Almarai", sans-serif;
+            background: var(--dash-bg);
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        .admin-dashboard {
+            width: min(1440px, 100%);
+            margin: 0 auto;
+            padding: 28px;
+        }
+
+        /* تسجيل الدخول */
+
+        .admin-login-page {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(169, 133, 96, .13), transparent 35%),
+                var(--dash-bg);
+        }
+
+        .admin-login-card {
+            width: min(100%, 440px);
+            padding: 38px;
+            background: #fff;
+            border: 1px solid var(--dash-border);
+            border-radius: 22px;
+            box-shadow: 0 20px 65px rgba(55, 39, 24, .09);
+        }
+
+        .admin-login-brand {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .admin-login-logo {
+            width: 66px;
+            height: 66px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 17px;
+            border-radius: 20px;
+            background: var(--dash-brown);
+            color: white;
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .admin-login-brand h1 {
+            margin: 0 0 9px;
+            color: var(--dash-brown);
+            font-size: 25px;
+        }
+
+        .admin-login-brand p {
+            margin: 5px 0;
+            color: var(--dash-muted);
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .admin-login-form {
+            display: grid;
+            gap: 17px;
+        }
+
+        .admin-login-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #514638;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .admin-login-form input {
+            width: 100%;
+            min-height: 49px;
+            padding: 12px 14px;
+            border: 1px solid #ded5c9;
+            border-radius: 11px;
+            background: #fffdfa;
+            font-size: 14px;
+            outline: none;
+            transition: .2s;
+        }
+
+        .admin-login-form input:focus {
+            border-color: #987452;
+            box-shadow: 0 0 0 3px rgba(152, 116, 82, .12);
+        }
+
+        .admin-login-button {
+            min-height: 50px;
+            border: 0;
+            border-radius: 11px;
+            background: var(--dash-brown);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .admin-login-button:hover {
+            background: var(--dash-brown-dark);
+        }
+
+        .admin-login-button:disabled {
+            opacity: .6;
+            cursor: wait;
+        }
+
+        .admin-login-feedback {
+            min-height: 20px;
+            color: #a33b32;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* رأس لوحة التحكم */
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 27px;
+            padding: 23px 25px;
+            border: 1px solid var(--dash-border);
+            border-radius: 17px;
+            background: var(--dash-card);
+            box-shadow: var(--dash-shadow);
+        }
+
+        .dashboard-heading h1 {
+            margin: 0 0 9px;
+            color: var(--dash-brown-dark);
+            font-size: 24px;
+        }
+
+        .dashboard-heading p {
+            margin: 0;
+            color: var(--dash-muted);
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .dashboard-header-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-date {
+            color: var(--dash-muted);
+            font-size: 11px;
+        }
+
+        .dashboard-account {
+            display: inline-block;
+            margin-top: 5px;
+            color: var(--dash-brown);
+            font-weight: 700;
+        }
+
+        .admin-logout-button {
+            min-height: 40px;
+            padding: 9px 16px;
+            border: 1px solid #e6d9ca;
+            border-radius: 9px;
+            background: #fff;
+            color: var(--dash-brown);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .admin-logout-button:hover {
+            background: #f8f1e9;
+        }
+
+        /* عناوين الأقسام */
+
+        .dashboard-section {
+            margin-top: 28px;
+        }
+
+        .dashboard-section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .dashboard-section-heading h2 {
+            margin: 0;
+            color: var(--dash-brown-dark);
+            font-size: 17px;
+        }
+
+        .dashboard-section-heading p {
+            margin: 5px 0 0;
+            color: var(--dash-muted);
+            font-size: 11px;
+        }
+
+        /* بطاقات الإحصاءات */
+
+        .admin-stats-grid.admin-dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin: 0;
+        }
+
+        .dashboard-stat-link {
+            display: block;
+            min-width: 0;
+            color: inherit;
+            text-decoration: none;
+            border-radius: 15px;
+            outline-offset: 4px;
+        }
+
+        .dashboard-stat-link .admin-stat-card {
+            position: relative;
+            min-height: 145px;
+            height: 100%;
+            padding: 21px;
+            border: 1px solid var(--dash-border);
+            border-radius: 15px;
+            background: var(--dash-card);
+            box-shadow: var(--dash-shadow);
+            transition: transform .2s, box-shadow .2s, border-color .2s;
+        }
+
+        .dashboard-stat-link:hover .admin-stat-card {
+            transform: translateY(-4px);
+            border-color: #c9ad8e;
+            box-shadow: 0 13px 30px rgba(65, 45, 25, .09);
+        }
+
+        .dashboard-stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .dashboard-stat-label {
+            color: var(--dash-muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .dashboard-stat-icon {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: #f5eee5;
+            color: var(--dash-brown);
+            font-size: 17px;
+        }
+
+        .dashboard-stat-number {
+            display: block;
+            color: var(--dash-brown-dark);
+            font-size: 29px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .dashboard-stat-hint {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 12px;
+            color: var(--dash-muted);
+            font-size: 10px;
+        }
+
+        .dashboard-stat-hint span:last-child {
+            color: var(--dash-brown);
+            font-weight: 700;
+        }
+
+        .dashboard-stat-link:focus-visible,
+        .admin-page-link:focus-visible,
+        button:focus-visible {
+            outline: 3px solid rgba(152, 116, 82, .35);
+        }
+
+        .dashboard-stat-note {
+            margin-top: 12px;
+            color: var(--dash-muted);
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        /* الاختصارات */
+
+        .admin-page-links {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin: 0;
+        }
+
+        .admin-page-link {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            min-height: 112px;
+            padding: 19px;
+            border: 1px solid var(--dash-border);
+            border-radius: 14px;
+            background: #fff;
+            color: inherit;
+            text-decoration: none;
+            box-shadow: var(--dash-shadow);
+            transition: .2s;
+        }
+
+        .admin-page-link:hover {
+            transform: translateY(-3px);
+            border-color: #c9ad8e;
+            box-shadow: 0 12px 27px rgba(55, 39, 24, .08);
+        }
+
+        .admin-page-link-icon {
+            width: 43px;
+            height: 43px;
+            flex: 0 0 43px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: #f5eee5;
+            color: var(--dash-brown);
+            font-size: 19px;
+        }
+
+        .admin-page-link-content {
+            min-width: 0;
+        }
+
+        .admin-page-link strong {
+            display: block;
+            margin: 2px 0 8px;
+            color: var(--dash-brown-dark);
+            font-size: 13px;
+        }
+
+        .admin-page-link span {
+            display: block;
+            color: var(--dash-muted);
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .admin-page-link-arrow {
+            position: absolute;
+            left: 15px;
+            bottom: 15px;
+            color: #a38a70;
+            font-size: 16px;
+        }
+
+        /* النشاط الأخير */
+
+        .admin-recent-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 17px;
+            margin-top: 0;
+        }
+
+        .admin-recent-panel {
+            min-width: 0;
+            padding: 21px;
+            border: 1px solid var(--dash-border);
+            border-radius: 15px;
+            background: #fff;
+            box-shadow: var(--dash-shadow);
+        }
+
+        .admin-recent-panel h2 {
+            margin: 0 0 16px;
+            color: var(--dash-brown-dark);
+            font-size: 14px;
+        }
+
+        .admin-recent-item {
+            padding: 13px 0;
+            border-bottom: 1px solid #eee8df;
+        }
+
+        .admin-recent-item:last-child {
+            border-bottom: 0;
+        }
+
+        .admin-recent-item__content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-recent-item__content strong {
+            color: #574632;
+            font-size: 12px;
+        }
+
+        .admin-recent-item__content span {
+            color: #898176;
+            font-size: 10px;
+        }
+
+        .admin-empty {
+            padding: 22px 10px;
+            color: var(--dash-muted);
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* أدوات التحديث */
+
+        .dashboard-tools {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 23px;
+            padding: 16px 19px;
+            border: 1px solid var(--dash-border);
+            border-radius: 13px;
+            background: #fff;
+        }
+
+        .dashboard-tools-info {
+            color: var(--dash-muted);
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .dashboard-tools-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-refresh-button {
+            min-height: 40px;
+            padding: 9px 17px;
+            border: 0;
+            border-radius: 9px;
+            background: var(--dash-brown);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .dashboard-refresh-button:hover {
+            background: var(--dash-brown-dark);
+        }
+
+        .dashboard-refresh-button:disabled {
+            opacity: .6;
+            cursor: wait;
+        }
+
+        .dashboard-loading {
+            color: var(--dash-muted);
+            font-size: 11px;
+        }
+
+        .admin-dashboard-feedback {
+            margin: 13px 0;
+            padding: 12px 14px;
+            border: 1px solid #efd4d0;
+            border-radius: 9px;
+            background: #fff8f7;
+            color: #a33b32;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .admin-dashboard-updated {
+            margin-top: 13px;
+            color: var(--dash-muted);
+            font-size: 10px;
+        }
+
+        .dashboard-footer {
+            margin-top: 27px;
+            padding: 17px 0 5px;
+            border-top: 1px solid var(--dash-border);
+            color: var(--dash-muted);
+            text-align: center;
+            font-size: 10px;
+            line-height: 1.9;
+        }
+
+        @media (max-width: 950px) {
+            .admin-stats-grid.admin-dashboard-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .admin-page-links {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 650px) {
+            .admin-dashboard {
+                padding: 15px;
+            }
+
+            .dashboard-header {
+                padding: 19px;
+            }
+
+            .dashboard-heading h1 {
+                font-size: 20px;
+            }
+
+            .admin-page-links,
+            .admin-recent-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-stat-link .admin-stat-card {
+                min-height: 135px;
+                padding: 16px;
+            }
+
+            .dashboard-stat-number {
+                font-size: 25px;
+            }
+
+            .dashboard-tools {
+                align-items: flex-start;
+            }
+
+            .dashboard-tools-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .admin-login-card {
+                padding: 27px 21px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .admin-stats-grid.admin-dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body class="admin-body admin-page admin-dashboard-page">
+
+    <!-- تسجيل دخول المدير -->
+
+    <section class="admin-login-page" id="admin-login-panel">
+        <div class="admin-login-card">
+
+            <div class="admin-login-brand">
+                <div class="admin-login-logo">IBR</div>
+                <h1>مركز إدارة IBR</h1>
+                <p>لوحة التحكم وإدارة متجر الأثاث الخشبي</p>
+                <p>يرجى تسجيل الدخول بحساب المدير أو المالك</p>
+            </div>
+
+            <form id="admin-login-form" class="admin-login-form">
+
+                <div>
+                    <label for="admin-email">البريد الإلكتروني</label>
+                    <input type="email" id="admin-email" autocomplete="username" placeholder="أدخل البريد الإلكتروني"
+                        required>
+                </div>
+
+                <div>
+                    <label for="admin-password">كلمة المرور</label>
+                    <input type="password" id="admin-password" autocomplete="current-password"
+                        placeholder="أدخل كلمة المرور" required>
+                </div>
+
+                <div id="admin-login-feedback" class="admin-login-feedback" role="alert" aria-live="polite"></div>
+
+                <button type="submit" id="admin-login-button" class="admin-login-button">
+                    تسجيل الدخول
+                </button>
+
+            </form>
+        </div>
+    </section>
+
+
+    <!-- لوحة التحكم الرئيسية -->
+
+    <main id="admin-dashboard" class="admin-dashboard" hidden>
+
+        <!-- رأس الصفحة -->
+
+        <header class="dashboard-header">
+
+            <div class="dashboard-heading">
+                <h1>مرحباً بك في مركز التحكم</h1>
+
+                <p>
+                    نظرة شاملة على نشاط متجر IBR وإدارة عملياته.
+                    <span id="admin-account-label" class="dashboard-account"></span>
+                </p>
+
+                <div class="dashboard-date" id="dashboard-current-date">
+                    —
+                </div>
+            </div>
+
+            <div class="dashboard-header-meta">
+
+                <button type="button" id="admin-logout-button" class="admin-logout-button" data-admin-logout>
+                    تسجيل الخروج
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- الإحصاءات التفاعلية -->
+
+        <section class="dashboard-section">
+
+            <div class="dashboard-section-heading">
+                <div>
+                    <h2>ملخص المتجر</h2>
+                    <p>اضغط على أي بطاقة للانتقال إلى القسم المرتبط بها.</p>
+                </div>
+            </div>
+
+            <div class="admin-stats-grid admin-dashboard-stats">
+
+                <!-- الطلبات -->
+
+                <a href="admin-customers.html" class="dashboard-stat-link"
+                    aria-label="الانتقال إلى إدارة العملاء والطلبات" title="فتح إدارة العملاء والطلبات">
+                    <article class="admin-stat-card admin-dashboard-stat">
+
+                        <div class="dashboard-stat-top">
+                            <span class="dashboard-stat-label">إجمالي الطلبات المحمّلة</span>
+                            <span class="dashboard-stat-icon" aria-hidden="true">▤</span>
+                        </div>
+
+                        <strong class="dashboard-stat-number" data-dashboard-stat="orders">—</strong>
+
+                        <div class="dashboard-stat-hint">
+                            <span>الطلبات المسجلة</span>
+                            <span>فتح الطلبات ←</span>
+                        </div>
+
+                    </article>
+                </a>
+
+
+                <!-- المنتجات -->
+
+                <a href="admin-store.html" class="dashboard-stat-link" aria-label="الانتقال إلى إدارة المنتجات"
+                    title="فتح إدارة المتجر">
+                    <article class="admin-stat-card admin-dashboard-stat">
+
+                        <div class="dashboard-stat-top">
+                            <span class="dashboard-stat-label">إجمالي المنتجات المحمّلة</span>
+                            <span class="dashboard-stat-icon" aria-hidden="true">▧</span>
+                        </div>
+
+                        <strong class="dashboard-stat-number" data-dashboard-stat="products">—</strong>
+
+                        <div class="dashboard-stat-hint">
+                            <span>منتجات المتجر</span>
+                            <span>إدارة المنتجات ←</span>
+                        </div>
+
+                    </article>
+                </a>
+
+
+                <!-- الرسائل -->
+
+                <a href="admin-customers.html" class="dashboard-stat-link" aria-label="الانتقال إلى إدارة رسائل العملاء"
+                    title="فتح إدارة العملاء والرسائل">
+                    <article class="admin-stat-card admin-dashboard-stat">
+
+                        <div class="dashboard-stat-top">
+                            <span class="dashboard-stat-label">رسائل العملاء المحمّلة</span>
+                            <span class="dashboard-stat-icon" aria-hidden="true">✉</span>
+                        </div>
+
+                        <strong class="dashboard-stat-number" data-dashboard-stat="messages">—</strong>
+
+                        <div class="dashboard-stat-hint">
+                            <span>الاستفسارات والرسائل</span>
+                            <span>فتح الرسائل ←</span>
+                        </div>
+
+                    </article>
+                </a>
+
+
+                <!-- قيد المتابعة -->
+
+                <a href="admin-customers.html" class="dashboard-stat-link"
+                    aria-label="الانتقال إلى متابعة العملاء والطلبات" title="فتح متابعة العملاء والطلبات">
+                    <article class="admin-stat-card admin-dashboard-stat">
+
+                        <div class="dashboard-stat-top">
+                            <span class="dashboard-stat-label">قيد المتابعة</span>
+                            <span class="dashboard-stat-icon" aria-hidden="true">◷</span>
+                        </div>
+
+                        <strong class="dashboard-stat-number" data-dashboard-stat="pending">—</strong>
+
+                        <div class="dashboard-stat-hint">
+                            <span>تحتاج إلى متابعة</span>
+                            <span>متابعة السجلات ←</span>
+                        </div>
+
+                    </article>
+                </a>
+
+            </div>
+
+            <p class="dashboard-stat-note">
+                الإحصاءات تعتمد على السجلات التي تم تحميلها ضمن حدود الاستعلام،
+                ولا تعني بالضرورة العدد الإجمالي لجميع سجلات قاعدة البيانات.
+            </p>
+
+        </section>
+
+
+        <!-- الأقسام الرئيسية -->
+
+        <section class="dashboard-section">
+
+            <div class="dashboard-section-heading">
+                <div>
+                    <h2>إدارة المتجر</h2>
+                    <p>انتقل مباشرة إلى القسم الذي تريد العمل عليه.</p>
+                </div>
+            </div>
+
+            <div class="admin-page-links">
+
+                <a href="admin-customers.html" class="admin-page-link">
+                    <span class="admin-page-link-icon" aria-hidden="true">♙</span>
+
+                    <span class="admin-page-link-content">
+                        <strong>إدارة العملاء</strong>
+                        <span>
+                            متابعة العملاء والطلبات والاستفسارات
+                            والتواصل وسجل النشاط.
+                        </span>
+                    </span>
+
+                    <span class="admin-page-link-arrow" aria-hidden="true">←</span>
+                </a>
+
+
+                <a href="admin-store.html" class="admin-page-link">
+                    <span class="admin-page-link-icon" aria-hidden="true">▧</span>
+
+                    <span class="admin-page-link-content">
+                        <strong>إدارة المتجر</strong>
+                        <span>
+                            إدارة المنتجات والتصنيفات والصور
+                            والبنرات ومحتوى المتجر.
+                        </span>
+                    </span>
+
+                    <span class="admin-page-link-arrow" aria-hidden="true">←</span>
+                </a>
+
+
+                <a href="admin-analytics.html" class="admin-page-link">
+                    <span class="admin-page-link-icon" aria-hidden="true">▥</span>
+
+                    <span class="admin-page-link-content">
+                        <strong>التحليلات والإحصاءات</strong>
+                        <span>
+                            متابعة أداء المتجر والمبيعات
+                            والطلبات والمنتجات.
+                        </span>
+                    </span>
+
+                    <span class="admin-page-link-arrow" aria-hidden="true">←</span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- أحدث النشاطات -->
+
+        <section class="dashboard-section">
+
+            <div class="dashboard-section-heading">
+                <div>
+                    <h2>آخر نشاطات المتجر</h2>
+                    <p>أحدث السجلات التي تم تحميلها من قاعدة البيانات.</p>
+                </div>
+            </div>
+
+            <div class="admin-recent-grid">
+
+                <article class="admin-recent-panel">
+
+                    <h2>أحدث الطلبات</h2>
+
+                    <div data-dashboard-recent-orders>
+                        <div class="admin-empty">
+                            بانتظار تحميل الطلبات...
+                        </div>
+                    </div>
+
+                </article>
+
+
+                <article class="admin-recent-panel">
+
+                    <h2>أحدث رسائل العملاء</h2>
+
+                    <div data-dashboard-recent-messages>
+                        <div class="admin-empty">
+                            بانتظار تحميل الرسائل...
+                        </div>
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- أدوات التحديث -->
+
+        <section class="dashboard-tools">
+
+            <div class="dashboard-tools-info">
+                <strong>تحديث بيانات لوحة التحكم</strong>
+                <div>يمكنك إعادة تحميل أحدث البيانات من قاعدة البيانات.</div>
+            </div>
+
+            <div class="dashboard-tools-actions">
+
+                <span data-dashboard-loading class="dashboard-loading" hidden aria-live="polite">
+                    جارٍ تحديث البيانات...
+                </span>
+
+                <button type="button" class="dashboard-refresh-button" data-dashboard-refresh>
+                    ↻ تحديث البيانات
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <div data-dashboard-error class="admin-dashboard-feedback" role="alert" hidden></div>
+
+        <p class="admin-dashboard-updated">
+            آخر تحديث للبيانات:
+            <span data-dashboard-updated>—</span>
+        </p>
+
+
+        <footer class="dashboard-footer">
+            <strong>IBR</strong> — مركز إدارة متجر الأثاث الخشبي
+            <br>
+            لوحة التحكم الداخلية
+        </footer>
+
+    </main>
+
+
+    <!-- مكتبة Supabase -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- الاتصال الأساسي بالمتجر -->
+
+    <script src="../../assets/js/store.js"></script>
+
+    <!-- ملفات الإدارة -->
+
+    <script src="../js/admin-common.js" defer></script>
+    <script src="../js/admin-dashboard.js" defer></script>
+
+
+    <!-- منطق تسجيل الدخول وتشغيل لوحة التحكم -->
+
+    <script>
+        (() => {
+            "use strict";
+
+            const $ = id => document.getElementById(id);
+
+            const loginPanel = $("admin-login-panel");
+            const dashboardPanel = $("admin-dashboard");
+            const loginForm = $("admin-login-form");
+            const loginButton = $("admin-login-button");
+            const loginFeedback = $("admin-login-feedback");
+
+            let loginBusy = false;
+            let dashboardStarted = false;
+
+
+            /* الحصول على اتصال Supabase */
+
+            function getClient() {
+                return (
+                    window.supabaseClient ||
+                    window.IBRAdmin?.getClient?.() ||
+                    null
+                );
+            }
+
+
+            /* التحقق من صلاحية المدير */
+
+            async function verifyAdmin() {
+                const client = getClient();
+
+                if (!client) {
+                    throw new Error("تعذر العثور على اتصال قاعدة البيانات.");
+                }
+
+                const {
+                    data: userData,
+                    error: userError
+                } = await client.auth.getUser();
+
+                if (userError || !userData?.user) {
+                    return {
+                        allowed: false,
+                        user: null
+                    };
+                }
+
+                const {
+                    data,
+                    error
+                } = await client.rpc("is_admin");
+
+                if (error) {
+                    throw error;
+                }
+
+                return {
+                    allowed: data === true,
+                    user: userData.user
+                };
+            }
+
+
+            /* عرض التاريخ */
+
+            function updateDashboardDate() {
+                const element = $("dashboard-current-date");
+
+                if (!element) return;
+
+                element.textContent = new Intl.DateTimeFormat(
+                    "ar-SA",
+                    {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric"
+                    }
+                ).format(new Date());
+            }
+
+
+            /* تشغيل لوحة النظرة العامة */
+
+            async function startDashboard(user) {
+                if (dashboardStarted) return;
+
+                const client = getClient();
+
+                if (!client) {
+                    throw new Error("اتصال قاعدة البيانات غير متوفر.");
+                }
+
+                loginPanel.hidden = true;
+                dashboardPanel.hidden = false;
+
+                $("admin-account-label").textContent =
+                    user?.email ? "— " + user.email : "";
+
+                updateDashboardDate();
+
+                try {
+                    if (!window.IBRAdminDashboard) {
+                        throw new Error(
+                            "ملف لوحة النظرة العامة غير محمّل. تحقق من مساره."
+                        );
+                    }
+
+                    await window.IBRAdminDashboard.init({
+
+                        client,
+
+                        tables: {
+                            orders: "orders",
+                            products: "products",
+                            messages: "customer_messages"
+                        },
+
+                        fields: {
+                            orders: {
+                                createdAt: "created_at",
+                                status: "status"
+                            },
+
+                            products: {
+                                active: "is_active"
+                            },
+
+                            messages: {
+                                createdAt: "created_at",
+                                status: "status"
+                            }
+                        },
+
+                        statuses: {
+                            pending: ["new", "contacting"]
+                        }
+
+                    });
+
+                    dashboardStarted = true;
+
+                } catch (error) {
+                    console.error("Dashboard initialization:", error);
+
+                    const errorElement =
+                        document.querySelector("[data-dashboard-error]");
+
+                    if (errorElement) {
+                        errorElement.textContent =
+                            "تعذر تشغيل لوحة النظرة العامة: " +
+                            (error.message || "حدث خطأ غير معروف.");
+
+                        errorElement.hidden = false;
+                    }
+                }
+            }
+
+
+            /* تسجيل الدخول */
+
+            loginForm.addEventListener("submit", async event => {
+                event.preventDefault();
+
+                if (loginBusy) return;
+
+                loginBusy = true;
+                loginButton.disabled = true;
+                loginButton.textContent = "جارٍ التحقق...";
+                loginFeedback.textContent = "";
+
+                try {
+                    const client = getClient();
+
+                    if (!client) {
+                        throw new Error("اتصال Supabase غير متوفر.");
+                    }
+
+                    const email = $("admin-email").value.trim();
+                    const password = $("admin-password").value;
+
+                    const {
+                        error: signInError
+                    } = await client.auth.signInWithPassword({
+                        email,
+                        password
+                    });
+
+                    if (signInError) {
+                        throw new Error(
+                            "البريد الإلكتروني أو كلمة المرور غير صحيحة."
+                        );
+                    }
+
+                    const result = await verifyAdmin();
+
+                    if (!result.allowed) {
+                        await client.auth.signOut();
+
+                        throw new Error(
+                            "هذا الحساب لا يملك صلاحية إدارة المتجر."
+                        );
+                    }
+
+                    await startDashboard(result.user);
+
+                    if (!dashboardStarted) {
+                        throw new Error(
+                            "تم تسجيل الدخول، لكن تعذر تشغيل لوحة التحكم."
+                        );
+                    }
+
+                } catch (error) {
+                    console.error("Admin login:", error);
+
+                    loginFeedback.textContent =
+                        error.message ||
+                        "تعذر تسجيل الدخول. حاول مرة أخرى.";
+
+                } finally {
+                    loginBusy = false;
+                    loginButton.disabled = false;
+                    loginButton.textContent = "تسجيل الدخول";
+                }
+            });
+
+
+            /* تسجيل الخروج */
+
+            $("admin-logout-button").addEventListener(
+                "click",
+                async () => {
+
+                    const confirmed = window.confirm(
+                        "هل تريد تسجيل الخروج من لوحة الإدارة؟"
+                    );
+
+                    if (!confirmed) return;
+
+                    try {
+                        const client = getClient();
+
+                        if (client) {
+                            await client.auth.signOut();
+                        }
+
+                    } catch (error) {
+                        console.error("Admin logout:", error);
+
+                    } finally {
+                        window.location.href = "admin.html";
+                    }
+                }
+            );
+
+
+            /* استعادة الجلسة */
+
+            async function restoreSession() {
+                try {
+                    const client = getClient();
+
+                    if (!client) {
+                        throw new Error(
+                            "اتصال Supabase غير متوفر. تحقق من مسار store.js."
+                        );
+                    }
+
+                    const result = await verifyAdmin();
+
+                    if (result.allowed) {
+                        await startDashboard(result.user);
+                    } else {
+                        loginPanel.hidden = false;
+                        dashboardPanel.hidden = true;
+                    }
+
+                } catch (error) {
+                    console.error("Session restoration:", error);
+
+                    loginPanel.hidden = false;
+                    dashboardPanel.hidden = true;
+
+                    loginFeedback.textContent =
+                        error.message ||
+                        "تعذر التحقق من الجلسة. تحقق من الاتصال.";
+                }
+            }
+
+
+            /* انتظار تحميل ملفات defer قبل تشغيل لوحة الإدارة */
+
+            if (document.readyState === "loading") {
+                document.addEventListener(
+                    "DOMContentLoaded",
+                    restoreSession,
+                    { once: true }
+                );
+            } else {
+                restoreSession();
+            }
+
+        })();
+    </script>
+   
+</body>
+
+</html>

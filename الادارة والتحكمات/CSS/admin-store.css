@@ -1,0 +1,1842 @@
+/* =========================================================
+   IBR ADMIN STORE
+   تنسيقات إدارة المنتجات والتصنيفات والصور والبنرات
+   ========================================================= */
+
+.admin-store {
+    --store-brown: #68452e;
+    --store-dark: #49301f;
+    --store-beige: #f2e9dc;
+    --store-cream: #fbf8f3;
+    --store-border: #e9dfd2;
+    --store-muted: #887d72;
+    --store-success: #367653;
+    --store-warning: #a66b20;
+    --store-danger: #a8463e;
+
+    width: 100%;
+    min-width: 0;
+}
+
+/* رأس الصفحة */
+
+.admin-store .store-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.admin-store .store-header h1 {
+    margin: 0;
+    color: var(--store-dark);
+    font-size: clamp(21px, 3vw, 28px);
+    font-weight: 800;
+}
+
+.admin-store .store-header p {
+    margin: 7px 0 0;
+    color: var(--store-muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* الإحصاءات */
+
+.admin-store .store-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.admin-store .store-stat {
+    position: relative;
+    min-width: 0;
+    padding: 19px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(73, 48, 31, .035);
+}
+
+.admin-store .store-stat::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--store-brown);
+    opacity: .8;
+}
+
+.admin-store .store-stat__label {
+    display: block;
+    color: var(--store-muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admin-store .store-stat__value {
+    display: block;
+    margin-top: 11px;
+    color: var(--store-dark);
+    font-size: 27px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-store .store-stat.is-success::after {
+    background: var(--store-success);
+}
+
+.admin-store .store-stat.is-warning::after {
+    background: var(--store-warning);
+}
+
+/* تبويبات الأقسام */
+
+.admin-store .store-tabs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    background: var(--store-cream);
+    border: 1px solid var(--store-border);
+    border-radius: 12px;
+    scrollbar-width: thin;
+}
+
+.admin-store .store-tab {
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding: 9px 17px;
+    color: var(--store-muted);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.admin-store .store-tab:hover {
+    color: var(--store-dark);
+    background: #fff;
+}
+
+.admin-store .store-tab.active,
+.admin-store .store-tab[aria-selected="true"] {
+    color: #fff;
+    background: var(--store-brown);
+    border-color: var(--store-brown);
+}
+
+/* البطاقات الرئيسية */
+
+.admin-store .store-panel {
+    min-width: 0;
+    padding: 21px;
+    margin-bottom: 22px;
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(73, 48, 31, .03);
+}
+
+.admin-store .store-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.admin-store .store-panel__header h2 {
+    margin: 0;
+    color: var(--store-dark);
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.admin-store .store-panel__header p {
+    margin: 5px 0 0;
+    color: var(--store-muted);
+    font-size: 12px;
+}
+
+/* شريط الأدوات */
+
+.admin-store .store-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.admin-store .store-search {
+    flex: 1 1 220px;
+    min-width: 170px;
+}
+
+.admin-store .store-search input {
+    width: 100%;
+    min-height: 43px;
+    padding: 10px 14px;
+    color: var(--store-dark);
+    background: var(--store-cream);
+    border: 1px solid var(--store-border);
+    border-radius: 9px;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+    transition: .2s ease;
+}
+
+.admin-store .store-search input:focus {
+    border-color: var(--store-brown);
+    box-shadow: 0 0 0 3px rgba(104, 69, 46, .09);
+}
+
+.admin-store .store-filter {
+    min-width: 145px;
+    min-height: 43px;
+    padding: 9px 12px;
+    color: var(--store-dark);
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 9px;
+    outline: none;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.admin-store .store-filter:focus {
+    border-color: var(--store-brown);
+}
+
+/* شبكة المنتجات */
+
+.admin-store .store-products {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.admin-store .store-product {
+    min-width: 0;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 12px;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.admin-store .store-product:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(73, 48, 31, .07);
+}
+
+.admin-store .store-product__image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--store-cream);
+}
+
+.admin-store .store-product__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s ease;
+}
+
+.admin-store .store-product:hover .store-product__image img {
+    transform: scale(1.035);
+}
+
+.admin-store .store-product__image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: var(--store-muted);
+    font-size: 12px;
+}
+
+.admin-store .store-product__body {
+    padding: 14px;
+}
+
+.admin-store .store-product__title {
+    margin: 0;
+    color: var(--store-dark);
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.7;
+}
+
+.admin-store .store-product__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 10px;
+    color: var(--store-muted);
+    font-size: 11px;
+}
+
+.admin-store .store-product__price {
+    color: var(--store-brown);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.admin-store .store-product__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-top: 12px;
+    margin-top: 12px;
+    border-top: 1px solid var(--store-border);
+}
+
+/* شارات المنتجات */
+
+.admin-store .store-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    padding: 5px 9px;
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.admin-store .store-badge.active {
+    color: #286746;
+    background: #e5f2e9;
+}
+
+.admin-store .store-badge.hidden {
+    color: #6c6258;
+    background: #eeeae5;
+}
+
+.admin-store .store-badge.archived {
+    color: #9b4038;
+    background: #f8e8e5;
+}
+
+.admin-store .store-badge.unavailable {
+    color: #865b1d;
+    background: #f9efd9;
+}
+
+/* الأزرار */
+
+.admin-store .store-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 39px;
+    padding: 9px 15px;
+    color: #fff;
+    background: var(--store-brown);
+    border: 1px solid var(--store-brown);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.admin-store .store-button:hover {
+    background: var(--store-dark);
+    border-color: var(--store-dark);
+}
+
+.admin-store .store-button.secondary {
+    color: var(--store-brown);
+    background: #f7f1e9;
+    border-color: #e9ddce;
+}
+
+.admin-store .store-button.secondary:hover {
+    color: #fff;
+    background: var(--store-brown);
+}
+
+.admin-store .store-button.danger {
+    color: #a8463e;
+    background: #fff5f3;
+    border-color: #f0d8d4;
+}
+
+.admin-store .store-button.danger:hover {
+    color: #fff;
+    background: #a8463e;
+}
+
+.admin-store .store-button:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+/* التصنيفات */
+
+.admin-store .store-categories {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.admin-store .store-category {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+    padding: 14px;
+    background: var(--store-cream);
+    border: 1px solid var(--store-border);
+    border-radius: 11px;
+    transition: border-color .2s ease, background .2s ease;
+}
+
+.admin-store .store-category:hover {
+    background: #fff;
+    border-color: #d8c6b2;
+}
+
+.admin-store .store-category__image {
+    flex: 0 0 58px;
+    width: 58px;
+    height: 58px;
+    overflow: hidden;
+    background: #eee4d8;
+    border-radius: 9px;
+}
+
+.admin-store .store-category__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-store .store-category__content {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-store .store-category__content strong {
+    display: block;
+    color: var(--store-dark);
+    font-size: 13px;
+}
+
+.admin-store .store-category__content span {
+    display: block;
+    margin-top: 5px;
+    color: var(--store-muted);
+    font-size: 11px;
+}
+
+/* النماذج */
+
+.admin-store .store-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.admin-store .store-field {
+    min-width: 0;
+}
+
+.admin-store .store-field.full {
+    grid-column: 1 / -1;
+}
+
+.admin-store .store-field label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--store-dark);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-store .store-field input,
+.admin-store .store-field select,
+.admin-store .store-field textarea {
+    width: 100%;
+    min-height: 43px;
+    padding: 10px 12px;
+    color: var(--store-dark);
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 8px;
+    outline: none;
+    font-family: inherit;
+    font-size: 12px;
+    transition: .2s ease;
+}
+
+.admin-store .store-field textarea {
+    min-height: 110px;
+    line-height: 1.9;
+    resize: vertical;
+}
+
+.admin-store .store-field input:focus,
+.admin-store .store-field select:focus,
+.admin-store .store-field textarea:focus {
+    border-color: var(--store-brown);
+    box-shadow: 0 0 0 3px rgba(104, 69, 46, .08);
+}
+
+.admin-store .store-field input::placeholder,
+.admin-store .store-field textarea::placeholder {
+    color: #a69b90;
+}
+
+.admin-store .store-form-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    grid-column: 1 / -1;
+    padding-top: 13px;
+    border-top: 1px solid var(--store-border);
+}
+
+/* مربعات الاختيارات */
+
+.admin-store .store-checks {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 13px;
+    padding: 13px;
+    background: var(--store-cream);
+    border: 1px solid var(--store-border);
+    border-radius: 9px;
+}
+
+.admin-store .store-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--store-dark);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.admin-store .store-check input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--store-brown);
+}
+
+/* إدارة الصور */
+
+.admin-store .store-image-upload {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 150px;
+    padding: 20px;
+    color: var(--store-muted);
+    text-align: center;
+    background: var(--store-cream);
+    border: 1px dashed #cbb9a5;
+    border-radius: 11px;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.admin-store .store-image-upload:hover {
+    color: var(--store-brown);
+    background: #f7f0e7;
+    border-color: var(--store-brown);
+}
+
+.admin-store .store-image-upload strong {
+    color: var(--store-dark);
+    font-size: 13px;
+}
+
+.admin-store .store-image-upload span {
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.admin-store .store-image-upload input[type="file"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.admin-store .store-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.admin-store .store-image-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: var(--store-cream);
+    border: 1px solid var(--store-border);
+    border-radius: 10px;
+}
+
+.admin-store .store-image-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-store .store-image-card.is-primary {
+    outline: 2px solid var(--store-brown);
+    outline-offset: 2px;
+}
+
+.admin-store .store-image-card__label {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    padding: 5px 8px;
+    color: #fff;
+    background: rgba(73, 48, 31, .88);
+    border-radius: 5px;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.admin-store .store-image-card__actions {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    display: flex;
+    gap: 5px;
+}
+
+.admin-store .store-image-card__actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    color: #fff;
+    background: rgba(73, 48, 31, .85);
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* صورة الصفحة الرئيسية */
+
+.admin-store .store-home-image {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(220px, .8fr);
+    gap: 20px;
+    align-items: center;
+}
+
+.admin-store .store-home-image__preview {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--store-cream);
+    border: 1px solid var(--store-border);
+    border-radius: 12px;
+}
+
+.admin-store .store-home-image__preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-store .store-home-image__info h3 {
+    margin: 0 0 8px;
+    color: var(--store-dark);
+    font-size: 15px;
+}
+
+.admin-store .store-home-image__info p {
+    margin: 0 0 14px;
+    color: var(--store-muted);
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+/* البنرات */
+
+.admin-store .store-banners {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.admin-store .store-banner {
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 12px;
+}
+
+.admin-store .store-banner__image {
+    aspect-ratio: 16 / 7;
+    overflow: hidden;
+    background: var(--store-cream);
+}
+
+.admin-store .store-banner__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-store .store-banner__body {
+    padding: 13px;
+}
+
+.admin-store .store-banner__body strong {
+    display: block;
+    color: var(--store-dark);
+    font-size: 13px;
+}
+
+.admin-store .store-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 12px;
+}
+
+/* حالات فارغة */
+
+.admin-store .store-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 165px;
+    padding: 25px;
+    color: var(--store-muted);
+    text-align: center;
+    background: var(--store-cream);
+    border: 1px dashed #ddcfbf;
+    border-radius: 11px;
+}
+
+.admin-store .store-empty strong {
+    margin-bottom: 7px;
+    color: var(--store-dark);
+    font-size: 14px;
+}
+
+.admin-store .store-empty p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* الفواصل */
+
+.admin-store .store-divider {
+    height: 1px;
+    margin: 18px 0;
+    background: var(--store-border);
+    border: 0;
+}
+
+/* التحميل */
+
+.admin-store .is-loading {
+    opacity: .65;
+    pointer-events: none;
+}
+
+.admin-store button:disabled,
+.admin-store input:disabled,
+.admin-store select:disabled,
+.admin-store textarea:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+/* شاشات متوسطة */
+
+@media (max-width: 1000px) {
+    .admin-store .store-products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-store .store-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-store .store-categories {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* الجوال */
+
+@media (max-width: 640px) {
+    .admin-store .store-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-store .store-panel {
+        padding: 13px;
+        border-radius: 11px;
+    }
+
+    .admin-store .store-products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .admin-store .store-product__body {
+        padding: 10px;
+    }
+
+    .admin-store .store-product__title {
+        font-size: 12px;
+    }
+
+    .admin-store .store-product__actions {
+        flex-direction: column;
+    }
+
+    .admin-store .store-button {
+        width: 100%;
+    }
+
+    .admin-store .store-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-store .store-search,
+    .admin-store .store-filter {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .admin-store .store-categories {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-store .store-form {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-store .store-field.full {
+        grid-column: auto;
+    }
+
+    .admin-store .store-home-image {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-store .store-banners {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-store .store-images-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 380px) {
+    .admin-store .store-products {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-store .store-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-store .store-images-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =====================================================
+   IBR20 — HTML COMPATIBILITY LAYER
+   توافق التنسيقات مع أسماء العناصر الحالية في HTML
+===================================================== */
+
+/* رؤوس الأقسام */
+.admin-store .admin-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.admin-store .admin-panel-header h2,
+.admin-store .admin-panel-header h3 {
+    margin: 0;
+    color: var(--store-dark);
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.admin-store .admin-panel-header p {
+    margin: 6px 0 0;
+    color: var(--store-muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* أزرار الإدارة */
+.admin-store .admin-primary-button,
+.admin-store .admin-secondary-button {
+    min-height: 41px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 17px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.admin-store .admin-primary-button {
+    color: #fff;
+    background: var(--store-brown);
+    border-color: var(--store-brown);
+}
+
+.admin-store .admin-primary-button:hover {
+    background: var(--store-dark);
+    transform: translateY(-1px);
+}
+
+.admin-store .admin-secondary-button {
+    color: var(--store-brown);
+    background: var(--store-cream);
+    border-color: var(--store-border);
+}
+
+.admin-store .admin-secondary-button:hover {
+    background: var(--store-beige);
+}
+
+/* شريط البحث والتصفية */
+.admin-store .store-search,
+.admin-store .store-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.admin-store .store-search label,
+.admin-store .store-filter label {
+    color: var(--store-dark);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-store .store-search input,
+.admin-store .store-filter select {
+    width: 100%;
+    min-height: 43px;
+    padding: 10px 12px;
+    color: var(--store-dark);
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 9px;
+    outline: none;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.admin-store .store-search input:focus,
+.admin-store .store-filter select:focus {
+    border-color: var(--store-brown);
+    box-shadow: 0 0 0 3px rgba(104, 69, 46, .08);
+}
+
+/* قوائم المنتجات والتصنيفات والبنرات */
+.admin-store .store-products-container,
+.admin-store .store-categories-container,
+.admin-store .store-banners-container {
+    min-width: 0;
+    width: 100%;
+}
+
+.admin-store .store-products-container:not(:empty),
+.admin-store .store-categories-container:not(:empty),
+.admin-store .store-banners-container:not(:empty) {
+    margin-top: 15px;
+}
+
+/* نماذج الإدخال */
+.admin-store .store-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.admin-store .store-form-field {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.admin-store .store-form-field.store-field-full {
+    grid-column: 1 / -1;
+}
+
+.admin-store .store-form-field label {
+    color: var(--store-dark);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-store .store-form-field input,
+.admin-store .store-form-field select,
+.admin-store .store-form-field textarea {
+    width: 100%;
+    min-height: 43px;
+    padding: 10px 12px;
+    color: var(--store-dark);
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 9px;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.admin-store .store-form-field textarea {
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.8;
+}
+
+.admin-store .store-form-field input:focus,
+.admin-store .store-form-field select:focus,
+.admin-store .store-form-field textarea:focus {
+    border-color: var(--store-brown);
+    box-shadow: 0 0 0 3px rgba(104, 69, 46, .08);
+}
+
+/* إدارة الصور */
+.admin-store .store-image-manager {
+    margin-top: 22px;
+    padding: 17px;
+    background: var(--store-cream);
+    border: 1px solid var(--store-border);
+    border-radius: 12px;
+}
+
+.admin-store .store-image-manager h4 {
+    margin: 0 0 7px;
+    color: var(--store-dark);
+    font-size: 14px;
+}
+
+.admin-store .store-image-manager p {
+    margin: 0 0 13px;
+    color: var(--store-muted);
+    font-size: 12px;
+}
+
+.admin-store .store-image-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 11px;
+    margin-top: 14px;
+}
+
+.admin-store .store-image-preview img {
+    width: 100%;
+    height: 105px;
+    padding: 5px;
+    object-fit: contain;
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 9px;
+}
+
+/* نماذج إضافة وتعديل المحتوى */
+.admin-store .store-product-editor,
+.admin-store .store-category-editor {
+    margin-top: 20px;
+    padding: 21px;
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 13px;
+    box-shadow: 0 5px 20px rgba(73, 48, 31, .05);
+}
+
+.admin-store .store-product-editor h3,
+.admin-store .store-category-editor h3 {
+    color: var(--store-dark);
+}
+
+.admin-store .store-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.admin-store .admin-feedback {
+    margin-top: 12px;
+    color: var(--store-muted);
+    font-size: 12px;
+}
+
+/* البنرات وصورة الرئيسية */
+.admin-store .store-banner-manager,
+.admin-store .store-home-feature-manager {
+    display: grid;
+    gap: 15px;
+    padding: 18px;
+    background: var(--store-cream);
+    border: 1px solid var(--store-border);
+    border-radius: 12px;
+}
+
+.admin-store .store-home-current-image {
+    width: 100%;
+    min-height: 170px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 11px;
+}
+
+.admin-store .store-home-current-image img {
+    display: block;
+    width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+}
+
+/* مقدمة صفحة الإدارة */
+.admin-store .admin-page-intro {
+    margin-bottom: 22px;
+}
+
+.admin-store .admin-page-intro h2 {
+    margin: 0;
+    color: var(--store-dark);
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.admin-store .admin-page-intro p {
+    color: var(--store-muted);
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+/* التنقل الداخلي */
+.admin-store .store-section-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 22px;
+    padding: 10px;
+    background: var(--store-cream);
+    border: 1px solid var(--store-border);
+    border-radius: 11px;
+}
+
+.admin-store .store-section-navigation a {
+    padding: 9px 15px;
+    color: var(--store-brown);
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    transition: .2s ease;
+}
+
+.admin-store .store-section-navigation a:hover {
+    color: #fff;
+    background: var(--store-brown);
+    border-color: var(--store-brown);
+}
+
+/* تنبيه الصفحة */
+.admin-store .admin-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 15px;
+    margin-top: 20px;
+    color: #765a35;
+    background: #fbf5e9;
+    border: 1px solid #eee0c6;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.admin-store .admin-notice p {
+    margin: 0;
+}
+
+/* تذييل الإدارة */
+.admin-store .admin-footer {
+    padding: 18px 27px;
+    color: var(--store-muted);
+    border-top: 1px solid var(--store-border);
+    text-align: center;
+    font-size: 11px;
+}
+
+@media (max-width: 700px) {
+    .admin-store .store-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-store .store-form-field.store-field-full {
+        grid-column: auto;
+    }
+
+    .admin-store .admin-panel-header {
+        align-items: flex-start;
+    }
+
+    .admin-store .store-form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-store .store-form-actions button {
+        width: 100%;
+    }
+}
+
+/* =====================================================
+   IBR20 — FIX PRODUCT GRID & IMAGE SIZES
+   إصلاح عرض المنتجات وأحجام الصور والاستجابة للشاشات
+===================================================== */
+
+/* منع تجاوز المحتوى */
+.admin-main.admin-store,
+.admin-store .admin-content,
+.admin-store .store-panel,
+.admin-store .store-products-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* شبكة المنتجات الفعلية المستخدمة في HTML */
+.admin-store .store-products-container {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+}
+
+/* بطاقة المنتج */
+.admin-store .store-products-container .store-product {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* حاوية صورة المنتج */
+.admin-store .store-products-container .store-product__image {
+    width: 100%;
+    height: 180px;
+    max-height: 180px;
+    aspect-ratio: auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fbf8f3;
+}
+
+/* صورة المنتج */
+.admin-store .store-products-container .store-product__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* الصور التي لا تستخدم حاوية الصورة السابقة */
+.admin-store .store-products-container img {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* حالة عدم وجود منتجات */
+.admin-store .store-products-container > .admin-empty-state,
+.admin-store .store-products-container > .store-empty {
+    grid-column: 1 / -1;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* منع تمدد النصوص والأزرار */
+.admin-store .store-product__body {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.admin-store .store-product__actions button {
+    max-width: 100%;
+    min-width: 0;
+}
+
+/* الشاشات المتوسطة */
+@media (max-width: 1100px) {
+    .admin-store .store-products-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* الأجهزة اللوحية */
+@media (max-width: 800px) {
+    .admin-store .store-products-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .admin-store .store-products-container .store-product__image {
+        height: 155px;
+        max-height: 155px;
+    }
+
+    .admin-store .store-products-container .store-product__image img {
+        max-height: 155px;
+    }
+}
+
+/* الجوال */
+@media (max-width: 520px) {
+    .admin-store .store-products-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .admin-store .store-products-container .store-product__image {
+        height: 125px;
+        max-height: 125px;
+    }
+
+    .admin-store .store-products-container .store-product__image img {
+        max-height: 125px;
+    }
+
+    .admin-store .store-product__body {
+        padding: 9px;
+    }
+
+    .admin-store .store-product__title {
+        font-size: 11px;
+        line-height: 1.6;
+    }
+
+    .admin-store .store-product__meta {
+        font-size: 10px;
+    }
+
+    .admin-store .store-product__actions {
+        gap: 6px;
+    }
+
+    .admin-store .store-product__actions button {
+        width: 100%;
+        font-size: 11px;
+    }
+
+    .admin-store .store-panel {
+        padding: 11px;
+    }
+}
+
+/* الجوال الصغير */
+@media (max-width: 360px) {
+    .admin-store .store-products-container {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-store .store-products-container .store-product__image {
+        height: 170px;
+        max-height: 170px;
+    }
+
+    .admin-store .store-products-container .store-product__image img {
+        max-height: 170px;
+    }
+}
+
+/* =================================================
+   IBR ADMIN — PRODUCT CARDS
+   ضبط حجم الصور والبطاقات لجميع الشاشات
+================================================= */
+
+.admin-store .store-products-container,
+.admin-store [data-store-products] {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    align-items: start;
+    box-sizing: border-box;
+}
+
+/* بطاقة المنتج */
+.admin-store .admin-store-product-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #e9dfd4;
+    border-radius: 13px;
+    box-sizing: border-box;
+}
+
+/* مساحة صورة المنتج */
+.admin-store .admin-store-product-image {
+    position: relative;
+    width: 100%;
+    height: 175px;
+    min-height: 175px;
+    max-height: 175px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #faf7f2;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+/* الصورة نفسها */
+.admin-store .admin-store-product-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* حالة عدم وجود صورة */
+.admin-store .admin-store-no-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #8a7969;
+    font-size: 13px;
+}
+
+/* بيانات المنتج */
+.admin-store .admin-store-product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 13px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.admin-store .admin-store-product-info strong {
+    color: #49301f;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.admin-store .admin-store-product-info span,
+.admin-store .admin-store-product-info small {
+    color: #817366;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.admin-store .admin-store-product-info b {
+    color: #68452e;
+    font-size: 15px;
+    margin-top: 3px;
+}
+
+/* أزرار البطاقة */
+.admin-store .admin-store-card-actions {
+    display: flex;
+    gap: 8px;
+    padding: 0 13px 13px;
+    box-sizing: border-box;
+}
+
+.admin-store .admin-store-card-actions button {
+    flex: 1;
+    min-width: 0;
+    min-height: 36px;
+    padding: 7px 10px;
+    border: 1px solid #68452e;
+    border-radius: 7px;
+    background: #fff;
+    color: #68452e;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.admin-store .admin-store-card-actions button:hover {
+    background: #68452e;
+    color: #fff;
+}
+
+/* الشاشات المتوسطة */
+@media (max-width: 1100px) {
+    .admin-store .store-products-container,
+    .admin-store [data-store-products] {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+    }
+}
+
+/* الأجهزة اللوحية */
+@media (max-width: 800px) {
+    .admin-store .store-products-container,
+    .admin-store [data-store-products] {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .admin-store .admin-store-product-image {
+        height: 150px;
+        min-height: 150px;
+        max-height: 150px;
+    }
+}
+
+/* الجوال */
+@media (max-width: 520px) {
+    .admin-store .store-products-container,
+    .admin-store [data-store-products] {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .admin-store .admin-store-product-image {
+        height: 120px;
+        min-height: 120px;
+        max-height: 120px;
+        padding: 6px;
+    }
+
+    .admin-store .admin-store-product-info {
+        padding: 9px;
+        gap: 5px;
+    }
+
+    .admin-store .admin-store-product-info strong {
+        font-size: 12px;
+    }
+
+    .admin-store .admin-store-product-info span,
+    .admin-store .admin-store-product-info small {
+        font-size: 10px;
+    }
+
+    .admin-store .admin-store-product-info b {
+        font-size: 13px;
+    }
+
+    .admin-store .admin-store-card-actions {
+        gap: 5px;
+        padding: 0 8px 9px;
+    }
+
+    .admin-store .admin-store-card-actions button {
+        min-height: 33px;
+        padding: 6px 4px;
+        font-size: 11px;
+    }
+}
+
+/* الجوالات الصغيرة جدًا */
+@media (max-width: 360px) {
+    .admin-store .store-products-container,
+    .admin-store [data-store-products] {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-store .admin-store-product-image {
+        height: 170px;
+        min-height: 170px;
+        max-height: 170px;
+    }
+}
+
+
+/* =========================================================
+   IBR20 — PRODUCT PRICING & DISCOUNT EDITOR
+   تنسيقات السعر والخصم ومعاينة السعر في لوحة الإدارة
+========================================================= */
+
+/* قسم إعدادات التسعير */
+.admin-store .store-pricing-section {
+    grid-column: 1 / -1;
+    min-width: 0;
+    padding: 19px;
+    margin-top: 5px;
+    background: linear-gradient(145deg, #fffdf9, #fbf8f3);
+    border: 1px solid var(--store-border);
+    border-radius: 13px;
+    box-sizing: border-box;
+}
+
+.admin-store .store-pricing-section > h3,
+.admin-store .store-pricing-section > h4 {
+    margin: 0 0 8px;
+    color: var(--store-dark);
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.admin-store .store-pricing-section > p {
+    margin: 0 0 17px;
+    color: var(--store-muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* شبكة حقول التسعير */
+.admin-store .store-pricing-section .store-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.admin-store .store-pricing-section .store-form-field {
+    min-width: 0;
+}
+
+/* حقول الأسعار */
+.admin-store .store-pricing-section input[type="number"],
+.admin-store .store-pricing-section input[type="datetime-local"],
+.admin-store .store-pricing-section select {
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-store .store-pricing-section input[type="number"] {
+    direction: ltr;
+    text-align: right;
+}
+
+/* خيار تفعيل الخصم */
+.admin-store [data-product-discount-enabled] {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--store-brown);
+    cursor: pointer;
+}
+
+.admin-store .store-pricing-section .store-check {
+    min-height: 43px;
+    padding: 10px 13px;
+    background: #fff;
+    border: 1px solid var(--store-border);
+    border-radius: 9px;
+}
+
+/* إعدادات الخصم */
+.admin-store [data-discount-fields] {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    min-width: 0;
+    padding: 16px;
+    margin-top: 4px;
+    background: #fff;
+    border: 1px solid #e8d9c8;
+    border-radius: 11px;
+    box-sizing: border-box;
+}
+
+/* احترام خاصية الإخفاء التي يتحكم بها JavaScript */
+.admin-store [data-discount-fields][hidden] {
+    display: none !important;
+}
+
+/* معاينة السعر */
+.admin-store [data-price-preview] {
+    grid-column: 1 / -1;
+    min-width: 0;
+    padding: 17px;
+    margin-top: 5px;
+    background: #f7f1e9;
+    border: 1px solid #e6d7c6;
+    border-radius: 11px;
+    box-sizing: border-box;
+}
+
+.admin-store [data-price-preview]::before {
+    content: "معاينة السعر قبل الحفظ";
+    display: block;
+    margin-bottom: 13px;
+    color: var(--store-dark);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.admin-store [data-price-preview] [data-preview-original],
+.admin-store [data-price-preview] [data-preview-final],
+.admin-store [data-price-preview] [data-preview-saving],
+.admin-store [data-price-preview] [data-preview-status] {
+    display: block;
+    min-width: 0;
+    margin-top: 8px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.admin-store [data-price-preview] [data-preview-original] {
+    color: var(--store-muted);
+    font-size: 12px;
+}
+
+.admin-store [data-price-preview] [data-preview-final] {
+    color: var(--store-brown);
+    font-size: 23px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-store [data-price-preview] [data-preview-saving] {
+    color: var(--store-success);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.admin-store [data-price-preview] [data-preview-status] {
+    padding-top: 8px;
+    color: var(--store-muted);
+    border-top: 1px solid #e6d7c6;
+    font-size: 11px;
+}
+
+/* تمييز حالة الخصم */
+.admin-store [data-price-preview].is-discount-active {
+    background: #f1f7f0;
+    border-color: #d5e6d3;
+}
+
+.admin-store [data-price-preview].is-discount-active
+[data-preview-final] {
+    color: var(--store-success);
+}
+
+.admin-store [data-price-preview].is-discount-expired {
+    background: #f8f3ef;
+    border-color: var(--store-border);
+}
+
+/* تحسين عرض القيم الرقمية */
+.admin-store .store-pricing-section input,
+.admin-store .store-pricing-section select {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+/* الأجهزة اللوحية */
+@media (max-width: 800px) {
+    .admin-store .store-pricing-section {
+        padding: 15px;
+    }
+
+    .admin-store [data-discount-fields] {
+        padding: 13px;
+        gap: 12px;
+    }
+}
+
+/* الجوال */
+@media (max-width: 640px) {
+    .admin-store .store-pricing-section {
+        padding: 12px;
+    }
+
+    .admin-store .store-pricing-section .store-form-grid,
+    .admin-store [data-discount-fields] {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-store .store-pricing-section .store-form-field.store-field-full {
+        grid-column: auto;
+    }
+
+    .admin-store [data-price-preview] {
+        padding: 13px;
+    }
+
+    .admin-store [data-price-preview] [data-preview-final] {
+        font-size: 21px;
+    }
+}

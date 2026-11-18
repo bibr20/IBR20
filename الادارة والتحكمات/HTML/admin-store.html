@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>إدارة المتجر | IBR20</title>
+    <meta name="theme-color" content="#f7f3ed">
+
+    <link rel="stylesheet" href="../CSS/admin-common.css">
+    <link rel="stylesheet" href="../CSS/admin-store.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../../assets/js/store.js"></script>
+    <script src="../Js/admin-common.js" defer></script>
+    <script src="../Js/admin-page-guard.js" defer></script>
+    <script src="../Js/admin-store.js" defer></script>
+
+</head>
+
+<body class="admin-body admin-page admin-store-page admin-store">
+
+    <!-- التحقق من صلاحية المدير -->
+    <div class="admin-loading-screen" data-admin-loading>
+        <div class="admin-loading-content">
+            <div class="admin-loading-spinner"></div>
+            <p>جارٍ التحقق من صلاحية الدخول...</p>
+        </div>
+    </div>
+
+    <div class="admin-layout" data-admin-content hidden>
+
+        <!-- القائمة الجانبية -->
+        <aside class="admin-sidebar">
+
+            <div class="admin-sidebar-brand">
+                <a href="admin.html" class="admin-brand-link">
+                    <span class="admin-brand-name">IBR20</span>
+                    <span class="admin-brand-description">إدارة المتجر</span>
+                </a>
+            </div>
+
+            <nav class="admin-navigation">
+
+                <a href="admin.html" class="admin-nav-link">
+                    <span class="admin-nav-icon">⌂</span>
+                    <span>الرئيسية</span>
+                </a>
+
+                <a href="admin-customers.html" class="admin-nav-link">
+                    <span class="admin-nav-icon">♙</span>
+                    <span>العملاء والطلبات</span>
+                </a>
+
+                <a href="admin-store.html"
+                   class="admin-nav-link active"
+                   aria-current="page">
+                    <span class="admin-nav-icon">▦</span>
+                    <span>إدارة المتجر</span>
+                </a>
+
+                <a href="admin-analytics.html" class="admin-nav-link">
+                    <span class="admin-nav-icon">▥</span>
+                    <span>التحليلات والإحصاءات</span>
+                </a>
+
+            </nav>
+
+            <div class="admin-sidebar-bottom">
+                <a href="../../index.html" class="admin-nav-link">
+                  <span class="admin-nav-icon">↗</span>
+                  <span>زيارة المتجر</span>
+                </a>
+
+                <button type="button"
+                        class="admin-nav-link admin-logout-button"
+                        data-admin-logout>
+                    <span class="admin-nav-icon">⇥</span>
+                    <span>تسجيل الخروج</span>
+                </button>
+
+            </div>
+
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="admin-main admin-store">
+
+            <header class="admin-topbar">
+
+                <div class="admin-topbar-title">
+                    <h1>إدارة المتجر</h1>
+                    <p>التحكم في المنتجات والتصنيفات والمحتوى المرئي.</p>
+                </div>
+
+                <div class="admin-topbar-actions">
+
+                    <span class="admin-user-label" data-admin-email>
+                        المدير
+                    </span>
+
+                    <button type="button"
+                            class="admin-mobile-menu-button"
+                            data-admin-menu-toggle
+                            aria-label="فتح القائمة">
+                        ☰
+                    </button>
+
+                </div>
+
+            </header>
+
+            <div class="admin-content">
+
+                <!-- مقدمة -->
+                <section class="admin-page-intro">
+                    <div>
+                        <h2>مركز التحكم بالمتجر</h2>
+                        <p>
+                            إدارة محتوى متجر IBR20 من المنتجات إلى الصور
+                            والتصنيفات والبنرات.
+                        </p>
+                    </div>
+                </section>
+
+                
+                <!-- التنقل الداخلي -->
+                <nav class="store-section-navigation"
+                      aria-label="أقسام إدارة المتجر">
+
+                     <a href="#products-section">المنتجات</a>
+                     <a href="#categories-section">التصنيفات</a>
+                     <a href="#banners-section">البنرات</a>
+                     <a href="#home-feature-section">صورة الرئيسية</a>
+
+                </nav>
+            
+
+                <!-- =====================================
+                     القسم الأول: المنتجات
+                ====================================== -->
+                <section class="admin-panel store-panel"
+                         id="products-section">
+
+                    <div class="admin-panel-header">
+
+                        <div>
+                            <h2>إدارة المنتجات</h2>
+                            <p>
+                                إضافة المنتجات وتعديل بياناتها وإدارة صورها.
+                            </p>
+                        </div>
+
+                        <button type="button"
+                                class="admin-primary-button"
+                                data-product-add>
+                            + إضافة منتج
+                        </button>
+
+                    </div>
+
+                    <!-- البحث والتصفية -->
+                    <div class="store-toolbar">
+
+                        <div class="store-search">
+                            <label for="store-product-search">
+                                البحث عن منتج
+                            </label>
+
+                            <input
+                                type="search"
+                                id="store-product-search"
+                                placeholder="اسم المنتج..."
+                                data-store-product-search
+                            >
+                        </div>
+
+                        <div class="store-filter">
+                            <label for="store-category-filter">
+                                التصنيف
+                            </label>
+
+                            <select id="store-category-filter"
+                                    data-store-category-filter>
+                                <option value="">جميع التصنيفات</option>
+                            </select>
+                        </div>
+
+                        <div class="store-filter">
+                            <label for="store-status-filter">
+                                حالة المنتج
+                            </label>
+
+                            <select id="store-status-filter"
+                                    data-store-status-filter>
+                                <option value="">جميع الحالات</option>
+                                <option value="active">نشط</option>
+                                <option value="inactive">مخفي</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- قائمة المنتجات -->
+                    <div class="store-products-container"
+                         data-store-products>
+
+                        <div class="admin-empty-state">
+                            <span class="admin-empty-icon">▦</span>
+                            <h3>المنتجات</h3>
+                            <p>
+                                سيتم عرض منتجات المتجر هنا بعد تحميلها
+                                من قاعدة البيانات.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- نموذج إضافة وتعديل المنتج -->
+                    <div class="store-product-editor"
+                         data-store-product-editor
+                         hidden>
+
+                        <div class="admin-panel-header">
+                            <div>
+                                <h3 data-product-editor-title>
+                                    بيانات المنتج
+                                </h3>
+                                <p>أدخل بيانات المنتج المطلوبة.</p>
+                            </div>
+
+                            <button type="button"
+                                    class="admin-secondary-button"
+                                    data-product-editor-close>
+                                إغلاق
+                            </button>
+                        </div>
+
+                        <form data-store-product-form>
+
+                            <input type="hidden"
+                                   name="id"
+                                   data-product-id>
+
+                            <div class="store-form-grid">
+
+                                <div class="store-form-field">
+                                    <label for="product-name">
+                                        اسم المنتج
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="product-name"
+                                        name="name"
+                                        required
+                                        placeholder="اسم المنتج"
+                                    >
+                                </div>
+
+                                <div class="store-form-field">
+                                    <label for="product-category">
+                                        التصنيف
+                                    </label>
+
+                                    <select
+                                        id="product-category"
+                                        name="category_id"
+                                        data-product-category
+                                        required>
+                                        <option value="">
+                                            اختر التصنيف
+                                        </option>
+                                    </select>
+                                </div>
+
+                               <!-- =========================================
+                                       
+                                          إعدادات السعر والخصم
+                                  ========================================= -->
+
+                                <div class="store-pricing-section">
+
+                                  <div class="store-form-field">
+                                  <label for="product-price-mode">نمط التسعير</label>
+
+                                   <select id="product-price-mode" name="price_mode">
+                                     <option value="fixed">سعر ثابت</option>
+                                     <option value="from">يبدأ من</option>
+                                     <option value="quote">السعر عند الاستفسار</option>
+                                    </select>
+                                </div>
+
+                                <div class="store-form-field">
+                                 <label for="product-price">السعر الأساسي (ر.س)</label>
+
+                                  <input
+                                  type="number"
+                                  id="product-price"
+                                  name="price"
+                                  min="0"
+                                  step="0.01"
+                                  placeholder="0.00"
+                                 >
+                                </div>
+
+                                <div class="store-form-field">
+                                 <label for="product-compare-price">السعر السابق (ر.س)</label>
+
+                                    <input
+                                     type="number"
+                                     id="product-compare-price"
+                                     name="compare_at_price"
+                                     min="0"
+                                     step="0.01"
+                                     placeholder="اختياري"
+                                    >
+
+                                 <small>يظهر كسعر مشطوب عند وجود تخفيض صالح.</small>
+                                </div>
+
+                                <div class="store-form-field">
+                                    <label>
+                                        <input
+                                         type="checkbox"
+                                         id="product-discount-enabled"
+                                         name="discount_enabled"
+                                         value="true"
+                                         data-product-discount-enabled
+                                         >
+                                         تفعيل الخصم لهذا المنتج
+                                    </label>
+                                </div>
+
+                                <div class="store-discount-fields" data-discount-fields hidden> </div>      
+                                <div class="store-form-field">
+                                 <label for="product-discount-type">نوع الخصم</label>
+  
+                                    <select id="product-discount-type" name="discount_type">
+                                      <option value="percentage">نسبة مئوية (%)</option>
+                                      <option value="fixed">مبلغ ثابت (ر.س)</option>
+                                    </select>
+                                </div>
+
+                                <div class="store-form-field">
+                                 <label for="product-discount-value">قيمة الخصم</label>
+
+                                    <input
+                                     type="number"
+                                     id="product-discount-value"
+                                     name="discount_value"
+                                     min="0.01"
+                                     step="0.01"
+                                     placeholder="مثلاً 15"
+                                    >
+                                </div>
+
+                                <div class="store-form-field">
+                                    <label for="product-discount-badge">شارة العرض</label>
+
+                                    <select id="product-discount-badge" name="discount_badge">
+                                     <option value="">تلقائية</option>
+                                     <option value="عرض خاص">عرض خاص</option>
+                                     <option value="تخفيض">تخفيض</option>
+                                     <option value="لفترة محدودة">لفترة محدودة</option>
+                                     <option value="خصم حصري">خصم حصري</option>
+                                    </select>
+                                </div>
+
+                                <div class="store-form-field">
+                                   <label for="product-discount-start">بداية العرض</label>
+                              
+                                   <input
+                                     type="datetime-local"
+                                     id="product-discount-start"
+                                     name="discount_starts_at"
+                                    >
+                                </div>
+
+                                <div class="store-form-field">
+                                    <label for="product-discount-end">نهاية العرض</label>
+ 
+                                    <input
+                                     type="datetime-local"
+                                     id="product-discount-end"
+                                     name="discount_ends_at"
+                                    >
+                                </div>
+
+                                </div>
+
+                                    <div class="store-price-preview" data-price-preview aria-live="polite">
+                                     <strong>معاينة السعر</strong>
+                                     <p data-preview-original>السعر الأساسي: —</p>
+                                     <p data-preview-final>السعر النهائي: —</p>
+                                     <p data-preview-saving>قيمة التوفير: —</p>
+                                     <p data-preview-status>لا يوجد خصم مفعّل.</p>
+                                    </div>
+
+                                </div>
+                              
+                                <div class="store-form-field">
+                                    <label for="product-stock">
+                                        الكمية المتوفرة
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="product-stock"
+                                        name="stock_quantity"
+                                        min="0"
+                                        step="1"
+                                        placeholder="0"
+                                    >
+                                </div>
+
+                                <div class="store-form-field store-field-full">
+                                    <label for="product-description">
+                                        وصف المنتج
+                                    </label>
+
+                                    <textarea
+                                        id="product-description"
+                                        name="description"
+                                        rows="5"
+                                        placeholder="اكتب وصف المنتج..."
+                                    ></textarea>
+                                </div>
+
+                                <div class="store-form-field">
+                                    <label for="product-active">
+                                        حالة العرض
+                                    </label>
+
+                                    <select
+                                        id="product-active"
+                                        name="is_active">
+                                        <option value="true">نشط</option>
+                                        <option value="false">مخفي</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <!-- الصور -->
+                            <div class="store-image-manager">
+
+                                <h4>صور المنتج</h4>
+
+                                <p>
+                                    يمكنك اختيار صور المنتج من جهازك.
+                                </p>
+
+                                <input
+                                    type="file"
+                                    accept="image/jpeg,image/png,image/webp"
+                                    multiple
+                                    data-product-images-input
+                                >
+
+                                <div data-product-images-preview
+                                     class="store-image-preview">
+                                </div>
+
+                            </div>
+
+                            <div class="store-form-actions">
+
+                                <button type="submit"
+                                        class="admin-primary-button">
+                                    حفظ المنتج
+                                </button>
+
+                                <button type="button"
+                                        class="admin-secondary-button"
+                                        data-product-editor-close>
+                                    إلغاء
+                                </button>
+
+                            </div>
+
+                            <div data-product-form-feedback
+                                 class="admin-feedback"
+                                 role="status"
+                                 aria-live="polite">
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </section>
+
+                <!-- =====================================
+                     القسم الثاني: التصنيفات
+                ====================================== -->
+                <section class="admin-panel store-panel"
+                         id="categories-section">
+
+                    <div class="admin-panel-header">
+
+                        <div>
+                            <h2>إدارة التصنيفات</h2>
+                            <p>
+                                تنظيم المنتجات داخل أقسام المتجر.
+                            </p>
+                        </div>
+
+                        <button type="button"
+                                class="admin-primary-button"
+                                data-category-add>
+                            + إضافة تصنيف
+                        </button>
+
+                    </div>
+
+                    <div class="store-categories-container"
+                         data-store-categories>
+
+                        <div class="admin-empty-state">
+                            <span class="admin-empty-icon">▤</span>
+                            <h3>تصنيفات المتجر</h3>
+                            <p>
+                                سيتم عرض التصنيفات الحالية هنا.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- نموذج التصنيف -->
+                    <div class="store-category-editor"
+                         data-category-editor
+                         hidden>
+
+                        <h3 data-category-editor-title>
+                            إضافة تصنيف
+                        </h3>
+
+                        <form data-category-form>
+
+                            <input type="hidden"
+                                   name="id"
+                                   data-category-id>
+
+                            <div class="store-form-field">
+                                <label for="category-name">
+                                    اسم التصنيف
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="category-name"
+                                    name="name"
+                                    required
+                                    placeholder="مثال: الطاولات"
+                                >
+                            </div>
+
+                            <div class="store-form-field">
+                                <label for="category-slug">
+                                    الرابط المختصر
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="category-slug"
+                                    name="slug"
+                                    required
+                                    placeholder="tables"
+                                    dir="ltr"
+                                >
+                            </div>
+
+                            <div class="store-form-field">
+                                <label for="category-description">
+                                    وصف التصنيف
+                                </label>
+
+                                <textarea
+                                    id="category-description"
+                                    name="description"
+                                    rows="3"
+                                    placeholder="وصف مختصر..."
+                                ></textarea>
+                            </div>
+
+                            <div class="store-form-field">
+                                <label for="category-sort">
+                                    ترتيب التصنيف
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="category-sort"
+                                    name="sort_order"
+                                    min="0"
+                                    value="0"
+                                >
+                            </div>
+
+                            <div class="store-form-actions">
+
+                                <button type="submit"
+                                        class="admin-primary-button">
+                                    حفظ التصنيف
+                                </button>
+
+                                <button type="button"
+                                        class="admin-secondary-button"
+                                        data-category-editor-close>
+                                    إلغاء
+                                </button>
+
+                            </div>
+
+                            <div data-category-feedback
+                                 class="admin-feedback"
+                                 role="status"
+                                 aria-live="polite">
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </section>
+
+                <!-- =====================================
+                     القسم الثالث: البنرات
+                ====================================== -->
+                <section class="admin-panel store-panel"
+                         id="banners-section">
+
+                    <div class="admin-panel-header">
+
+                        <div>
+                            <h2>بنرات المتجر</h2>
+                            <p>
+                                إدارة الصور الترويجية التي تظهر في واجهة المتجر.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="store-banner-manager">
+
+                        <div class="store-form-field">
+                            <label for="banner-product">
+                                اختيار صورة من منتج
+                            </label>
+
+                            <select id="banner-product"
+                                    data-banner-product>
+                                <option value="">
+                                    اختر منتجًا
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="store-form-field">
+                            <label for="banner-upload">
+                                أو رفع صورة مستقلة
+                            </label>
+
+                            <input
+                                type="file"
+                                id="banner-upload"
+                                accept="image/jpeg,image/png,image/webp"
+                                data-banner-upload
+                            >
+                        </div>
+
+                        <div class="store-form-field">
+                            <label for="banner-description">
+                                وصف البنر
+                            </label>
+
+                            <input
+                                type="text"
+                                id="banner-description"
+                                placeholder="وصف الصورة..."
+                                data-banner-description
+                            >
+                        </div>
+
+                        <div class="store-form-actions">
+
+                            <button type="button"
+                                    class="admin-primary-button"
+                                    data-banner-save>
+                                حفظ البنر
+                            </button>
+
+                        </div>
+
+                        <div data-banner-feedback
+                             class="admin-feedback"
+                             role="status"
+                             aria-live="polite">
+                        </div>
+
+                    </div>
+
+                    <div class="store-banners-container"
+                         data-store-banners>
+
+                        <div class="admin-empty-state">
+                            <span class="admin-empty-icon">▧</span>
+                            <h3>بنرات المتجر</h3>
+                            <p>
+                                ستظهر البنرات المسجلة هنا.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- =====================================
+                     القسم الرابع: صورة الصفحة الرئيسية
+                ====================================== -->
+                <section class="admin-panel store-panel"
+                         id="home-feature-section">
+
+                    <div class="admin-panel-header">
+
+                        <div>
+                            <h2>صورة الصفحة الرئيسية</h2>
+                            <p>
+                                تحديد الصورة الرئيسية التي تظهر في واجهة المتجر.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="store-home-feature-manager">
+
+                        <div class="store-home-current-image"
+                             data-home-feature-preview>
+
+                            <div class="admin-empty-state">
+                                <span class="admin-empty-icon">▧</span>
+                                <p>لا توجد صورة معروضة حاليًا.</p>
+                            </div>
+
+                        </div>
+
+                        <div class="store-form-field">
+
+                            <label for="home-feature-product">
+                                اختيار صورة من أحد المنتجات
+                            </label>
+
+                            <select
+                                id="home-feature-product"
+                                data-home-feature-product>
+                                <option value="">
+                                    اختر المنتج
+                                </option>
+                            </select>
+
+                        </div>
+
+                        <div class="store-form-field">
+
+                            <label for="home-feature-upload">
+                                أو رفع صورة مستقلة
+                            </label>
+
+                            <input
+                                type="file"
+                                id="home-feature-upload"
+                                accept="image/jpeg,image/png,image/webp"
+                                data-home-feature-upload
+                            >
+
+                        </div>
+
+                        <div class="store-form-actions">
+
+                            <button type="button"
+                                    class="admin-primary-button"
+                                    data-home-feature-save>
+                                حفظ الصورة الرئيسية
+                            </button>
+
+                        </div>
+
+                        <div data-home-feature-feedback
+                             class="admin-feedback"
+                             role="status"
+                             aria-live="polite">
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- تنبيه -->
+                <div class="admin-notice">
+                    <span class="admin-notice-icon">ⓘ</span>
+                    <p>
+                        عمليات إدارة المنتجات والتصنيفات والصور تخضع
+                        لصلاحيات المدير. لا تحذف هذه الصفحة ملفات الصور
+                        القديمة من التخزين تلقائيًا.
+                    </p>
+                </div>
+
+            </div>
+
+            <footer class="admin-footer">
+                <p>IBR20 — نظام إدارة المتجر</p>
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

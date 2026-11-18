@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#68452e">
+    <meta name="description" content="تتبع استفسارك لدى IBR للأثاث الخشبي.">
+    <title>تتبع الاستفسار | IBR للأثاث الخشبي</title>
+
+    <style>
+        :root {
+            --brown: #68452e;
+            --brown-dark: #49301f;
+            --beige: #f5efe8;
+            --cream: #fcfaf7;
+            --border: #e6d9cc;
+            --text: #40352d;
+            --muted: #88796d;
+            --success: #537b5c;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--text);
+            font-family: Tahoma, Arial, sans-serif;
+            line-height: 1.8;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .top-bar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 15px 20px;
+        }
+
+        .top-inner {
+            max-width: 1050px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand {
+            color: var(--brown);
+            font-size: 21px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .top-link {
+            color: var(--brown);
+            font-size: 14px;
+        }
+
+        .page {
+            width: min(720px, calc(100% - 30px));
+            margin: 42px auto 60px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 27px;
+        }
+
+        .intro-mark {
+            width: 55px;
+            height: 55px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            background: var(--beige);
+            color: var(--brown);
+            display: grid;
+            place-items: center;
+            font-size: 25px;
+        }
+
+        .intro h1 {
+            color: var(--brown-dark);
+            font-size: clamp(23px, 5vw, 31px);
+            margin: 0 0 8px;
+        }
+
+        .intro p {
+            color: var(--muted);
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 28px rgba(75, 49, 30, .045);
+            margin-bottom: 18px;
+        }
+
+        .card h2 {
+            color: var(--brown);
+            font-size: 19px;
+            margin: 0 0 17px;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #fff;
+            outline: none;
+            transition: border-color .2s;
+        }
+
+        .field input:focus {
+            border-color: var(--brown);
+        }
+
+        .field input::placeholder {
+            color: #b4a79c;
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            border: 0;
+            border-radius: 9px;
+            padding: 12px 19px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: .2s;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--brown);
+            color: #fff;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--brown-dark);
+        }
+
+        .btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            display: none;
+            padding: 12px;
+            border-radius: 9px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .feedback.error {
+            display: block;
+            background: #fff0ed;
+            color: #a13f31;
+            border: 1px solid #f0d0ca;
+        }
+
+        .feedback.success {
+            display: block;
+            background: #edf6ed;
+            color: #416d49;
+            border: 1px solid #d0e4d1;
+        }
+
+        .result {
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .result-heading h2 {
+            margin: 0;
+        }
+
+        .status-badge {
+            padding: 6px 13px;
+            border-radius: 30px;
+            background: var(--beige);
+            color: var(--brown);
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .inquiry-number {
+            background: var(--beige);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 13px;
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .inquiry-number small {
+            display: block;
+            color: var(--muted);
+        }
+
+        .inquiry-number strong {
+            display: block;
+            direction: ltr;
+            color: var(--brown);
+            font-size: 19px;
+            margin-top: 3px;
+        }
+
+        .timeline {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 5px;
+            margin: 25px 0;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            color: #b6aaa0;
+        }
+
+        .step-circle {
+            width: 37px;
+            height: 37px;
+            margin: auto;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: #fff;
+            display: grid;
+            place-items: center;
+            font-size: 16px;
+        }
+
+        .step.active .step-circle {
+            background: var(--brown);
+            border-color: var(--brown);
+            color: #fff;
+        }
+
+        .step.done .step-circle {
+            background: #eaf1e9;
+            border-color: #d2e0d0;
+            color: var(--success);
+        }
+
+        .step-label {
+            display: block;
+            font-size: 11px;
+            margin-top: 7px;
+        }
+
+        .step.active,
+        .step.done {
+            color: var(--brown);
+        }
+
+        .details {
+            border-top: 1px solid var(--border);
+            padding-top: 18px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 9px 0;
+            border-bottom: 1px solid #f2ede8;
+            font-size: 14px;
+        }
+
+        .detail-row span:first-child {
+            color: var(--muted);
+        }
+
+        .detail-row strong {
+            text-align: left;
+            overflow-wrap: anywhere;
+        }
+
+        .reply-card {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 13px;
+            background: #f7f1e9;
+            border: 1px solid #dfcbb8;
+        }
+
+        .reply-card.show {
+            display: block;
+        }
+
+        .reply-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--brown);
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .reply-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #eadccf;
+            display: grid;
+            place-items: center;
+        }
+
+        .reply-text {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            line-height: 2;
+            color: #44362b;
+            margin: 0;
+        }
+
+        .reply-date {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 14px;
+            border-top: 1px solid #e5d8ca;
+            padding-top: 10px;
+        }
+
+        .pending-message {
+            background: #faf7f3;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 18px;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .actions a,
+        .actions button {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        .btn-outline {
+            background: #fff;
+            border: 1px solid var(--border);
+            color: var(--brown);
+        }
+
+        .btn-whatsapp {
+            background: #edf5ed;
+            color: #39734a;
+            border: 1px solid #d6e7d8;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+            padding: 22px 10px;
+        }
+
+        @media (max-width: 520px) {
+            .page {
+                margin-top: 25px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+            .step-label {
+                font-size: 10px;
+            }
+
+            .step-circle {
+                width: 32px;
+                height: 32px;
+            }
+
+            .detail-row {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="top-bar">
+        <div class="top-inner">
+            <a class="brand" href="index.html">IBR20</a>
+            <a class="top-link" href="contact.html">التواصل مع المتجر</a>
+        </div>
+    </header>
+
+    <main class="page">
+
+        <section class="intro">
+            <div class="intro-mark">⌕</div>
+            <h1>تتبع استفسارك</h1>
+            <p>تابع حالة استفسارك واطّلع على رد إدارة IBR بكل سهولة.</p>
+        </section>
+
+        <section class="card">
+            <h2>بيانات الاستفسار</h2>
+
+            <form id="tracking-form">
+
+                <div class="field">
+                    <label for="inquiry-number">رقم الاستفسار</label>
+                    <input id="inquiry-number" type="text" placeholder="مثال: IBR-2611-000001" required maxlength="60"
+                        autocomplete="off">
+                </div>
+
+                <div class="field">
+                    <label for="customer-phone">رقم الجوال</label>
+                    <input id="customer-phone" type="tel" placeholder="أدخل رقم الجوال الذي سجلت به الاستفسار" required
+                        maxlength="30" autocomplete="tel">
+                    <div class="hint">
+                        نستخدم رقم الجوال للتحقق من ملكيتك للاستفسار.
+                    </div>
+                </div>
+
+                <button id="track-button" class="btn btn-primary" type="submit">
+                    عرض تفاصيل الاستفسار
+                </button>
+
+                <div id="tracking-feedback" class="feedback"></div>
+
+            </form>
+        </section>
+
+        <section id="tracking-result" class="card result">
+
+            <div class="result-heading">
+                <h2>تفاصيل استفسارك</h2>
+                <span id="status-badge" class="status-badge"></span>
+            </div>
+
+            <div class="inquiry-number">
+                <small>رقم الاستفسار</small>
+                <strong id="result-number"></strong>
+            </div>
+
+            <h3 style="font-size:15px;color:#68452e">
+                مراحل متابعة الاستفسار
+            </h3>
+
+            <div class="timeline">
+
+                <div class="step" id="step-received">
+                    <div class="step-circle">✓</div>
+                    <span class="step-label">تم الاستلام</span>
+                </div>
+
+                <div class="step" id="step-review">
+                    <div class="step-circle">2</div>
+                    <span class="step-label">قيد المراجعة</span>
+                </div>
+
+                <div class="step" id="step-answered">
+                    <div class="step-circle">3</div>
+                    <span class="step-label">تم الرد</span>
+                </div>
+
+            </div>
+
+            <div class="details">
+
+                <div class="detail-row">
+                    <span>موضوع الاستفسار</span>
+                    <strong id="result-subject"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>تاريخ الإرسال</span>
+                    <strong id="result-created"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>آخر تحديث</span>
+                    <strong id="result-updated"></strong>
+                </div>
+
+            </div>
+
+            <div id="reply-card" class="reply-card">
+
+                <div class="reply-title">
+                    <span class="reply-icon">✉</span>
+                    رد إدارة IBR على استفسارك
+                </div>
+
+                <p id="reply-text" class="reply-text"></p>
+
+                <div class="reply-date">
+                    تاريخ الرد:
+                    <strong id="reply-date"></strong>
+                </div>
+
+            </div>
+
+            <div id="pending-message" class="pending-message">
+                استفسارك مسجل لدينا. ستظهر هنا إجابة الإدارة بمجرد الرد عليك.
+            </div>
+
+            <div class="actions">
+
+                <a id="whatsapp-button" class="btn btn-whatsapp" href="https://wa.me/966595811980" target="_blank"
+                    rel="noopener">
+                    التواصل عبر واتساب
+                </a>
+
+                <button id="new-search-button" class="btn btn-outline" type="button">
+                    تتبع استفسار آخر
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        IBR20 للأثاث الخشبي — نعتني بتفاصيل الخشب وجودة الصنع
+    </footer>
+    <!-- 1. مكتبة Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- 2. ملف المتجر -->
+    <script src="assets/js/store.js"></script>
+
+    <!-- 3. نظام تسجيل الدخول -->
+    <script src="assets/js/auth.js"></script>
+
+    <script>
+        (() => {
+
+            "use strict";
+
+            const $ = id => document.getElementById(id);
+
+            const form = $("tracking-form");
+            const numberInput = $("inquiry-number");
+            const phoneInput = $("customer-phone");
+            const trackButton = $("track-button");
+            const feedback = $("tracking-feedback");
+            const result = $("tracking-result");
+
+            const WHATSAPP_NUMBER = "966595811980";
+
+            function showFeedback(message, type = "error") {
+                feedback.textContent = message;
+                feedback.className = "feedback " + type;
+            }
+
+            function hideFeedback() {
+                feedback.textContent = "";
+                feedback.className = "feedback";
+            }
+
+            function formatDate(value) {
+
+                if (!value) return "غير متوفر";
+
+                const date = new Date(value);
+
+                if (Number.isNaN(date.getTime())) {
+                    return "غير متوفر";
+                }
+
+                return new Intl.DateTimeFormat("ar-SA", {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                }).format(date);
+            }
+
+            function statusInformation(status) {
+
+                const statuses = {
+                    new: {
+                        label: "تم الاستلام",
+                        step: 1
+                    },
+                    in_review: {
+                        label: "قيد المراجعة",
+                        step: 2
+                    },
+                    answered: {
+                        label: "تم الرد",
+                        step: 3
+                    },
+                    closed: {
+                        label: "مغلقة",
+                        step: 3
+                    }
+                };
+
+                return statuses[status] || {
+                    label: "قيد المتابعة",
+                    step: 1
+                };
+            }
+
+            function updateTimeline(step) {
+
+                const received = $("step-received");
+                const review = $("step-review");
+                const answered = $("step-answered");
+
+                [received, review, answered].forEach(item => {
+                    item.classList.remove("active", "done");
+                });
+
+                if (step >= 1) {
+                    received.classList.add(
+                        step > 1 ? "done" : "active"
+                    );
+                }
+
+                if (step >= 2) {
+                    review.classList.add(
+                        step > 2 ? "done" : "active"
+                    );
+                }
+
+                if (step >= 3) {
+                    answered.classList.add("active");
+                }
+            }
+
+            function displayResult(item) {
+
+                const status = statusInformation(
+                    item.inquiry_status
+                );
+
+                $("status-badge").textContent = status.label;
+
+                $("result-number").textContent =
+                    item.inquiry_number || "";
+
+                $("result-subject").textContent =
+                    item.subject || "بدون موضوع";
+
+                $("result-created").textContent =
+                    formatDate(item.created_at);
+
+                $("result-updated").textContent =
+                    formatDate(item.updated_at);
+
+                updateTimeline(status.step);
+
+                const replyCard = $("reply-card");
+                const pendingMessage = $("pending-message");
+
+                const hasReply =
+                    item.inquiry_status === "answered" &&
+                    typeof item.customer_reply === "string" &&
+                    item.customer_reply.trim().length > 0;
+
+                if (hasReply) {
+
+                    $("reply-text").textContent =
+                        item.customer_reply;
+
+                    $("reply-date").textContent =
+                        formatDate(item.customer_reply_at);
+
+                    replyCard.classList.add("show");
+
+                    pendingMessage.style.display = "none";
+
+                } else {
+
+                    replyCard.classList.remove("show");
+
+                    pendingMessage.style.display = "block";
+
+                    if (item.inquiry_status === "closed") {
+                        pendingMessage.textContent =
+                            "تم إغلاق هذا الاستفسار. يمكنك التواصل مع الإدارة عبر واتساب عند الحاجة.";
+                    } else {
+                        pendingMessage.textContent =
+                            "استفسارك مسجل لدينا. ستظهر هنا إجابة الإدارة بمجرد الرد عليك.";
+                    }
+                }
+
+                const whatsappText =
+                    "السلام عليكم، أود متابعة الاستفسار رقم: " +
+                    (item.inquiry_number || "");
+
+                $("whatsapp-button").href =
+                    "https://wa.me/" +
+                    WHATSAPP_NUMBER +
+                    "?text=" +
+                    encodeURIComponent(whatsappText);
+
+                result.classList.add("show");
+
+                result.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+
+            form.addEventListener("submit", async event => {
+
+                event.preventDefault();
+
+                hideFeedback();
+
+                result.classList.remove("show");
+
+                const inquiryNumber = numberInput.value.trim();
+                const phone = phoneInput.value.trim();
+
+                if (!inquiryNumber || !phone) {
+                    showFeedback(
+                        "يرجى إدخال رقم الاستفسار ورقم الجوال."
+                    );
+                    return;
+                }
+
+                const client = window.supabaseClient;
+
+                if (!client) {
+                    showFeedback(
+                        "تعذر الاتصال بقاعدة البيانات. يرجى تحديث الصفحة والمحاولة مرة أخرى."
+                    );
+                    return;
+                }
+
+                trackButton.disabled = true;
+                trackButton.textContent = "جارٍ التحقق...";
+
+                try {
+
+                    const { data, error } = await client.rpc(
+                        "track_customer_inquiry",
+                        {
+                            p_inquiry_number: inquiryNumber,
+                            p_phone: phone
+                        }
+                    );
+
+                    if (error) throw error;
+
+                    const item = Array.isArray(data)
+                        ? data[0]
+                        : data;
+
+                    if (!item) {
+                        showFeedback(
+                            "لم نعثر على استفسار مطابق. تحقق من رقم الاستفسار ورقم الجوال."
+                        );
+                        return;
+                    }
+
+                    displayResult(item);
+
+                    showFeedback(
+                        "تم العثور على استفسارك بنجاح.",
+                        "success"
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "Inquiry tracking error:",
+                        error
+                    );
+
+                    showFeedback(
+                        "تعذر جلب بيانات الاستفسار. يرجى المحاولة مرة أخرى."
+                    );
+
+                } finally {
+
+                    trackButton.disabled = false;
+                    trackButton.textContent =
+                        "عرض تفاصيل الاستفسار";
+                }
+
+            });
+
+            $("new-search-button").addEventListener("click", () => {
+
+                result.classList.remove("show");
+
+                form.reset();
+
+                hideFeedback();
+
+                numberInput.focus();
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+
+            // قراءة رقم الاستفسار القادم من صفحة التواصل
+            const params = new URLSearchParams(
+                window.location.search
+            );
+
+            const inquiryNumber = params.get("number");
+
+            if (inquiryNumber) {
+                numberInput.value = inquiryNumber;
+                phoneInput.focus();
+            }
+
+        })();
+    </script>
+
+    <!-- IBR20 Analytics Engine -->
+    <script src="assets/js/ibr-analytics.js"></script>
+
+    <!-- IBR20 Analytics Consent -->
+    <script src="assets/js/ibr-analytics-consent.js"></script>
+
+</body>
+
+</html>
