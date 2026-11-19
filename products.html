@@ -867,6 +867,98 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* =====================================================
+   IBR20 — تحسين كثافة بطاقات المنتجات
+   تقليل الارتفاع مع الحفاظ على وضوح الصور والمعلومات
+===================================================== */
+
+        /* مساحة الصورة */
+        .product-card .product-image {
+            height: 220px;
+            min-height: 220px;
+            flex-shrink: 0;
+        }
+
+        /* معلومات المنتج */
+        .product-card .product-info {
+            padding: 6px 5px 9px;
+            gap: 0;
+        }
+
+        /* اسم المنتج: سطران كحد أقصى */
+        .product-card .product-info h3 {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            min-height: 0;
+            max-height: 3.4em;
+            margin: 4px 0 6px;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* اسم التصنيف */
+        .product-card .product-info .eyebrow {
+            margin: 0 0 2px;
+            font-size: 10px;
+        }
+
+        /* مساحة الأسعار */
+        .product-card .product-price-area {
+            gap: 3px;
+            margin: 6px 0 8px;
+        }
+
+        /* السعر النهائي */
+        .product-card .price-final {
+            font-size: 17px;
+        }
+
+        /* الأزرار */
+        .product-card .product-actions {
+            gap: 7px;
+            padding-top: 3px;
+        }
+
+        .product-card .product-actions .buy-now-btn,
+        .product-card .product-actions .add-to-cart-btn {
+            min-height: 39px;
+            padding: 7px 6px;
+            font-size: 12px;
+        }
+
+        /* الأجهزة اللوحية */
+        @media (max-width: 900px) {
+            .product-card .product-image {
+                height: 195px;
+                min-height: 195px;
+            }
+        }
+
+        /* الهواتف */
+        @media (max-width: 600px) {
+            .product-card .product-image {
+                height: 175px;
+                min-height: 175px;
+            }
+
+            .product-card .product-info {
+                padding: 5px 3px 8px;
+            }
+
+            .product-card .product-info h3 {
+                font-size: 13px;
+                line-height: 1.6;
+            }
+
+            .product-card .product-actions .buy-now-btn,
+            .product-card .product-actions .add-to-cart-btn {
+                min-height: 37px;
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 
