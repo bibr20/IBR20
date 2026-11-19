@@ -540,6 +540,187 @@
             min-height: 22px;
         }
 
+
+        /* =========================================
+           IBR20 — CART REFINEMENT
+           بطاقة منتج مريحة للجوال مع الحفاظ على الوظائف
+        ========================================= */
+        .cart-row {
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            column-gap: 18px;
+            row-gap: 12px;
+            padding: 18px 0;
+        }
+
+        .cart-product-info {
+            grid-template-columns: 104px minmax(0, 1fr);
+            grid-template-rows: auto auto auto;
+            column-gap: 16px;
+            row-gap: 5px;
+            align-items: center;
+        }
+
+        .cart-product-link {
+            width: 104px;
+            height: 104px;
+            min-width: 104px;
+            flex: 0 0 104px;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #f7f3ee;
+        }
+
+        .cart-product-image {
+            width: 100%;
+            height: 100%;
+            flex: 0 0 100%;
+            object-fit: contain;
+            padding: 5px;
+        }
+
+        .cart-product-name {
+            font-size: clamp(15px, 1.15vw, 18px);
+            line-height: 1.65;
+            overflow-wrap: break-word;
+            word-break: normal;
+            color: #382719;
+        }
+
+        .cart-price-area {
+            margin-top: 3px;
+            line-height: 1.65;
+        }
+
+        .cart-stock-note,
+        .cart-stock-warning {
+            margin-top: 2px;
+        }
+
+        .cart-quantity-control {
+            gap: 9px;
+            padding: 4px;
+        }
+
+        .cart-quantity-control button {
+            width: 36px;
+            height: 36px;
+        }
+
+        .cart-line-total {
+            font-size: 17px;
+            text-align: end;
+        }
+
+        @media (max-width: 600px) {
+            .cart-row {
+                grid-template-columns: minmax(0, 1fr) auto;
+                align-items: center;
+                column-gap: 12px;
+                row-gap: 12px;
+                padding: 16px 0;
+            }
+
+            .cart-product-info {
+                grid-column: 1 / -1;
+                grid-row: 1;
+                grid-template-columns: 88px minmax(0, 1fr);
+                grid-template-rows: auto auto auto;
+                column-gap: 13px;
+                row-gap: 4px;
+                width: 100%;
+            }
+
+            .cart-product-link {
+                grid-column: 1;
+                grid-row: 1 / 4;
+                width: 88px;
+                height: 88px;
+                min-width: 88px;
+                flex-basis: 88px;
+                border-radius: 11px;
+            }
+
+            .cart-product-meta {
+                grid-column: 2;
+                grid-row: 1;
+                align-self: end;
+            }
+
+            .cart-product-name {
+                font-size: 15px;
+                line-height: 1.55;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
+                overflow: hidden;
+            }
+
+            .cart-price-area {
+                grid-column: 2;
+                grid-row: 2;
+                align-self: center;
+                font-size: 14px;
+            }
+
+            .cart-stock-note,
+            .cart-stock-warning {
+                grid-column: 2;
+                grid-row: 3;
+                font-size: 11px;
+                line-height: 1.45;
+            }
+
+            .cart-row > div:nth-child(2) {
+                grid-column: 1;
+                grid-row: 2;
+                justify-self: start;
+            }
+
+            .cart-line-total {
+                grid-column: 2;
+                grid-row: 2;
+                justify-self: end;
+                font-size: 16px;
+            }
+
+            .cart-quantity-control button {
+                width: 34px;
+                height: 34px;
+            }
+
+            .cart-summary {
+                padding: 16px 0;
+                gap: 10px;
+            }
+
+            .cart-intro {
+                font-size: 14px;
+                margin-bottom: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .cart-product-info {
+                grid-template-columns: 78px minmax(0, 1fr);
+                column-gap: 10px;
+            }
+
+            .cart-product-link {
+                width: 78px;
+                height: 78px;
+                min-width: 78px;
+                flex-basis: 78px;
+            }
+
+            .cart-product-name {
+                font-size: 14px;
+            }
+
+            .cart-line-total {
+                font-size: 14px;
+            }
+        }
+
         /* استجابة الشاشات */
 
         @media (max-width: 850px) {
